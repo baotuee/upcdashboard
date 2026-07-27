@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>UPC Livestream Performance</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAA8CAYAAADMtVzqAAAE7klEQVR4nO3bXYgVZRzH8c+sr2Wim6JELyJFkV1UNxGEvUNgdBPddLWGlS+pJUR0U2YFEaH0npVEl0YXemeiUCAlQRIUoRQmWiLaGxG4u+45M13MOe6ct93zMjPn7NEvLHtm9jnP+e+X57fPM8/MBlEUqeafu29/FO9jK16taZABlwacCRkaCZ0J4+OcWIMt2IztkzUeaHD+LszHK3ghtdJ6j/X4AItwfzNvaCRsLPH6ZbzUUVm9ySa8kzgebuZNjYSFVceb8WIbRfUqG7Gt6lz171yXRsLqsUV/xHM93mr3za0IY+rHszqGLdOqMOJ4PtfJh3aJejFsmXaEwet4ttMPz5GOYpikXWHwBp5Po4iMWavDGCbpRBi8prfjuUy8AE+NToXR2/FcmXaHaQijd+O5NO0O0xJGb8ZzbPImrZGmMOJ4bki5z06o3VnokLSFwdviBWJfkoUw4gXixoz67ipZCSNeKK7PsP+ukKUw4gVjX8Uza2H0WTzzEEb/xHNRXsKI4/nURA3y28Zvm4fyFAbvYlWjH87ANBksntJjRd7CYAduSp6IMCtgdyFyNOSS+kOtG7UmmYt7ulXEvcmDaRBwJORs+biSJ3AID+dQWyNuw2C3hP1ZfhFhXsDO0cjeQuSqoCaSq/ERbsEjeRZZxa10Z5j/hF3Et2nmB/EV8rZzkbOYXtn2CZU3V+sMvty4gfyFHcYDGAkxGDASsWo49EfI4qDiXtc68chKUsit0lquJF9hv+BBnAyxIIh/+zUjkX1FFg9URHE13suxtmZYQE0CMuMYluN0OYYhhoZD+wtcWymrOoa9wGzMI58RdlhC1mDAaDQua+lALK8krF4Me4FZmEn2whrGcH8xHlkJejGGZQIlV1lGsiKGc0qyVg6H9tXG8HG9F8MkRaUJJ6sRdj6GjI/nDSOhvbUxXI6PM6ojLc6WvjIRdj6GxGIuG+BAgS8KLKn9xGcyqCFtivib9CN5PoblEzPFY/mTscho6bjquaLrUq4hK06T7giriGGZuQEHxvi6GLk6qJEVaPK5rB7gV9ITVhHDanYWQkUNt22mirAfSSeSv4ufiT2VPFleRnxTjOwZY0G3N2c65yCKnQo7ivuUZEW4PDC+dRqxYywSimfKqTKUGnAM33Ui7DhW4HiIOZg9wMECP4SRhQF/hRwqXSdOcVll9rQr7CTuxInkFs3Tw/E661QUX3xND7giiHPfJ8I+a0dYOYYnkls0a0dDu89xzTSWBfHCpUyfyIIjrQqriOGCgHPGt2hunBbLKU7YxdSmFWE1MZxgi6ZvaXayP4o7JGI4wRZNX9NI2IzE65oYTrBFcz0Gsyi0V2gk7N/S99/EMfy5OoZ7CpEllXd4VuF78X/A9S2N/oZtF18Tfq60+VeeDVePVMawxDrjm383Z1hv12kk7DjeZPwSpzwblmOYkFW9UzqSTam9wYSzZJs3LPr6b3/DWXIK37DIlLojbLB0AX02ajqGFwx1hX1bjDf+to6G9kyN+4a5UVfYY8OhSDyiqmbDJ/FhLpX1KHWFzSntZ1U9pjXkApdFA2F1nmcbwqfZljI1aOZacpWLss4zmbAh8SOWFykxkbBN2htZi1tsv7CFtvNb7LuV9k21nWilX8RO/Kf51fsMHGmyrVK/u8T/OTs6SdvZ+LKFvpXazzT55docfNVMh/8D/PKECfEom/MAAAAASUVORK5CYII=">
+<script src="password.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1f36;font-size:10.5px;}
+.page{width:1440px;margin:0 auto;padding:8px;}
+/* ===== Ecomobi brand ===== */
+.hdr{background:#fff;color:#414042;border-radius:6px 6px 0 0;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #EE3124;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:7px;}
+.hdr h1{font-size:15px;font-weight:800;color:#414042;letter-spacing:.2px;}
+.hdr h1 .accent{color:#EE3124;}
+.hdr-meta{font-size:8.5px;color:#9ca3af;margin-top:1px;}
+.ecologo{display:flex;flex-direction:column;align-items:flex-start;}
+.ecowm{font-size:17px;font-weight:900;color:#414042;letter-spacing:1.5px;display:flex;align-items:center;line-height:1;}
+.ecotag{font-size:7px;color:#9ca3af;letter-spacing:1.2px;margin-top:2px;align-self:flex-end;}
+.fbar{background:#fff;padding:5px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:2px solid #f3f4f6;margin-bottom:7px;border-radius:0 0 6px 6px;}
+.fi{display:flex;flex-direction:column;gap:1px;}
+.fi label{font-size:7.5px;color:#aaa;font-weight:700;text-transform:uppercase;}
+.fi select{border:1px solid #ddd;border-radius:3px;padding:2px 7px;font-size:9.5px;background:#fafafa;color:#333;max-width:170px;}
+.fi input[type=date]{border:1px solid #ddd;border-radius:3px;padding:1.5px 6px;font-size:9.5px;background:#fafafa;color:#333;font-family:inherit;}
+.msel{position:relative;min-width:120px;}
+.msel-btn{width:100%;border:1px solid #ddd;border-radius:3px;padding:2px 22px 2px 7px;font-size:9.5px;background:#fafafa;color:#333;text-align:left;cursor:pointer;font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;}
+.msel-btn::after{content:'▾';position:absolute;right:7px;top:50%;transform:translateY(-52%);font-size:9px;color:#555;}
+.msel-menu{display:none;position:absolute;z-index:20;top:calc(100% + 3px);left:0;min-width:150px;background:#fff;border:1px solid #ddd;border-radius:5px;box-shadow:0 8px 18px rgba(0,0,0,.13);padding:4px;max-height:190px;overflow:auto;}
+.msel.open .msel-menu{display:block;}
+.msel-opt{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:4px;font-size:9px;color:#374151;cursor:pointer;white-space:nowrap;}
+.msel-opt:hover{background:#FDECEB;color:#EE3124;}
+.msel-opt input{width:12px;height:12px;accent-color:#EE3124;}
+.tbadge{background:#EE3124;color:#fff;padding:2px 10px;border-radius:999px;font-size:9.5px;font-weight:700;}
+.tab-row{display:flex;gap:4px;margin-left:auto;align-items:center;}
+.tab{padding:3.5px 13px;border-radius:999px;font-size:9.5px;font-weight:700;cursor:pointer;border:1px solid transparent;}
+.tab-a{background:#EE3124;color:#fff;border-color:#EE3124;}
+.tab-i{background:#fff;color:#6b7280;border-color:#d1d5db;}
+.tab-i:hover{background:#FDECEB;border-color:#EE3124;color:#EE3124;}
+.clr{font-size:8.5px;color:#EE3124;cursor:pointer;margin-left:8px;font-weight:700;}
+.clr:hover{text-decoration:underline;}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:7px;}
+.kpi{background:#fff;border-radius:6px;padding:10px 12px;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.kpi .lb{font-size:9px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.kpi .vl{font-size:20px;font-weight:800;color:#1a1f36;line-height:1.25;margin:2px 0;}
+.kpi .s1,.kpi .s2{font-size:9px;color:#aaa;}
+.kpi.hl{background:#1a1f36;box-shadow:0 2px 8px rgba(26,31,54,.35);position:relative;overflow:hidden;}
+.kpi.hl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#f59e0b;}
+.kpi.hl .lb{color:#fcd34d;}
+.kpi.hl .vl{color:#fff;font-size:24px;}
+.kpi.hl .s1,.kpi.hl .s2{color:#94a3b8;}
+.kpi.hl .s1 strong,.kpi.hl .s2 strong{color:#e2e8f0;}
+.kpi.tg{background:#FDECEB;border:1px solid #f6c3bf;position:relative;overflow:hidden;}
+.kpi.tg::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#EE3124;}
+.kpi.tg .lb{color:#EE3124;}
+.kpi.tg .s1,.kpi.tg .s2{color:#b3776f;}
+.kpi .vl.up{color:#22c55e;}
+.kpi .vl.dn{color:#ef4444;}
+.kpi .vl.neu{color:#f59e0b;}
+.up{color:#22c55e;font-weight:700;}
+.dn{color:#ef4444;font-weight:700;}
+.neu{color:#f59e0b;font-weight:700;}
+.mtdchip{display:inline-block;background:#fee2e2;color:#dc2626;font-weight:800;border-radius:9px;padding:1px 8px;font-size:8.5px;letter-spacing:.2px;}
+.picchip{display:inline-block;padding:1px 8px;border-radius:10px;color:#fff;font-weight:700;font-size:7.5px;white-space:nowrap;letter-spacing:.2px;vertical-align:middle;}
+/* view toggle Overall / Host detail */
+.view-tabs{display:flex;gap:0;background:#f3f4f6;border-radius:999px;padding:2px;}
+.vtab{padding:4px 15px;border-radius:999px;font-size:10.5px;font-weight:800;cursor:pointer;border:none;background:transparent;color:#6b7280;font-family:inherit;}
+.vtab-a{background:#1a1f36;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.vtab-i:hover{color:#EE3124;}
+/* host bar demo-style */
+.hbar{display:flex;align-items:center;gap:6px;cursor:pointer;padding:1px 2px;border-radius:3px;}
+.hbar:hover{background:#f3f4f6;}
+.hbar.sel{background:#fde68a;box-shadow:inset 3px 0 0 #f59e0b;}
+.hbar .hn{width:120px;font-size:8.5px;color:#374151;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hbar .htk{flex:1;background:#f3f4f6;border-radius:3px;height:15px;position:relative;overflow:hidden;}
+.hbar .hfl{height:100%;border-radius:3px;background:linear-gradient(90deg,#1a1f36,#EE3124);display:flex;align-items:center;justify-content:flex-end;padding-right:5px;min-width:34px;}
+.hbar .hfl span{font-size:7.5px;color:#fff;font-weight:700;white-space:nowrap;}
+.stars{color:#f59e0b;font-size:9px;letter-spacing:-1px;white-space:nowrap;}
+.stars .off{color:#e5e7eb;}
+.hbar .hnote{display:flex;gap:2px;flex-shrink:0;width:118px;justify-content:flex-start;}
+.hntag{font-size:7px;font-weight:700;padding:0.5px 5px;border-radius:7px;white-space:nowrap;border:1px solid;}
+.hn-g{background:#dcfce7;color:#15803d;border-color:#86efac;}
+.hn-r{background:#fee2e2;color:#dc2626;border-color:#fca5a5;}
+.hn-n{background:#f3f4f6;color:#6b7280;border-color:#e5e7eb;}
+/* bảng so sánh tuần/tháng theo brand + Elasticity (kiểu sheet CIR WoW) */
+.cmp-table td,.cmp-table th{white-space:nowrap;text-align:right;}
+.cmp-table th{position:sticky;top:0;z-index:4;background:#EE3124;color:#fff;}
+.cmp-table .cmp-br,.cmp-table .cmp-mt{position:sticky;z-index:3;background:#fff;}
+.cmp-table thead .cmp-br,.cmp-table thead .cmp-mt{z-index:6;background:#EE3124;}
+.cmp-table .cmp-br{left:0;width:186px;text-align:left;vertical-align:top;border-right:1px solid #eee;padding:6px 8px;}
+.cmp-table .cmp-mt{left:186px;width:64px;text-align:left;color:#555;border-right:2px solid #e5e7eb;}
+.cmp-table tr:hover td{background:#f9fbff;}
+.cmp-table tr:hover .cmp-br,.cmp-table tr:hover .cmp-mt{background:#f9fbff;}
+.cmp-table .brhead .cmp-br{background:#fff;}
+.cmp-table .cval{font-weight:700;}
+.cmp-table .cdlt{font-size:7px;display:block;line-height:1.2;}
+.cmp-table td.pcol{border-left:1px solid #f3f4f6;}
+.cmp-table .brsep td{border-top:2px solid #c9241a;}
+.cmp-table td.cmp-spk2{border-left:2px solid #e5e7eb;text-align:center;width:96px;}
+.mchip{display:inline-block;padding:1px 7px;border-radius:8px;font-weight:800;font-size:7.5px;letter-spacing:.2px;}
+.brname{font-weight:800;color:#414042;font-size:10px;display:flex;align-items:center;gap:3px;}
+.br-mtd{font-size:7.5px;color:#6b7280;margin-top:3px;line-height:1.5;}
+.rolechip{display:inline-block;border-radius:8px;padding:0.5px 6px;font-weight:700;font-size:7px;margin-top:2px;border:1px solid;white-space:normal;}
+.rc-good{background:#dcfce7;color:#15803d;border-color:#86efac;}
+.rc-bad{background:#fee2e2;color:#dc2626;border-color:#fca5a5;}
+.rc-neu{background:#fef3c7;color:#b45309;border-color:#fde68a;}
+.cyc{display:inline-block;font-size:6.5px;font-weight:800;padding:0 3px;border-radius:5px;letter-spacing:.2px;}
+.cyc-d{background:#fee2e2;color:#b91c1c;}.cyc-m{background:#fff3e0;color:#c2410c;}.cyc-p{background:#dcfce7;color:#15803d;}
+/* thanh filter brand — style giong divbar CPD/LDB cua dash CIR */
+.divbar{background:#FDF1F0;border:1px solid #f8d7d4;border-radius:5px;padding:5px 12px;margin-bottom:7px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.divlbl{font-size:7.5px;color:#c2554e;font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-right:4px;}
+.dtab{border:1px solid #e5c5c2;background:#fff;color:#6b7280;border-radius:13px;padding:5px 16px;font-size:13.5px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;font-family:inherit;}
+.dtab .dsub{font-size:7px;font-weight:600;opacity:.75;text-transform:none;}
+.dtab:hover{background:#FDECEB;border-color:#EE3124;color:#EE3124;}
+.dtab.on{background:#EE3124;border-color:#EE3124;color:#fff;}
+.dtab.on .dsub{opacity:.9;}
+.fbhere{display:inline-flex;align-items:center;color:#EE3124;font-weight:900;font-size:12.5px;letter-spacing:.5px;margin-left:6px;animation:fbnudge 1.1s ease-in-out infinite;white-space:nowrap;}
+@keyframes fbnudge{0%,100%{transform:translateX(0);}50%{transform:translateX(-7px);}}
+#cfBar{background:#fff7ed;border:1px solid #fed7aa;border-radius:5px;padding:5px 10px;margin-bottom:7px;display:none;gap:6px;align-items:center;flex-wrap:wrap;font-size:9px;}
+.cfchip{background:#1a1f36;color:#fff;padding:2px 8px;border-radius:10px;font-size:8.5px;font-weight:600;cursor:pointer;display:inline-flex;gap:5px;align-items:center;}
+.cfchip .x{color:#f87171;font-weight:800;}
+.cfclear{color:#3b82f6;cursor:pointer;font-weight:700;margin-left:4px;}
+tr.clk{cursor:pointer;}
+tr.cfsel{background:#fde68a !important;box-shadow:inset 3px 0 0 #f59e0b;}
+tr.cfsel:hover{background:#fcd34d !important;}
+.card{background:#fff;border-radius:5px;padding:9px 11px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.ct{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid #f3f4f6;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:7px;}
+.g5{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:7px;}
+/* pivot Plan vs Actual theo Day Type — header nhóm màu như mẫu sheet */
+.pv-table th{font-size:7.5px;padding:3px 4px;}
+.pv-table th.gp-plan{background:#9a1c14;color:#fff;text-align:center;letter-spacing:.4px;}
+.pv-table th.gp-act{background:#1d4ed8;color:#fff;text-align:center;letter-spacing:.4px;}
+.pv-table th.gp-blank{background:#fff;}
+.pv-table td{padding:2px 4px;font-size:8.5px;}
+.pv-table td.sep{border-left:2px solid #cbd5e1;}
+.pv-table th.sep{border-left:2px solid #94a3b8;}
+.pv-table .dtn{text-align:left;font-weight:800;color:#414042;}
+.pv-table .arw{font-size:7px;font-weight:800;margin-left:2px;}
+/* title highlight + chip cho block quan trọng */
+.ct.ct-hl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:10.5px;color:#1a1f36;background:linear-gradient(90deg,#FDECEB,#fff 60%);border-left:4px solid #EE3124;border-radius:4px;padding:6px 10px;margin:-2px -2px 7px;border-bottom:none;}
+.ct-chip{display:inline-flex;align-items:center;background:#EE3124;color:#fff;font-size:7.5px;font-weight:800;letter-spacing:.4px;padding:2px 8px;border-radius:999px;text-transform:none;white-space:nowrap;}
+.ct-chip.src{background:#1a1f36;}
+.ct-chip.ch3{background:#0f766e;}
+.upd-badge{display:inline-flex;align-items:center;gap:5px;background:#dcfce7;color:#15803d;border:1px solid #86efac;font-size:8.5px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+.upd-badge .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px #bbf7d0;}
+.data-note{margin:8px 0 4px;background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:8px;padding:8px 12px;font-size:9px;color:#92400e;line-height:1.55;}
+.data-note b{color:#78350f;}
+.data-note .dn-hd{font-weight:800;display:block;margin-bottom:2px;}
+/* MoM: Δ% mỗi tháng + chip cho dòng target */
+#tblMoM .mval{font-weight:600;}
+#tblMoM .mdlt{display:block;font-size:7px;font-weight:800;line-height:1.25;margin-top:1px;}
+.tgt-chip{display:inline-block;font-size:7.5px;font-weight:800;letter-spacing:.3px;padding:1.5px 8px;border-radius:999px;color:#fff;white-space:nowrap;}
+.tgt-chip.tc-nmv{background:#EE3124;}
+.tgt-chip.tc-ads{background:#414042;}
+.tgt-chip.tc-load{background:#0f766e;}
+.tgt-chip.tc-acos{background:#b45309;}
+/* chip ô peak trong ma trận host (thay viền đỏ) */
+.pkchip{display:inline-block;padding:1px 7px;border-radius:999px;font-weight:800;font-size:8px;color:#fff;white-space:nowrap;}
+.pkchip.pkc-amber{background:#d97706;}
+.pkchip.pkc-blue{background:#1d4ed8;}
+/* huy chương top 3 host */
+.medal{font-size:9px;margin-right:2px;}
+.mdl-tbl td{padding:2px 5px;}
+.mdl-tbl .cat{text-align:left;font-weight:800;color:#414042;white-space:nowrap;}
+.mdl-tbl .hn3{text-align:left;white-space:nowrap;}
+/* Tier Rank theo CTOR (4>3>2>1) */
+.tier{display:inline-block;padding:1px 7px;border-radius:999px;font-size:7.5px;font-weight:800;color:#fff;cursor:help;}
+.tier.tr-4{background:#15803d;}
+.tier.tr-3{background:#65a30d;}
+.tier.tr-2{background:#d97706;}
+.tier.tr-1{background:#dc2626;}
+/* ma trận funnel training */
+.ftm td{padding:2px 4px;}
+.ftm .idx{font-weight:800;font-size:9px;line-height:1.15;}
+.ftm .raw{font-size:7px;color:#6b7280;line-height:1.15;}
+.ftm .hostn{text-align:left;font-weight:700;white-space:nowrap;}
+.ftm .lowsample{opacity:.55;}
+.ftm .trn{text-align:left;font-size:8px;white-space:nowrap;}
+.ftm .trn b{color:#b45309;}
+.ftm .trn .scale{color:#16a34a;font-weight:700;}
+.ftm .trn .bal{color:#6b7280;}
+/* làm nổi cụm chọn tab + tháng */
+.pick-box{display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding:6px 9px;border:2px dashed #EE3124;border-radius:9px;background:#FFF7F6;box-shadow:0 0 0 3px rgba(238,49,36,.07);}
+.pick-here{font-size:10px;font-weight:900;color:#EE3124;letter-spacing:.5px;white-space:nowrap;animation:pknudge 1.2s ease-in-out infinite;}
+@keyframes pknudge{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
+.pk{margin-left:4px;font-size:9px;filter:drop-shadow(0 0 1px rgba(245,158,11,.8));}
+.pk2{opacity:.45;font-size:8px;}
+/* chú thích day type */
+.dt-leg{display:flex;gap:10px;flex-wrap:wrap;font-size:7.5px;color:#6b7280;margin-top:5px;line-height:1.5;}
+.dt-leg b{color:#414042;}
+.dt-leg .dtc{display:inline-block;width:8px;height:8px;border-radius:2px;vertical-align:-1px;margin-right:3px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:6px;margin-bottom:7px;}
+.full{margin-bottom:7px;}
+.cw{position:relative;height:130px;}
+.cwl{position:relative;height:200px;}
+table{width:100%;border-collapse:collapse;font-size:8.5px;}
+th{background:#1a1f36;color:#fff;padding:4px 5px;text-align:right;font-weight:600;white-space:nowrap;cursor:pointer;user-select:none;}
+th:first-child{text-align:left;}
+th .sarr{font-size:8px;margin-left:2px;}
+th.sactive{background:#0f1424;}
+td{padding:2.5px 5px;text-align:right;border-bottom:1px solid #f0f0f0;white-space:nowrap;}
+td:first-child{text-align:left;white-space:normal;}
+tr:hover{background:#f9fbff;}
+tr.tot{background:#dbeafe;font-weight:700;}
+tr.tot td:first-child{text-align:left;}
+.tblwrap{overflow:auto;}
+.tblwrap thead th{position:sticky;top:0;z-index:3;}
+.tblwrap tr.tot td{position:sticky;bottom:0;background:#dbeafe;z-index:2;box-shadow:0 -1px 0 #94a3b8;}
+/* phễu tam giác ngược */
+.funnel{display:flex;flex-direction:column;align-items:center;padding:4px 0 8px;}
+.fnl-stage{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;height:27px;padding:0 9%;color:#fff;transition:width .5s cubic-bezier(.22,1,.36,1);}
+.fnl-stage .fnl-bg{position:absolute;inset:0;clip-path:polygon(2% 0,98% 0,93% 100%,7% 100%);z-index:0;}
+.fnl-stage .fnl-lb,.fnl-stage .fnl-v{position:relative;z-index:1;}
+.fnl-stage .fnl-lb{font-size:9px;font-weight:700;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.25);}
+.fnl-stage .fnl-v{font-size:11.5px;font-weight:800;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.25);}
+.fnl-arrow{display:flex;align-items:center;gap:5px;font-size:8px;color:#94a3b8;font-weight:600;padding:2px 0;line-height:1;}
+.fnl-arrow .ar{font-size:11px;color:#cbd5e1;}
+.fnl-arrow b{color:#1a1f36;font-size:10px;font-weight:800;}
+#pieLeg{margin-top:5px;display:flex;flex-direction:column;gap:2px;}
+#pieLeg .pl{display:flex;align-items:center;gap:5px;font-size:8px;padding:1px 2px;border-radius:2px;cursor:pointer;}
+#pieLeg .pl:hover{background:#f3f4f6;}
+#pieLeg .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+#pieLeg .pl b{margin-left:auto;}
+.ldtrack{position:relative;width:90px;height:6px;background:#f3f4f6;border-radius:3px;flex-shrink:0;}
+.ldfill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;max-width:100%;}
+.ldtick{position:absolute;top:-1.5px;bottom:-1.5px;width:1px;background:#94a3b8;}
+.badge-red{background:#fee2e2;color:#991b1b;padding:1px 5px;border-radius:8px;font-size:7.5px;font-weight:700;}
+.badge-grn{background:#d1fae5;color:#065f46;padding:1px 5px;border-radius:8px;font-size:7.5px;font-weight:700;}
+.footer{text-align:center;padding:7px;font-size:7.5px;color:#bbb;margin-top:4px;}
+.note{font-size:7.5px;color:#aaa;margin-top:4px;}
+#gdBtn{position:fixed;left:14px;bottom:14px;z-index:1500;background:#EE3124;color:#fff;font-weight:900;font-size:12px;letter-spacing:.4px;border-radius:999px;padding:10px 18px;cursor:pointer;box-shadow:0 4px 16px rgba(238,49,36,.45);user-select:none;display:flex;align-items:center;gap:7px;}
+#gdBtn:hover{background:#c9241a;}
+#gdPanel{display:none;position:fixed;left:14px;bottom:62px;z-index:1600;width:400px;max-width:calc(100vw - 28px);max-height:76vh;overflow:auto;background:#fffdf6;border:1.5px dashed #f2b09a;border-radius:8px;box-shadow:0 10px 34px rgba(0,0,0,.22);padding:12px 15px;font-size:9.5px;line-height:1.65;color:#374151;}
+#gdPanel.open{display:block;}
+#gdPanel h3{font-family:Consolas,'Courier New',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#c2410c;border-bottom:1px dashed #f2cdb4;padding-bottom:5px;margin-bottom:7px;}
+#gdPanel h4{font-size:9.5px;font-weight:800;color:#EE3124;margin:9px 0 3px;}
+#gdPanel ul{margin:0;padding-left:15px;}
+#gdPanel li{margin-bottom:2px;}
+#gdPanel .gdx{position:absolute;top:8px;right:11px;cursor:pointer;color:#9ca3af;font-weight:800;font-size:13px;}
+body.auth-locked #gdBtn,body.auth-locked #gdPanel{display:none;}
+@media print{#gdBtn,#gdPanel{display:none !important;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:13px;">
+    <div class="ecologo" title="Ecomobi — Do the right thing">
+      <div class="ecowm">ECO<svg width="24" height="14" viewBox="0 0 52 30" style="margin:0 2px;" aria-hidden="true"><polygon points="0,0 20,15 0,30" fill="#EE3124"/><rect x="24" y="19" width="7" height="11" fill="#414042"/><rect x="33" y="11" width="7" height="19" fill="#414042"/><rect x="42" y="3" width="7" height="27" fill="#414042"/></svg>OBI</div>
+      <div class="ecotag">DO THE RIGHT THING</div>
+    </div>
+    <div style="width:1px;height:32px;background:#e5e7eb;"></div>
+    <div>
+      <h1>UPC <span class="accent">Livestream Performance</span> <span class="upd-badge" id="updBadge"><span class="dot"></span>—</span></h1>
+      <div class="hdr-meta">Actual tự tải từ Google Sheet: <b>raw_centralized</b> + <b>raw_smg</b> &nbsp;|&nbsp; Plan T7: <b>Data_plan</b> cho BAU/CP/MG, <b>raw_smg target</b> cho Super Mega &nbsp;|&nbsp; <span id="hdrRange"></span></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:9px;">
+    <span class="pick-here">CHOOSE TAB HERE ➡️</span>
+    <div class="pick-box">
+      <div class="view-tabs">
+        <button class="vtab vtab-a" id="vtOverall" onclick="setView('overall')">📊 Overall</button>
+        <!-- Host detail ẩn: UPC không có dữ liệu host -->
+      </div>
+      <div class="tab-row" id="tabRow"></div>
+    </div>
+  </div>
+</div>
+
+<div class="fbar">
+  <div class="fi"><label>Time select</label><span class="tbadge" id="timeBadge">—</span></div>
+  <div class="fi"><label>Từ ngày</label><input type="date" id="dFrom" onchange="render()"></div>
+  <div class="fi"><label>Đến ngày</label><input type="date" id="dTo" onchange="render()"></div>
+  <div class="fi"><label>Channel</label><select id="fCh" onchange="render()"><option value="All">All</option></select></div>
+  <div class="fi"><label>Loại phiên live</label><div class="msel" id="fTyBox"><button type="button" class="msel-btn" id="fTyBtn" onclick="toggleTyMenu(event)">All</button><div class="msel-menu" id="fTyMenu" onclick="event.stopPropagation()"></div></div></div>
+  <div class="fi" style="display:none;"><label>Host</label><select id="fHost" onchange="render()"><option value="All">All</option></select></div>
+  <div class="fi" style="display:none;"><label>OP</label><select id="fOp" onchange="render()"><option value="All">All</option></select></div>
+  <div class="fi" style="margin-left:auto;"><label>&nbsp;</label><span style="font-size:8px;color:#9ca3af;font-style:italic;">Click 1 dòng bảng (Channel/Loại phiên/Host/Khung giờ) để <b>cross-filter toàn dashboard</b> · click lại để bỏ</span></div>
+</div>
+
+<div class="divbar">
+  <span class="divlbl">Brand</span>
+  <span id="brandBtns" style="display:flex;gap:6px;flex-wrap:wrap;"></span>
+  <span class="fbhere">⬅️ FILTER BRAND HERE!!!</span>
+  <span id="brandInfo" style="margin-left:auto;font-size:8px;color:#c2554e;font-style:italic;font-weight:700;"></span>
+</div>
+
+<div id="cfBar"><span style="font-weight:700;color:#9a3412;">⚡ Cross-filter:</span><span id="cfChips"></span><span class="cfclear" onclick="clearCf()">✕ Bỏ hết</span></div>
+
+<div class="data-note" id="dataNote" style="display:none;"></div>
+
+<div id="viewOverall">
+<div class="kpi-row" id="kpiRow"></div>
+
+<div class="g2">
+  <div class="card"><div class="ct">🔻 Funnel chuyển đổi — Impression → View → Click → Order</div><div class="funnel" id="funnel"></div></div>
+  <div class="card"><div class="ct">🎯 Plan vs Actual theo Day Type <span style="color:#aaa;text-transform:none;font-weight:400;">— GMV · Ads Cost · ROI (tháng <span class="pm-lbl"></span>) · ▲▼ = Actual so Plan</span></div>
+    <div class="tblwrap" style="max-height:190px;"><table id="tblPvType" class="pv-table"></table></div>
+  </div>
+</div>
+
+<div class="full card">
+  <div class="ct">🔬 Chẩn đoán phễu (Funnel diagnostics) <span style="color:#aaa;text-transform:none;font-weight:400;">— đi từng tầng: tầng đạt → xuống tầng dưới · chưa đạt → xử lý theo gợi ý · target CPV/CTR/CTOR lấy từ KPI Ads control trong plan (tháng <span class="pm-lbl"></span>)</span></div>
+  <div class="g3" id="funnelGates" style="margin-bottom:8px;"></div>
+  <div class="g5" style="margin-bottom:8px;">
+    <div class="card" style="padding:7px 8px;"><div style="font-size:8.5px;font-weight:700;color:#555;margin-bottom:2px;">① CPM × Ads spend</div><div style="position:relative;height:150px;"><canvas id="scF1"></canvas></div></div>
+    <div class="card" style="padding:7px 8px;"><div style="font-size:8.5px;font-weight:700;color:#555;margin-bottom:2px;">② CPV × ERR</div><div style="position:relative;height:150px;"><canvas id="scF2"></canvas></div></div>
+    <div class="card" style="padding:7px 8px;"><div style="font-size:8.5px;font-weight:700;color:#555;margin-bottom:2px;">③ CTR × Click</div><div style="position:relative;height:150px;"><canvas id="scF3"></canvas></div></div>
+    <div class="card" style="padding:7px 8px;"><div style="font-size:8.5px;font-weight:700;color:#555;margin-bottom:2px;">④ AOV × GMV</div><div style="position:relative;height:150px;"><canvas id="scF4"></canvas></div></div>
+    <div class="card" style="padding:7px 8px;"><div style="font-size:8.5px;font-weight:700;color:#555;margin-bottom:2px;">⑤ ROI × CTOR</div><div style="position:relative;height:150px;"><canvas id="scF5"></canvas></div></div>
+  </div>
+  <div class="g2" style="margin-bottom:0;">
+    <div><div style="font-size:9px;font-weight:700;color:#555;margin-bottom:4px;">📈 Tương quan với GMV/giờ <span style="color:#aaa;font-weight:400;text-transform:none;">— r Pearson theo ngày trong scope · |r|≥.5 mạnh · .3–.5 khá · &lt;.3 yếu</span></div><table id="tblCorr"></table></div>
+    <div><div style="font-size:9px;font-weight:700;color:#555;margin-bottom:4px;">🧭 Nhận xét tự động</div><div id="funnelNote" style="font-size:9px;line-height:1.6;color:#374151;background:#fffdf6;border:1.5px dashed #f2b09a;border-radius:6px;padding:8px 11px;"></div></div>
+  </div>
+</div>
+
+<div class="full card" id="planCard">
+  <div class="ct">🎯 Plan vs Actual <span id="planMtd"></span> <span style="color:#aaa;text-transform:none;font-weight:400;">— BAU/CP/MG dùng Data_plan cho tổng tháng; Super Mega dùng target trong raw_smg · MTD target tách theo ngày/type từ raw tương ứng · GMV Actual = GMV · CIR = Ads ÷ GMV</span></div>
+  <div class="tblwrap" style="max-height:260px;"><table id="tblPlan"></table></div>
+</div>
+
+<div class="full card">
+  <div class="ct">📅 GMV & Ads Cost theo ngày</div>
+  <div class="cwl"><canvas id="chDate"></canvas></div>
+</div>
+
+<div class="full card">
+  <div class="ct">🌓 So sánh theo tháng (MoM) <span style="color:#aaa;text-transform:none;font-weight:400;">— tháng hiện tại so MTD cùng kỳ tháng trước (logic sheet MoM)</span></div><div class="tblwrap" style="max-height:230px;"><table id="tblMoM"></table></div></div>
+
+<div class="full card" id="adsLiveCard" style="display:none;"><table id="tblAdsLive"></table><div id="adsLiveNote" class="note"></div></div>
+
+<div class="full card">
+  <div class="ct">🔁 So sánh tuần (WoW) <span style="color:#aaa;text-transform:none;font-weight:400;">— tuần Thứ 2→CN · WoW % so với <b>cùng khoảng ngày của tháng trước</b> (logic sheet WoW) · nhãn: 🔥 Deal Day = tuần có ngày đôi · 🌗 Mid Month = có ngày 15 · 💰 Pay Day = có ngày 25</span></div>
+  <div class="tblwrap" style="max-height:330px;"><table id="tblWoW"></table></div>
+</div>
+
+<div class="full card">
+  <div class="ct">🎬 Key metrics theo Day Type (loại phiên live) <span style="color:#aaa;text-transform:none;font-weight:400;">— Super Mega/Mega = ngày đẩy mạnh, BAU = nền · nền xanh↔đỏ theo chiều tốt/xấu của chỉ số · %Ads cost Act tô theo actual/target · click để lọc</span></div>
+  <div class="tblwrap" style="max-height:250px;"><table id="tblType"></table></div>
+  <div id="typeNote" class="note"></div>
+  <div class="dt-leg">
+    <span><span class="dtc" style="background:#7f1d1d;"></span><b>Super Mega (SMG)</b> — ngày sale đỉnh, dồn tối đa host top + budget, chấp nhận CPV cao nhất</span>
+    <span><span class="dtc" style="background:#EE3124;"></span><b>Mega (MG)</b> — ngày sale lớn, tối đa GMV, Ads Gate được waive (không chờ CTOR đạt mới push)</span>
+    <span><span class="dtc" style="background:#f59e0b;"></span><b>Campaign (CP)</b> — đợt khuyến mãi, scale GMV nhưng CPV có trần (cap)</span>
+    <span><span class="dtc" style="background:#94a3b8;"></span><b>BAU</b> — ngày thường, giữ CPV nền &amp; organic đều; Ads Gate bật (CTOR đạt mới push thêm ads)</span>
+  </div>
+</div>
+
+<div class="card"><div class="ct">🕗 Detail theo khung giờ live <span style="color:#aaa;text-transform:none;font-weight:400;">— click để lọc · nền xanh↔đỏ theo chiều tốt/xấu · <b>⭐ = khung peak</b> (GMV/giờ top 25%, ⭐ đậm = cao nhất)</span></div><div class="tblwrap" style="max-height:230px;"><table id="tblSlot"></table></div></div>
+
+<div class="full card">
+  <div class="ct">📡 Detail theo Channel <span style="color:#aaa;text-transform:none;font-weight:400;">— click để lọc</span></div>
+  <div class="tblwrap" style="max-height:250px;"><table id="tblCh"></table></div>
+</div>
+
+<div class="full card">
+  <div class="ct">🗓️ Detail theo ngày <span style="color:#aaa;text-transform:none;font-weight:400;">— click tiêu đề cột để sort · <b>Tier</b> xếp theo CTOR (tứ phân vị):
+    <span class="tier tr-4">T4</span> chốt tốt nhất → tăng ads maximize GMV ·
+    <span class="tier tr-3">T3</span> đẩy thêm ·
+    <span class="tier tr-2">T2</span> giữ nhịp ·
+    <span class="tier tr-1">T1</span> siết ads, tối ưu chốt trước</span></div>
+  <div class="tblwrap" style="max-height:330px;"><table id="tblDate"></table></div>
+</div>
+
+<div class="full card">
+  <div class="ct" style="display:flex;align-items:center;gap:8px;">📊 So sánh <span id="cmpModeLbl">tuần (WoW)</span> &amp; Elasticity — theo Brand
+    <span class="view-tabs" style="background:#f3f4f6;">
+      <button class="vtab vtab-a" id="cmpW" onclick="setCmp('week')" style="font-size:9px;padding:2px 11px;">Tuần</button>
+      <button class="vtab vtab-i" id="cmpM" onclick="setCmp('month')" style="font-size:9px;padding:2px 11px;">Tháng</button>
+    </span>
+    <span style="color:#aaa;text-transform:none;font-weight:400;font-size:8px;" id="cmpHint"></span></div>
+  <div class="note" style="margin:0 0 4px;">🟢 Cùng tăng (GMV↑ &amp; ROI↑) · 🔴 Cùng giảm · 🟠 GMV↑ ROI↓ (scale — tăng doanh thu nhưng hiệu quả giảm) · 🟡 ROI↑ GMV↓ (hiệu quả tăng nhưng doanh thu giảm) · block luôn hiện toàn chuỗi, không theo filter tháng/ngày; có áp filter Brand</div>
+  <div class="tblwrap" style="max-height:460px;"><table id="tblCompare" class="cmp-table"></table></div>
+</div>
+</div><!-- /viewOverall -->
+
+<div id="viewHost" style="display:none;"></div>
+
+<div id="gdBtn" onclick="gdToggle()"><span id="gdPlus">＋</span> HƯỚNG DẪN ĐỌC DASHBOARD</div>
+<div id="gdPanel">
+  <span class="gdx" onclick="gdToggle()">✕</span>
+  <h3>📖 HƯỚNG DẪN ĐỌC DASHBOARD</h3>
+  <h4>Dữ liệu lấy từ đâu?</h4>
+  Actual từ <b>UPC - raw_centralized (7)</b> và <b>UPC - raw_smg (3)</b>; chỉ giữ data tháng 7. Plan tổng tháng BAU/Campaign/Mega lấy từ <b>UPC - Data_plan</b>; plan <b>Super Mega</b> lấy từ target riêng trong <b>raw_smg</b>. MTD target tách theo ngày/type từ raw tương ứng. Tất cả tính trên <b>GMV</b>, Fix cost = 0 nên CIR = Ads ÷ GMV. Data không có host/operator nên các khối Host detail đã ẩn.
+  <h4>3 chỉ số trụ cột (3 card đen)</h4>
+  <ul>
+    <li><b>GMV</b> — doanh thu livestream (Actual)</li>
+    <li><b>Ads Cost</b> — tiền ads thực chi cho live</li>
+    <li><b>%Ads cost</b> = Ads cost ÷ <b>GMV</b> — <i>càng thấp càng tốt</i>. Xanh nếu ≤ target, đỏ nếu vượt. Target %Ads cost = Ads target ÷ GMV target, cùng mẫu số GMV với actual. CIR cũng tính trên GMV.</li>
+  </ul>
+  <h4>2 card đỏ = tiến độ plan tháng</h4>
+  <ul>
+    <li><b>%Loading GMV / Ads</b> = lũy kế tháng plan ÷ plan cả tháng, so với chip đỏ <b>MTD</b> (% plan đã trôi theo plan/ngày): Loading ≥ MTD là bám kịp</li>
+    <li>Card loading &amp; khối 🎯 Plan <b>nhảy theo filter</b> Brand/Channel/cross-filter (plan gộp theo kênh đang chọn)</li>
+  </ul>
+  <h4>Suggest Action 1→4 (giống dash CIR)</h4>
+  <ul>
+    <li>Ma trận <b>%Tiến độ GMV</b> (actual ÷ plan lũy kế) × <b>%Ads cost actual/target</b>:
+      <b style="color:#ef4444;">1 Urgent</b> (kiểm soát spend gấp) → <b style="color:#f97316;">2 Cần action</b> → <b style="color:#6b7280;">3 Maintain</b> → <b style="color:#22c55e;">4 Potential</b> (còn room scale)</li>
+    <li>Band GMV: 🔴&lt;85% · 🟠85–95% · ⬜95–105% · 🟢&gt;105% &nbsp;|&nbsp; Band %Ads cost: 🔴&gt;115% · 🟠105–115% · ⬜95–105% · 🟢&lt;95%</li>
+  </ul>
+  <h4>🎤 Host detail (nút góc phải header)</h4>
+  <ul>
+    <li>Bấm <b>Host detail</b>: Top host theo metric tuỳ chọn (GMV/CTR/CTOR/ERR/%Ads cost… + ⭐ tiềm năng + nhận xét nhanh kế tên), 3 chart <b>cột+line</b> (GMV/h×%Ads cost · CTR×CTOR · ERR×CPV), ma trận <b>Host × Day Type</b> & <b>Host × Thứ</b> (ô đậm = mạnh nhất), bảng xếp hạng đầy đủ có cột Nhận xét.</li>
+    <li><b>Nhận xét nhanh host</b> = so trung vị team theo tầng phễu: "CTR khoẻ/yếu" (tầng 2), "chốt tốt/yếu" (CTOR — tầng 3), "CPV rẻ/cao" (tầng 1). ⭐ = trộn GMV/giờ + ROI + quy mô GMV (percentile). Mọi filter áp cho cả view; click host để lọc, donut brand đổi theo host.</li>
+  </ul>
+  <h4>🔬 Chẩn đoán phễu (Funnel diagnostics)</h4>
+  <ul>
+    <li>Đi từng tầng: <b>View·CPV → CTR in-room → CTOR</b>. Tầng đạt target thì xuống tầng dưới; chưa đạt thì xử lý theo gợi ý (playbook). Target CPV/CTR/CTOR lấy từ khối <b>KPI Ads control</b> trong plan.</li>
+    <li>Bảng tương quan: r Pearson theo ngày giữa CTR/CTOR/ERR và GMV/giờ. <b>CTOR</b> mạnh khi tầng chốt ổn, <b>CTR</b> ổn định nhất, <b>ERR</b> ít dự báo GMV nhưng là driver chi phí (ERR↑ ⇒ CPV↓).</li>
+    <li>Nhận xét tự động chỉ ra tầng đang nghẽn + đòn bẩy GMV/giờ mạnh nhất trong scope đang lọc.</li>
+  </ul>
+  <h4>Day Type — key metric thay đổi thế nào</h4>
+  <ul>
+    <li>Bảng <b>Key metrics theo Day Type</b>: ngày <b>Super Mega/Mega</b> (đẩy mạnh) thường GMV/h cao & %Ads cost thấp hơn <b>BAU</b> (nền). Nền ô xanh↔đỏ theo chiều tốt/xấu để thấy ngay type nào hiệu quả.</li>
+    <li>%Ads cost Act tô theo actual/target của chính day type đó (Mega được cấp target Ads cost cao hơn BAU).</li>
+  </ul>
+  <h4>MoM &amp; WoW (theo logic Read me trong file gốc)</h4>
+  <ul>
+    <li><b>MoM</b>: tháng cũ so tháng liền kề; <b>tháng hiện tại so MTD cùng kỳ tháng trước</b> (1–ngày data mới nhất)</li>
+    <li><b>WoW</b>: tuần Thứ 2→CN, so với <b>cùng khoảng ngày của tháng trước</b> (không phải tuần liền kề) · nhãn 🔥 Deal Day (ngày đôi) / 🌗 Mid Month (15) / 💰 Pay Day (25)</li>
+  </ul>
+  <h4>Công thức chỉ số</h4>
+  <ul>
+    <li><b>ROI</b> = GMV ÷ Ads Cost · <b>AOV</b> = GMV ÷ Orders · <b>CPV</b> = Ads ÷ Views · <b>CPM</b> = Ads ÷ Impressions × 1000</li>
+    <li><b>ERR/TTR</b> = Views ÷ Impressions · <b>CTR</b> = Clicks ÷ Views · <b>CTOR</b> = Orders ÷ Clicks</li>
+    <li>T1–T5 (nguồn KT) funnel tái tạo từ tỉ lệ từng phiên: Orders = GMV÷AOV → Clicks = Orders÷CTOR → Views = Clicks÷CTR (đã đối chiếu khớp &lt;0.5%); Impression T3–T4 ước tính từ ERR phiên → CPM/ERR T3–T4 là số ước tính</li>
+    <li><b>CIR (GMV)</b> = (Ads + Fix cost) ÷ GMV — target ≤ 0.28</li>
+  </ul>
+  <h4>Cách thao tác</h4>
+  <ul>
+    <li>Chọn tháng góc phải header · thanh <b>Brand</b> (đỏ nhạt) lọc riêng từng brand — giống tab CPD/LDB bên dash CIR · lọc thêm bằng Channel/Loại phiên/Host/OP + khoảng ngày</li>
+    <li><b>Click 1 dòng bất kỳ</b> (Channel/Loại phiên/Host/Khung giờ) → toàn dashboard lọc theo, click lại để bỏ — như Power BI</li>
+    <li>Bảng Host/Ngày: click tiêu đề cột để sort</li>
+  </ul>
+  <h4>Cách đọc màu</h4>
+  <ul>
+    <li>Nền <b>vàng/xanh dương</b> đậm dần = giá trị lớn dần (không mang nghĩa tốt/xấu)</li>
+    <li>Chữ <b style="color:#16a34a;">xanh lá = tốt</b>, <b style="color:#dc2626;">đỏ = xấu</b> theo bản chất chỉ số (%Ads giảm = xanh, ROI tăng = xanh)</li>
+  </ul>
+</div>
+
+<div class="footer" id="footer"></div>
+</div>
+
+<script>
+const D = {"updated":"2026-07-26 22:03","srcModified":"2026-07-25","months":[7],"channels":["Lifebuoy Vietnam","Dove Vietnam","Closeupvietnam","Chuyên Gia P/S","Closeup White Now"],"types":["Super Mega","Mega","Campaign","BAU","(no type)"],"hosts":[],"ops":[],"planMonths":[7],"planMonth":7,"plan":{"7":{"0":{"ads":280025173.15999997,"views":453917.0,"nmv":2572002144.0,"byType":{"BAU":{"ads":30129831.9,"nmv":370145355.0,"gads":370145355.0,"days":9},"Campaign":{"ads":47620131.16,"nmv":469626540.0,"gads":469626540.0,"days":7},"Mega":{"ads":156015207.1,"nmv":1285133502.0,"gads":1285133502.0,"days":15},"Super Mega":{"ads":46260003.0,"nmv":447096747.0,"gads":447096747.0,"days":2}},"kpi":{"cpv":617.0853768420218,"ctor":0.06065334329882685,"ctr":0.40605663590480195,"ov":0.015,"aov":233113.5580931666,"view":453917.0},"daily":[["2026-07-01",10401013.81,85675566.8],["2026-07-02",10401013.81,85675566.8],["2026-07-03",10401013.81,85675566.8],["2026-07-04",10401013.81,85675566.8],["2026-07-05",10401013.81,85675566.8],["2026-07-06",15253449.0,152534486.0],["2026-07-07",31006554.0,294562261.0],["2026-07-08",3347759.1,41127261.666666664],["2026-07-09",6802875.879,67089505.71428572],["2026-07-10",10401013.81,85675566.8],["2026-07-11",10401013.81,85675566.8],["2026-07-12",10401013.81,85675566.8],["2026-07-13",3347759.1,41127261.666666664],["2026-07-14",6802875.879,67089505.71428572],["2026-07-15",6802875.879,67089505.71428572],["2026-07-16",3347759.1,41127261.666666664],["2026-07-17",6802875.879,67089505.71428572],["2026-07-18",3347759.1,41127261.666666664],["2026-07-19",3347759.1,41127261.666666664],["2026-07-20",3347759.1,41127261.666666664],["2026-07-21",6802875.879,67089505.71428572],["2026-07-22",6802875.879,67089505.71428572],["2026-07-23",3347759.1,41127261.666666664],["2026-07-24",10401013.81,85675566.8],["2026-07-25",10401013.81,85675566.8]],"dailyByType":{"BAU":[["2026-07-08",3347759.1,41127261.666666664],["2026-07-13",3347759.1,41127261.666666664],["2026-07-16",3347759.1,41127261.666666664],["2026-07-18",3347759.1,41127261.666666664],["2026-07-19",3347759.1,41127261.666666664],["2026-07-20",3347759.1,41127261.666666664],["2026-07-23",3347759.1,41127261.666666664]],"Campaign":[["2026-07-09",6802875.879,67089505.71428572],["2026-07-14",6802875.879,67089505.71428572],["2026-07-15",6802875.879,67089505.71428572],["2026-07-17",6802875.879,67089505.71428572],["2026-07-21",6802875.879,67089505.71428572],["2026-07-22",6802875.879,67089505.71428572]],"Mega":[["2026-07-01",10401013.81,85675566.8],["2026-07-02",10401013.81,85675566.8],["2026-07-03",10401013.81,85675566.8],["2026-07-04",10401013.81,85675566.8],["2026-07-05",10401013.81,85675566.8],["2026-07-10",10401013.81,85675566.8],["2026-07-11",10401013.81,85675566.8],["2026-07-12",10401013.81,85675566.8],["2026-07-24",10401013.81,85675566.8],["2026-07-25",10401013.81,85675566.8]],"Super Mega":[["2026-07-06",15253449.0,152534486.0],["2026-07-07",31006554.0,294562261.0]]}},"1":{"ads":160163587.06,"views":308335.0,"nmv":1334337914.0,"byType":{"BAU":{"ads":19417242.12,"nmv":213142065.0,"gads":213142065.0,"days":9},"Campaign":{"ads":34676703.54,"nmv":312121544.0,"gads":312121544.0,"days":7},"Mega":{"ads":106069641.4,"nmv":809074305.0,"gads":809074305.0,"days":15}},"kpi":{"cpv":519.317336663045,"ctor":0.051735043951326325,"ctr":0.36647344608948057,"ov":0.015,"aov":237392.40775662693,"view":308335.0},"daily":[["2026-07-01",7071309.426,53938287.0],["2026-07-02",7071309.426,53938287.0],["2026-07-03",7071309.426,53938287.0],["2026-07-04",7071309.426,53938287.0],["2026-07-05",7071309.426,53938287.0],["2026-07-06",7071309.426,53938287.0],["2026-07-07",7071309.426,53938287.0],["2026-07-08",2157471.347,23682451.666666668],["2026-07-09",4953814.791,44588792.0],["2026-07-10",7071309.426,53938287.0],["2026-07-11",7071309.426,53938287.0],["2026-07-12",7071309.426,53938287.0],["2026-07-13",2157471.347,23682451.666666668],["2026-07-14",4953814.791,44588792.0],["2026-07-15",4953814.791,44588792.0],["2026-07-16",2157471.347,23682451.666666668],["2026-07-17",4953814.791,44588792.0],["2026-07-18",2157471.347,23682451.666666668],["2026-07-19",2157471.347,23682451.666666668],["2026-07-20",2157471.347,23682451.666666668],["2026-07-21",4953814.791,44588792.0],["2026-07-22",4953814.791,44588792.0],["2026-07-23",2157471.347,23682451.666666668],["2026-07-24",7071309.426,53938287.0],["2026-07-25",7071309.426,53938287.0]],"dailyByType":{"BAU":[["2026-07-08",2157471.347,23682451.666666668],["2026-07-13",2157471.347,23682451.666666668],["2026-07-16",2157471.347,23682451.666666668],["2026-07-18",2157471.347,23682451.666666668],["2026-07-19",2157471.347,23682451.666666668],["2026-07-20",2157471.347,23682451.666666668],["2026-07-23",2157471.347,23682451.666666668]],"Campaign":[["2026-07-09",4953814.791,44588792.0],["2026-07-14",4953814.791,44588792.0],["2026-07-15",4953814.791,44588792.0],["2026-07-17",4953814.791,44588792.0],["2026-07-21",4953814.791,44588792.0],["2026-07-22",4953814.791,44588792.0]],"Mega":[["2026-07-01",7071309.426,53938287.0],["2026-07-02",7071309.426,53938287.0],["2026-07-03",7071309.426,53938287.0],["2026-07-04",7071309.426,53938287.0],["2026-07-05",7071309.426,53938287.0],["2026-07-06",7071309.426,53938287.0],["2026-07-07",7071309.426,53938287.0],["2026-07-10",7071309.426,53938287.0],["2026-07-11",7071309.426,53938287.0],["2026-07-12",7071309.426,53938287.0],["2026-07-24",7071309.426,53938287.0],["2026-07-25",7071309.426,53938287.0]]}},"2":{"ads":85427557.672,"views":235285.0,"nmv":711843802.0,"byType":{"BAU":{"ads":6398524.322,"nmv":73715718.0,"gads":73715718.0,"days":9},"Campaign":{"ads":10069145.12,"nmv":94280385.0,"gads":94280385.0,"days":7},"Mega":{"ads":68959888.23,"nmv":543847699.0,"gads":543847699.0,"days":15}},"kpi":{"cpv":363.2840640074803,"ctor":0.04037341364227874,"ctr":0.29551742780032725,"ov":0.015,"aov":253233.72465314835,"view":235285.0},"daily":[["2026-07-01",4597325.882,36256513.266666666],["2026-07-02",4597325.882,36256513.266666666],["2026-07-03",4597325.882,36256513.266666666],["2026-07-04",4597325.882,36256513.266666666],["2026-07-05",4597325.882,36256513.266666666],["2026-07-06",4597325.882,36256513.266666666],["2026-07-07",4597325.882,36256513.266666666],["2026-07-08",710947.1469,8190635.333333333],["2026-07-09",1438449.303,13468626.42857143],["2026-07-10",4597325.882,36256513.266666666],["2026-07-11",4597325.882,36256513.266666666],["2026-07-12",4597325.882,36256513.266666666],["2026-07-13",710947.1469,8190635.333333333],["2026-07-14",1438449.303,13468626.42857143],["2026-07-15",1438449.303,13468626.42857143],["2026-07-16",710947.1469,8190635.333333333],["2026-07-18",710947.1469,8190635.333333333],["2026-07-19",710947.1469,8190635.333333333],["2026-07-20",710947.1469,8190635.333333333],["2026-07-21",1438449.303,13468626.42857143],["2026-07-22",1438449.303,13468626.42857143],["2026-07-23",710947.1469,8190635.333333333],["2026-07-24",4597325.882,36256513.266666666],["2026-07-25",4597325.882,36256513.266666666]],"dailyByType":{"BAU":[["2026-07-08",710947.1469,8190635.333333333],["2026-07-13",710947.1469,8190635.333333333],["2026-07-16",710947.1469,8190635.333333333],["2026-07-18",710947.1469,8190635.333333333],["2026-07-19",710947.1469,8190635.333333333],["2026-07-20",710947.1469,8190635.333333333],["2026-07-23",710947.1469,8190635.333333333]],"Campaign":[["2026-07-09",1438449.303,13468626.42857143],["2026-07-14",1438449.303,13468626.42857143],["2026-07-15",1438449.303,13468626.42857143],["2026-07-21",1438449.303,13468626.42857143],["2026-07-22",1438449.303,13468626.42857143]],"Mega":[["2026-07-01",4597325.882,36256513.266666666],["2026-07-02",4597325.882,36256513.266666666],["2026-07-03",4597325.882,36256513.266666666],["2026-07-04",4597325.882,36256513.266666666],["2026-07-05",4597325.882,36256513.266666666],["2026-07-06",4597325.882,36256513.266666666],["2026-07-07",4597325.882,36256513.266666666],["2026-07-10",4597325.882,36256513.266666666],["2026-07-11",4597325.882,36256513.266666666],["2026-07-12",4597325.882,36256513.266666666],["2026-07-24",4597325.882,36256513.266666666],["2026-07-25",4597325.882,36256513.266666666]]}},"4":{"ads":67075660.8,"views":137520.0,"nmv":372744000.0,"byType":{"BAU":{"ads":13005619.2,"nmv":84672000.0,"gads":84672000.0,"days":9},"Campaign":{"ads":14762055.17,"nmv":85034880.0,"gads":85034880.0,"days":7},"Mega":{"ads":39307986.43,"nmv":203037120.0,"gads":203037120.0,"days":15}},"kpi":{"cpv":487.9066317626527,"ctor":0.05690710143341721,"ctr":0.3189877835951135,"ov":0.015,"aov":149314.90384615384,"view":137520.0},"daily":[["2026-07-05",2620532.429,13535808.0],["2026-07-06",2620532.429,13535808.0],["2026-07-07",2620532.429,13535808.0],["2026-07-08",1445068.8,9408000.0],["2026-07-09",2108865.024,12147840.0],["2026-07-10",2620532.429,13535808.0],["2026-07-11",2620532.429,13535808.0],["2026-07-12",2620532.429,13535808.0],["2026-07-13",1445068.8,9408000.0],["2026-07-14",2108865.024,12147840.0],["2026-07-15",2108865.024,12147840.0],["2026-07-16",1445068.8,9408000.0],["2026-07-17",2108865.024,12147840.0],["2026-07-18",1445068.8,9408000.0],["2026-07-19",1445068.8,9408000.0],["2026-07-20",1445068.8,9408000.0],["2026-07-21",2108865.024,12147840.0],["2026-07-22",2108865.024,12147840.0],["2026-07-23",1445068.8,9408000.0],["2026-07-24",2620532.429,13535808.0],["2026-07-25",2620532.429,13535808.0]],"dailyByType":{"BAU":[["2026-07-08",1445068.8,9408000.0],["2026-07-13",1445068.8,9408000.0],["2026-07-16",1445068.8,9408000.0],["2026-07-18",1445068.8,9408000.0],["2026-07-19",1445068.8,9408000.0],["2026-07-20",1445068.8,9408000.0],["2026-07-23",1445068.8,9408000.0]],"Campaign":[["2026-07-09",2108865.024,12147840.0],["2026-07-14",2108865.024,12147840.0],["2026-07-15",2108865.024,12147840.0],["2026-07-17",2108865.024,12147840.0],["2026-07-21",2108865.024,12147840.0],["2026-07-22",2108865.024,12147840.0]],"Mega":[["2026-07-05",2620532.429,13535808.0],["2026-07-06",2620532.429,13535808.0],["2026-07-07",2620532.429,13535808.0],["2026-07-10",2620532.429,13535808.0],["2026-07-11",2620532.429,13535808.0],["2026-07-12",2620532.429,13535808.0],["2026-07-24",2620532.429,13535808.0],["2026-07-25",2620532.429,13535808.0]]}},"3":{"ads":41470592.684,"views":135600.0,"nmv":230358240.0,"byType":{"BAU":{"ads":8296480.08,"nmv":53978400.0,"gads":53978400.0,"days":9},"Campaign":{"ads":8603902.944,"nmv":49533120.0,"gads":49533120.0,"days":7},"Mega":{"ads":24570209.66,"nmv":126846720.0,"gads":126846720.0,"days":15}},"kpi":{"cpv":305.97522123893805,"ctor":0.03856016455262255,"ctr":0.3097699115044248,"ov":0.015,"aov":142222.22222222222,"view":135600.0},"daily":[["2026-07-05",1638013.978,8456448.0],["2026-07-06",1638013.978,8456448.0],["2026-07-07",1638013.978,8456448.0],["2026-07-08",921831.12,5997600.0],["2026-07-09",1229128.992,7076160.0],["2026-07-10",1638013.978,8456448.0],["2026-07-11",1638013.978,8456448.0],["2026-07-12",1638013.978,8456448.0],["2026-07-13",921831.12,5997600.0],["2026-07-14",1229128.992,7076160.0],["2026-07-15",1229128.992,7076160.0],["2026-07-16",921831.12,5997600.0],["2026-07-17",1229128.992,7076160.0],["2026-07-18",921831.12,5997600.0],["2026-07-19",921831.12,5997600.0],["2026-07-20",921831.12,5997600.0],["2026-07-21",1229128.992,7076160.0],["2026-07-22",1229128.992,7076160.0],["2026-07-23",921831.12,5997600.0],["2026-07-24",1638013.978,8456448.0],["2026-07-25",1638013.978,8456448.0]],"dailyByType":{"BAU":[["2026-07-08",921831.12,5997600.0],["2026-07-13",921831.12,5997600.0],["2026-07-16",921831.12,5997600.0],["2026-07-18",921831.12,5997600.0],["2026-07-19",921831.12,5997600.0],["2026-07-20",921831.12,5997600.0],["2026-07-23",921831.12,5997600.0]],"Campaign":[["2026-07-09",1229128.992,7076160.0],["2026-07-14",1229128.992,7076160.0],["2026-07-15",1229128.992,7076160.0],["2026-07-17",1229128.992,7076160.0],["2026-07-21",1229128.992,7076160.0],["2026-07-22",1229128.992,7076160.0]],"Mega":[["2026-07-05",1638013.978,8456448.0],["2026-07-06",1638013.978,8456448.0],["2026-07-07",1638013.978,8456448.0],["2026-07-10",1638013.978,8456448.0],["2026-07-11",1638013.978,8456448.0],["2026-07-12",1638013.978,8456448.0],["2026-07-24",1638013.978,8456448.0],["2026-07-25",1638013.978,8456448.0]]}}}},"fix":{"0":{"fix":0,"fixPrev":0},"1":{"fix":0,"fixPrev":0},"2":{"fix":0,"fixPrev":0},"3":{"fix":0,"fixPrev":0},"4":{"fix":0,"fixPrev":0}},"adsLive":{},"nmvFactor":1,"cirTarget":0.28,"rows":[["2026-07-01",7,27,0,1,0,0,8,18784899.0,2520901.42,6.0075,4611.0,203470.0,1846.0,159.0,21620769.13,0],["2026-07-01",7,27,0,1,0,0,17,17224548.0,2318548.58,5.525277778,5607.0,202908.0,1914.0,158.0,19885269.28,0],["2026-07-01",7,27,1,1,0,0,7,22482125.0,3297751.544,6.061111111,4779.0,178800.0,1971.0,329.0,26512534.89,0],["2026-07-01",7,27,1,1,0,0,17,22307051.0,3017548.456,5.546111111,6113.0,443035.0,2031.0,354.0,24259819.96,0],["2026-07-01",7,27,2,1,0,0,7,6139630.0,1064810.566,6.073055556,3034.0,127571.0,1097.0,68.0,7147519.786,0],["2026-07-01",7,27,2,1,0,0,14,2614050.0,340488.0695,1.941944444,1092.0,33954.0,279.0,26.0,2285519.408,0],["2026-07-01",7,27,2,1,0,0,17,5326473.0,974416.3649,5.5575,3303.0,115259.0,837.0,53.0,6540750.508,0],["2026-07-02",7,27,0,1,0,0,7,15539673.0,3048616.168,6.040277778,5082.0,187107.0,1556.0,148.0,20775103.7,0],["2026-07-02",7,27,0,1,0,0,17,20051955.0,3042727.832,6.028611111,6231.0,388869.9999,2075.0,201.0,20734977.03,0],["2026-07-02",7,27,1,1,0,0,7,22366735.0,3341363.101,6.031388889,4968.0,274080.0,1877.0,306.0,25136836.11,0],["2026-07-02",7,27,1,1,0,0,17,22264651.0,3338900.899,6.026944444,6334.0,295351.0,2239.0,372.0,25118313.13,0],["2026-07-02",7,27,2,1,0,0,7,6672968.0,1372248.973,8.07,3805.0,167027.0,1174.0,94.0,7734538.188,0],["2026-07-02",7,27,2,1,0,0,18,4682340.0,867078.8378,5.099166667,2675.0,112376.0,671.0,57.0,4887199.419,0],["2026-07-02",7,27,2,1,0,0,18,442150.0,151480.1892,0.8908333333,568.0,21064.0,71.0,3.0,853802.2845,0],["2026-07-03",7,27,0,1,0,0,7,31880900.0,3543238.689,6.141111111,5617.0,654925.0,2436.0,253.0,34592764.27,0],["2026-07-03",7,27,0,1,0,0,17,29007346.0,3484740.311,6.039722222,7950.0,5373340.001,2849.0,305.0,34021642.55,0],["2026-07-03",7,27,1,1,0,0,6,22605160.0,2963701.992,8.0475,4940.0,310933.0,1779.0,310.0,23952675.55,0],["2026-07-03",7,27,1,1,0,0,17,15146707.0,2593073.008,7.041111111,5815.0,423639.9999,1482.0,226.0,20957247.58,0],["2026-07-03",7,27,2,1,0,0,7,347150.0,455126.7878,1.153333333,910.0,39067.0,125.0,8.0,2190268.87,0],["2026-07-03",7,27,2,1,0,0,9,718200.0,891070.7269,2.258055556,925.0,46889.00001,328.0,15.0,4288221.494,0],["2026-07-03",7,27,2,1,0,0,11,8270272.0,1786306.872,4.526666667,2458.0,94039.99999,1026.0,109.0,8596488.801,0],["2026-07-03",7,27,2,1,0,0,17,12284311.0,2377138.613,6.023888889,4694.0,206690.0,1326.0,139.0,11439829.17,0],["2026-07-04",7,27,0,1,0,0,8,20006719.0,2614768.132,5.948611111,5520.0,10050114.0,1875.0,162.0,22432322.25,0],["2026-07-04",7,27,0,1,0,0,17,19203289.0,2664584.868,6.061944444,7202.0,3204269.0,2107.0,142.0,22859704.34,0],["2026-07-04",7,27,1,1,0,0,6,17294446.0,2655418.323,7.568333333,4447.0,381428.0001,1462.0,228.0,22545184.41,0],["2026-07-04",7,27,1,1,0,0,18,20173408.0,2184292.574,6.225555556,5120.0,360083.9999,1614.0,259.0,18545205.65,0],["2026-07-04",7,27,1,1,0,0,18,252820.0,268602.103,0.7655555556,572.0,42515.99998,125.0,9.0,2280500.926,0],["2026-07-04",7,27,2,1,0,0,7,20191695.0,3453072.952,8.590555556,5587.0,203515.0,1943.0,234.0,18376820.63,0],["2026-07-04",7,27,2,1,0,0,17,7049040.0,2417352.048,6.013888889,3162.0,117815.0,678.0,71.0,12864844.04,0],["2026-07-05",7,27,0,1,0,0,8,20502766.0,3574980.94,6.52,5716.0,308057.0,2158.0,128.0,29258752.54,0],["2026-07-05",7,27,0,1,0,0,17,27827044.0,3306309.06,6.03,6457.0,698066.0,2281.0,180.0,27059858.56,0],["2026-07-05",7,27,1,1,0,0,7,16981010.0,2785785.113,7.0,4277.0,332691.0001,1401.0,205.0,22644898.94,0],["2026-07-05",7,27,1,1,0,0,18,1805005.0,505863.2014,1.271111111,881.0,56208.0,198.0,19.0,4112026.094,0],["2026-07-05",7,27,1,1,0,0,19,20130811.0,2264113.686,5.689166667,5902.0,322632.0,1650.0,214.0,18404372.03,0],["2026-07-05",7,27,2,1,0,0,8,19726241.0,3899844.567,8.004444444,5657.0,185007.0,2695.0,246.0,20746308.83,0],["2026-07-05",7,27,2,1,0,0,17,10644166.0,2925289.433,6.004166667,4716.0,150508.0,1402.0,153.0,15561891.5,0],["2026-07-05",7,27,3,1,0,0,10,2409050.0,898342.9226,4.008888889,2261.0,326970.0,724.0,18.0,4049285.613,0],["2026-07-05",7,27,3,1,0,0,19,5176027.0,909236.0774,4.0575,2460.0,386355.0,882.0,35.0,4098386.568,0],["2026-07-05",7,27,4,1,0,0,9,3065390.0,888282.9771,4.109722222,919.0,324938.0,751.0,15.0,2913962.088,0],["2026-07-05",7,27,4,1,0,0,19,1733583.0,871592.0229,4.0325,1400.0,331688.0,846.0,7.0,2859208.357,0],["2026-07-06",7,28,0,0,0,0,18,92645414.0,11229986.0,6.066944444,19655.0,1457911.0,8499.0,582.0,102925289.8,0],["2026-07-06",7,28,1,1,0,0,18,66587380.0,7612379.0,6.069166667,16056.0,2751012.0,5685.0,806.0,75856415.68,0],["2026-07-06",7,28,2,1,0,0,8,15588162.0,3657553.353,8.004444444,4906.0,185684.0,1876.0,188.0,19082232.11,0],["2026-07-06",7,28,2,1,0,0,17,12639527.0,2757888.647,6.035555556,4450.0,138000.0,1890.0,143.0,14388490.4,0],["2026-07-06",7,28,3,1,0,0,10,2250686.0,1172051.585,3.986944444,1844.0,322353.0,544.0,19.0,4986440.622,0],["2026-07-06",7,28,3,1,0,0,19,6421682.0,1180952.415,4.017222222,2892.0,780969.0,1196.0,42.0,5024308.804,0],["2026-07-06",7,28,4,1,0,0,10,3826999.0,1374850.628,4.019722222,1163.0,323056.0,580.0,17.0,5658135.142,0],["2026-07-06",7,28,4,1,0,0,19,5722911.0,1384541.372,4.048055556,1462.0,384965.0,953.0,25.0,5698016.96,0],["2026-07-07",7,28,0,0,0,0,18,285115696.0,35239111.0,5.993055556,50457.0,2180561.0,21077.0,1844.0,317460615.0,0],["2026-07-07",7,28,1,1,0,0,19,77364061.0,10647636.0,5.003888889,17363.0,3297290.0,6690.0,841.0,88339432.56,0],["2026-07-07",7,28,2,1,0,0,7,32412132.0,5813929.679,8.014166667,7104.0,557380.0,3753.0,356.0,29674249.93,0],["2026-07-07",7,28,2,1,0,0,17,17487121.0,4366039.321,6.018333333,5404.0,1250100.0,2092.0,181.0,22284229.28,0],["2026-07-07",7,28,3,1,0,0,9,7262580.0,1469892.79,4.038888889,3547.0,769590.0001,1120.0,54.0,7863711.028,0],["2026-07-07",7,28,3,1,0,0,19,6806873.0,1476868.21,4.058055556,3009.0,1015556.0,818.0,36.0,7901028.502,0],["2026-07-07",7,28,4,1,0,0,10,6378204.0,2481914.139,4.165833333,1850.0,361803.0,1136.0,30.0,9008441.693,0],["2026-07-07",7,28,4,1,0,0,19,8282723.0,2420184.861,4.062222222,2163.0,338441.0,1489.0,37.0,8784386.966,0],["2026-07-08",7,28,0,3,0,0,9,12352127.0,816512.0324,4.039166667,3527.0,346152.9999,1326.0,97.0,7948643.976,0],["2026-07-08",7,28,0,3,0,0,18,13466044.0,1041627.0,5.152777778,4229.0,491120.0,1095.0,99.0,10140110.43,0],["2026-07-08",7,28,0,3,0,0,18,0.0,10163.5842,0.05027777778,0.0,0.0,0.0,0.0,98941.23923,0],["2026-07-08",7,28,0,3,0,0,18,3565874.0,128364.3839,0.635,668.0,71881.0,312.0,31.0,1249611.452,0],["2026-07-08",7,28,1,3,0,0,9,9522419.0,532700.694,4.032777778,2355.0,822369.9999,866.0,94.0,4781721.669,0],["2026-07-08",7,28,1,3,0,0,19,9023042.0,531673.306,4.025,2288.0,1021070.0,560.0,73.0,4772499.448,0],["2026-07-08",7,28,2,3,0,0,17,1257600.0,101215.5617,0.9055555556,1151.0,176140.0,380.0,21.0,194074.2883,0],["2026-07-08",7,28,2,3,0,0,18,7848965.0,568949.4383,5.090277778,3024.0,990237.0,1082.0,75.0,1090923.722,0],["2026-07-08",7,28,3,3,0,0,10,1306523.0,408435.2904,4.003055556,1640.0,1046733.0,314.0,12.0,905370.3843,0],["2026-07-08",7,28,3,3,0,0,19,332250.0,208284.7096,2.041388889,1059.0,633924.0,101.0,2.0,461700.5727,0],["2026-07-08",7,28,4,3,0,0,9,3202243.0,555820.4115,2.053888889,881.0,174272.0,463.0,14.0,1631912.212,0],["2026-07-08",7,28,4,3,0,0,18,5153873.0,831550.6346,3.072777778,982.0,277631.0,547.0,18.0,2441467.796,0],["2026-07-08",7,28,4,3,0,0,18,974000.0,240173.9539,0.8875,514.0,75034.0,318.0,4.0,705160.8759,0],["2026-07-09",7,28,0,2,0,0,8,1520413.0,319720.0963,1.668888889,829.0,126148.0,190.0,12.0,3358115.941,0],["2026-07-09",7,28,0,2,0,0,10,6567125.0,625550.8874,3.265277778,1890.0,295312.0,563.0,35.0,6570348.35,0],["2026-07-09",7,28,0,2,0,0,10,1412950.0,129952.8088,0.6783333333,345.0,52876.0,150.0,11.0,1364933.277,0],["2026-07-09",7,28,0,2,0,0,17,18481230.0,1153770.208,6.0225,5871.0,640172.0,2036.0,134.0,12118394.09,0],["2026-07-09",7,28,1,2,0,0,9,2219224.0,1037690.743,2.044722222,1080.0,386385.0,305.0,18.0,8326981.577,0],["2026-07-09",7,28,1,2,0,0,17,27896952.0,3083327.257,6.075555556,5463.0,1108278.0,2192.0,228.0,24742255.27,0],["2026-07-09",7,28,2,2,0,0,10,2256478.0,813912.9696,3.191944444,1353.0,627537.9999,302.0,29.0,4054063.132,0],["2026-07-09",7,28,2,2,0,0,10,354440.0,190250.6515,0.7461111111,513.0,127785.0,217.0,10.0,947629.76,0],["2026-07-09",7,28,2,2,0,0,20,9252167.0,1014292.379,3.977777778,2776.0,757676.0001,861.0,72.0,5052143.769,0],["2026-07-09",7,28,3,2,0,0,9,513165.0,0.0,2.030833333,676.0,505211.0,110.0,4.0,0.0,0],["2026-07-09",7,28,4,2,0,0,11,1233545.0,513698.9887,2.075277778,746.0,195184.0,471.0,6.0,2272216.794,0],["2026-07-09",7,28,4,2,0,0,19,4914096.0,995425.0113,4.021388889,1694.0,359230.0,1047.0,27.0,4403009.307,0],["2026-07-10",7,28,0,1,0,0,8,41054036.0,4254144.434,5.923333333,6850.0,1155166.0,3111.0,280.0,44027601.35,0],["2026-07-10",7,28,0,1,0,0,17,34124285.0,4341126.566,6.044444444,9263.0,1379575.0,3253.0,226.0,44927809.3,0],["2026-07-10",7,28,1,1,0,0,8,21505173.0,3749978.432,8.025277778,4482.0,1511263.0,1919.0,231.0,28183508.55,0],["2026-07-10",7,28,1,1,0,0,18,21274768.0,2439413.473,5.220555556,4359.0,997220.9999,1302.0,195.0,18333766.91,0],["2026-07-10",7,28,1,1,0,0,18,518137.0,322287.0945,0.6897222222,408.0,121694.0,92.0,12.0,2422195.554,0],["2026-07-10",7,28,2,1,0,0,7,7838358.0,1250857.52,2.914722222,1617.0,414790.0,655.0,64.0,8853154.266,0],["2026-07-10",7,28,2,1,0,0,10,8077468.0,2174486.994,5.066944444,2771.0,795199.0,974.0,83.0,15390297.05,0],["2026-07-10",7,28,2,1,0,0,17,21368959.0,2603042.486,6.065555556,5500.0,930850.0,1731.0,190.0,18423470.56,0],["2026-07-10",7,28,3,1,0,0,10,1098080.0,752567.5818,3.953888889,1901.0,881178.9998,274.0,8.0,3614928.454,0],["2026-07-10",7,28,3,1,0,0,19,5648286.0,773557.4182,4.064166667,2757.0,962946.0,887.0,47.0,3715752.298,0],["2026-07-10",7,28,4,1,0,0,9,2207352.0,152309.6813,4.025555556,809.0,342349.0,444.0,10.0,1311435.367,0],["2026-07-10",7,28,4,1,0,0,20,4652215.0,151395.3187,4.001388889,2129.0,458814.0,598.0,18.0,1303562.411,0],["2026-07-11",7,28,0,1,0,0,8,25688881.0,5311741.437,6.091944444,5860.0,1686970.0,2351.0,182.0,50854646.69,0],["2026-07-11",7,28,0,1,0,0,18,56655451.0,5224548.563,5.991944444,10365.0,4116081.999,3845.0,357.0,50019861.55,0],["2026-07-11",7,28,1,1,0,0,7,24128381.0,3410308.35,8.026111111,4448.0,1687619.0,1729.0,243.0,26583206.79,0],["2026-07-11",7,28,1,1,0,0,17,17202935.0,2567704.65,6.043055556,4650.0,1325528.0,1585.0,220.0,20015147.22,0],["2026-07-11",7,28,2,1,0,0,8,12637209.0,3573102.788,8.015555556,4469.0,1334638.0,1306.0,117.0,27010876.04,0],["2026-07-11",7,28,2,1,0,0,17,26784460.0,2688247.212,6.030555556,6157.0,1043367.0,2447.0,231.0,20321808.94,0],["2026-07-11",7,28,3,1,0,0,9,4318874.0,935364.9013,4.041388889,2000.0,953419.0,609.0,36.0,6506368.36,0],["2026-07-11",7,28,3,1,0,0,19,6840325.0,936072.0987,4.044444444,2944.0,973243.0001,844.0,58.0,6511287.602,0],["2026-07-11",7,28,4,1,0,0,10,2637008.0,0.0,4.016111111,4150.0,558223.0,459.0,13.0,0.0,0],["2026-07-11",7,28,4,1,0,0,20,9983053.0,0.0,4.004444444,1630.0,382676.0,672.0,28.0,0.0,0],["2026-07-12",7,28,0,1,0,0,7,44792367.0,5121519.09,6.053888889,8944.0,6543897.999,3484.0,310.0,63433764.69,0],["2026-07-12",7,28,0,1,0,0,18,56333311.0,5062299.91,5.983888889,10178.0,2360945.0,4295.0,342.0,62700291.78,0],["2026-07-12",7,28,1,1,0,0,7,17383627.0,3161942.259,8.041111111,4613.0,1866229.0,1578.0,226.0,30901148.22,0],["2026-07-12",7,28,1,1,0,0,18,27697265.0,2362390.741,6.007777778,5143.0,1343488.0,1968.0,319.0,23087261.08,0],["2026-07-12",7,28,2,1,0,0,8,28855807.0,5781419.746,8.025,5328.0,1686364.0,1727.0,186.0,33507056.91,0],["2026-07-12",7,28,2,1,0,0,17,20791876.0,4377389.254,6.076111111,4693.0,1122660.0,1428.0,151.0,25369794.49,0],["2026-07-12",7,28,3,1,0,0,9,4699290.0,1040104.806,4.032222222,2598.0,1029962.0,886.0,38.0,6259058.622,0],["2026-07-12",7,28,3,1,0,0,19,5763076.0,1038170.194,4.024722222,3229.0,944072.0,1045.0,50.0,6247416.67,0],["2026-07-12",7,28,4,1,0,0,9,4389424.0,0.0,4.029166667,1111.0,436551.0,478.0,17.0,0.0,0],["2026-07-12",7,28,4,1,0,0,20,4864806.0,0.0,4.02,1697.0,386211.0,461.0,20.0,0.0,0],["2026-07-13",7,29,0,3,0,0,9,18158004.0,2132197.283,4.013333333,3712.0,494534.0,1444.0,113.0,21317777.26,0],["2026-07-13",7,29,0,3,0,0,17,28288912.0,3193130.717,6.010277778,5878.0,622377.0,2210.0,158.0,31925023.98,0],["2026-07-13",7,29,1,3,0,0,9,8582994.0,1644999.32,4.042222222,2218.0,959254.9999,798.0,75.0,12794438.61,0],["2026-07-13",7,29,1,3,0,0,17,19361260.0,2466707.68,6.061388889,4312.0,1357737.0,1668.0,144.0,19185503.36,0],["2026-07-13",7,29,2,3,0,0,17,4834416.0,1100920.0,6.029722222,3232.0,813021.0,717.0,38.0,5688360.039,0],["2026-07-13",7,29,3,3,0,0,9,2248952.0,658176.5977,4.034722222,1933.0,906524.0,431.0,19.0,3025597.288,0],["2026-07-13",7,29,3,3,0,0,19,1994000.0,339442.4023,2.080833333,1201.0,396401.0,299.0,14.0,1560395.82,0],["2026-07-13",7,29,4,3,0,0,9,3203170.0,0.0,2.003055556,1036.0,189814.0,216.0,12.0,0.0,0],["2026-07-13",7,29,4,3,0,0,18,2224180.0,0.0,4.009722222,1100.0,334173.0,440.0,13.0,0.0,0],["2026-07-14",7,29,0,2,0,0,10,17775642.0,2352049.048,3.981388889,3682.0,439744.0,1410.0,101.0,23930725.87,0],["2026-07-14",7,29,0,2,0,0,17,33002473.0,3546698.952,6.003611111,7101.0,650571.9997,2904.0,204.0,36085591.16,0],["2026-07-14",7,29,1,2,0,0,7,18805869.0,2599484.606,6.283888889,3891.0,1458357.0,1551.0,171.0,22043909.94,0],["2026-07-14",7,29,1,2,0,0,17,18729066.0,2486643.394,6.011111111,4052.0,1115536.0,1433.0,157.0,21087004.29,0],["2026-07-14",7,29,2,2,0,0,9,384440.0,286153.0519,1.603888889,875.0,308124.0,208.0,7.0,2088329.278,0],["2026-07-14",7,29,2,2,0,0,11,4017600.0,435027.9684,2.438333333,1191.0,604553.0001,212.0,29.0,3174810.254,0],["2026-07-14",7,29,2,2,0,0,20,5874520.0,692535.9797,3.881666667,2142.0,9208438.001,447.0,40.0,5054089.597,0],["2026-07-14",7,29,3,2,0,0,9,3202991.0,864935.5292,4.015555556,1818.0,820072.9999,447.0,30.0,4629354.093,0],["2026-07-14",7,29,3,2,0,0,19,5549372.0,877799.4708,4.075277778,2644.0,746570.0,777.0,39.0,4698205.167,0],["2026-07-14",7,29,4,2,0,0,11,286000.0,0.0,1.000555556,903.0,124141.0,78.0,1.0,0.0,0],["2026-07-14",7,29,4,2,0,0,13,960920.0,0.0,0.9863888889,346.0,84169.0,77.0,5.0,0.0,0],["2026-07-14",7,29,4,2,0,0,19,1640280.0,0.0,4.072222222,824.0,312392.9999,358.0,9.0,0.0,0],["2026-07-15",7,29,0,2,0,0,7,24437019.0,2452721.019,6.016944444,5571.0,655197.0,2079.0,143.0,28054034.96,0],["2026-07-15",7,29,0,2,0,0,17,22916130.0,2462458.981,6.040833333,5872.0,645164.0,2062.0,136.0,28165417.03,0],["2026-07-15",7,29,1,2,0,0,7,7042747.0,1334456.076,4.033333333,2004.0,772509.0001,668.0,61.0,11221264.38,0],["2026-07-15",7,29,1,2,0,0,12,4259170.0,654453.2863,1.978055556,1225.0,453240.0001,423.0,38.0,5503210.996,0],["2026-07-15",7,29,1,2,0,0,17,18131267.0,2002143.638,6.051388889,4167.0,981549.0,1466.0,132.0,16835760.64,0],["2026-07-15",7,29,2,2,0,0,9,11928626.0,1140432.372,4.055277778,4585.0,14947635.0,1903.0,86.0,10905732.01,0],["2026-07-15",7,29,2,2,0,0,19,6653781.0,1146603.628,4.077222222,2935.0,1281175.0,841.0,38.0,10964746.51,0],["2026-07-15",7,29,3,2,0,0,9,3227776.0,810739.1559,4.063333333,2211.0,863855.0001,550.0,26.0,4611895.284,0],["2026-07-15",7,29,3,2,0,0,19,4440730.0,804420.8441,4.031666667,2327.0,766933.0001,630.0,28.0,4575953.524,0],["2026-07-15",7,29,4,2,0,0,11,792114.0,0.0,2.008333333,1428.0,231602.0,201.0,5.0,0.0,0],["2026-07-15",7,29,4,2,0,0,19,3008950.0,0.0,4.014722222,847.0,341089.9999,318.0,12.0,0.0,0],["2026-07-16",7,29,0,3,0,0,10,9318450.0,1799659.229,3.962222222,3168.0,464252.0,1178.0,49.0,14618748.84,0],["2026-07-16",7,29,0,3,0,0,18,22513586.0,2725731.771,6.001111111,5311.0,701590.0,1710.0,107.0,22141296.27,0],["2026-07-16",7,29,1,3,0,0,9,9931882.0,1363091.067,4.053333333,2156.0,824313.0,741.0,64.0,11140587.2,0],["2026-07-16",7,29,1,3,0,0,17,14567396.0,2034547.933,6.05,3513.0,416248.0,1241.0,95.0,16628425.8,0],["2026-07-16",7,29,2,3,0,0,17,4987615.0,1520668.0,6.028888889,3245.0,1158617.0,807.0,48.0,5774735.635,0],["2026-07-16",7,29,3,3,0,0,9,1739522.0,816891.3856,4.041388889,2055.0,837062.9999,456.0,18.0,4025869.016,0],["2026-07-16",7,29,3,3,0,0,19,3813568.0,420208.6144,2.078888889,1680.0,446300.0,523.0,18.0,2070905.472,0],["2026-07-16",7,29,4,3,0,0,9,2779902.0,0.0,2.030555556,540.0,174373.0,230.0,10.0,0.0,0],["2026-07-16",7,29,4,3,0,0,17,2462651.0,0.0,4.0275,1319.0,2966337.0,433.0,9.0,0.0,0],["2026-07-17",7,29,0,2,0,0,10,14698483.0,2487799.782,4.005277778,3412.0,461061.0,1258.0,85.0,20424137.51,0],["2026-07-17",7,29,0,2,0,0,18,27964045.0,3716430.218,5.983333333,6682.0,771573.0,2446.0,156.0,30510848.32,0],["2026-07-17",7,29,1,2,0,0,9,2416992.0,781017.9224,1.965277778,1028.0,165423.0,278.0,18.0,6734544.542,0],["2026-07-17",7,29,1,2,0,0,12,5773535.0,790842.7415,1.99,1421.0,159597.0,438.0,40.0,6819261.78,0],["2026-07-17",7,29,1,2,0,0,17,22451025.0,2398801.336,6.036111111,5402.0,1194476.0,1592.0,155.0,20684332.56,0],["2026-07-17",7,29,2,0,0,0,20,110906464.0,33725182.0,4.011666667,34095.0,7684741.0,9735.0,764.0,131451074.5,0],["2026-07-17",7,29,3,2,0,0,9,3181167.0,1063198.692,4.079166667,2964.0,872559.9999,626.0,23.0,4045325.788,0],["2026-07-17",7,29,3,2,0,0,22,2507770.0,523092.3083,2.006944444,1719.0,500099.0,446.0,20.0,1990294.778,0],["2026-07-17",7,29,4,2,0,0,11,2411990.0,0.0,2.063333333,1535.0,3597887.0,387.0,10.0,0.0,0],["2026-07-17",7,29,4,2,0,0,19,2588330.0,0.0,4.031111111,1408.0,500819.0,366.0,11.0,0.0,0],["2026-07-18",7,29,0,3,0,0,10,14826550.0,1914865.638,3.993611111,3454.0,516541.0,1202.0,82.0,15670988.58,0],["2026-07-18",7,29,0,3,0,0,18,18064836.0,2855716.362,5.955833333,5536.0,764451.0001,1863.0,104.0,23370777.37,0],["2026-07-18",7,29,1,3,0,0,9,6962661.0,1145746.826,4.048888889,2081.0,634153.0,619.0,45.0,10517165.13,0],["2026-07-18",7,29,1,3,0,0,17,15959237.0,1705100.174,6.025555556,3929.0,881564.0001,1303.0,112.0,15651642.84,0],["2026-07-18",7,29,2,3,0,0,17,6023830.0,1132206.0,6.018611111,3738.0,1060543.0,684.0,44.0,7896833.353,0],["2026-07-18",7,29,3,3,0,0,9,5782809.0,880351.4763,4.098888889,2185.0,1125534.0,806.0,45.0,7367729.866,0],["2026-07-18",7,29,3,3,0,0,20,4291276.0,432479.5237,2.013611111,1441.0,532649.0001,532.0,32.0,3619454.717,0],["2026-07-18",7,29,4,3,0,0,10,2243068.0,0.0,1.883055556,732.0,208645.0,257.0,9.0,0.0,0],["2026-07-18",7,29,4,3,0,0,17,947121.0,0.0,2.338611111,584.0,218774.0,122.0,3.0,0.0,0],["2026-07-18",7,29,4,3,0,0,20,928620.0,0.0,2.003055556,693.0,198006.0,224.0,6.0,0.0,0],["2026-07-19",7,29,0,3,0,0,10,15234647.0,2765396.53,4.005,3491.0,558854.0,1227.0,80.0,39290489.56,0],["2026-07-19",7,29,0,3,0,0,18,62020131.0,4133901.47,5.986944444,9634.0,988336.0,4107.0,362.0,58734076.95,0],["2026-07-19",7,29,1,3,0,0,9,2717867.0,812440.6862,2.3275,1285.0,380872.0,358.0,23.0,7945242.752,0],["2026-07-19",7,29,1,3,0,0,12,4256800.0,580508.6989,1.663055556,1129.0,283776.0,356.0,30.0,5677069.86,0],["2026-07-19",7,29,1,3,0,0,17,21756993.0,2113276.615,6.054166667,4595.0,867974.0,1691.0,141.0,20666734.19,0],["2026-07-19",7,29,2,3,0,0,17,14649385.0,2197504.0,6.022777778,4725.0,1035537.0,1352.0,96.0,17680448.28,0],["2026-07-19",7,29,3,3,0,0,10,4383142.0,831120.4868,4.018333333,2140.0,1124816.0,741.0,35.0,5640035.261,0],["2026-07-19",7,29,3,3,0,0,20,3403000.0,420156.5132,2.031388889,1386.0,564529.9999,525.0,24.0,2851208.203,0],["2026-07-19",7,29,4,3,0,0,9,3014070.0,0.0,2.011666667,712.0,216594.0,307.0,14.0,0.0,0],["2026-07-19",7,29,4,3,0,0,17,5075391.0,0.0,4.024444444,1245.0,396436.0,518.0,17.0,0.0,0],["2026-07-20",7,30,0,3,0,0,10,1846384.0,775277.4413,2.136388889,1418.0,237826.0,487.0,7.0,7795556.191,0],["2026-07-20",7,30,0,3,0,0,12,7014570.0,674877.4502,1.859722222,2076.0,245170.0,916.0,49.0,6786015.953,0],["2026-07-20",7,30,0,3,0,0,18,20586845.0,2174325.108,5.991666667,5233.0,727867.0,2202.0,109.0,21863235.86,0],["2026-07-20",7,30,1,3,0,0,10,1696103.0,516758.456,2.133888889,1254.0,343077.0,321.0,17.0,4104926.632,0],["2026-07-20",7,30,1,3,0,0,12,2130849.0,445991.7421,1.841666667,1063.0,441996.0,284.0,20.0,3542783.594,0],["2026-07-20",7,30,1,3,0,0,17,13242549.0,1454013.802,6.004166667,3688.0,1221567.0,1438.0,116.0,11550115.74,0],["2026-07-20",7,30,2,3,0,0,17,5667800.0,1070878.0,6.047777778,3452.0,940101.9999,676.0,54.0,6268149.428,0],["2026-07-20",7,30,3,3,0,0,9,4319898.0,673594.629,4.066111111,2054.0,1060168.0,810.0,34.0,4894914.956,0],["2026-07-20",7,30,3,3,0,0,20,2043800.0,334220.371,2.0175,1405.0,568734.9999,487.0,15.0,2428731.201,0],["2026-07-20",7,30,4,3,0,0,9,2467840.0,0.0,2.083333333,713.0,207413.0,267.0,9.0,0.0,0],["2026-07-20",7,30,4,3,0,0,17,3462255.0,0.0,4.045,1249.0,404756.9999,521.0,15.0,0.0,0],["2026-07-21",7,30,0,2,0,0,10,14566401.0,2191569.018,4.004166667,3557.0,431163.0,1277.0,89.0,18575775.08,0],["2026-07-21",7,30,0,2,0,0,18,23505778.0,3271465.982,5.977222222,6177.0,631690.0,2082.0,133.0,27728999.52,0],["2026-07-21",7,30,1,2,0,0,9,1381192.0,336914.2885,1.028888889,552.0,192816.0,140.0,8.0,2666976.181,0],["2026-07-21",7,30,1,2,0,0,11,6427254.0,958804.9447,2.928055556,1607.0,558209.0001,498.0,38.0,7589793.716,0],["2026-07-21",7,30,1,2,0,0,17,16107747.0,1987648.767,6.07,3982.0,922402.0001,1308.0,110.0,15734007.43,0],["2026-07-21",7,30,2,2,0,0,10,5333690.0,996085.139,4.011111111,3030.0,645001.0001,850.0,55.0,5761644.329,0],["2026-07-21",7,30,2,2,0,0,20,4694978.0,986220.861,3.971388889,3226.0,580915.0,512.0,37.0,5704586.493,0],["2026-07-21",7,30,3,2,0,0,9,3686726.0,716855.2762,4.006111111,2315.0,983594.0001,821.0,36.0,5386741.721,0],["2026-07-21",7,30,3,2,0,0,20,3497256.0,366181.7238,2.046388889,1447.0,444246.0,448.0,29.0,2751638.21,0],["2026-07-21",7,30,4,2,0,0,11,438020.0,0.0,0.9447222222,397.0,110471.0,121.0,2.0,0.0,0],["2026-07-21",7,30,4,2,0,0,13,325600.0,0.0,1.0075,829.0,110151.0,188.0,3.0,0.0,0],["2026-07-21",7,30,4,2,0,0,19,2982108.0,0.0,4.011111111,1896.0,377946.0,619.0,13.0,0.0,0],["2026-07-22",7,30,0,2,0,0,8,1090111.0,765222.3106,1.667222222,755.0,107203.0,173.0,6.0,6171405.513,0],["2026-07-22",7,30,0,2,0,0,10,9872175.0,1842168.805,4.013611111,3112.0,359083.0,1150.0,55.0,14856820.77,0],["2026-07-22",7,30,0,2,0,0,18,28441854.0,2753244.885,5.998611111,6173.0,573916.0,2136.0,162.0,22204515.5,0],["2026-07-22",7,30,1,2,0,0,9,937048.0,365082.4907,1.322222222,663.0,210901.0,146.0,9.0,3073650.008,0],["2026-07-22",7,30,1,2,0,0,11,3891790.0,757085.9802,2.741944444,1469.0,483971.0001,520.0,30.0,6373949.418,0],["2026-07-22",7,30,1,2,0,0,17,16241732.0,1668948.529,6.044444444,3817.0,849614.0,1227.0,125.0,14050971.47,0],["2026-07-22",7,30,2,2,0,0,9,344000.0,680746.9794,0.9775,843.0,145744.0,87.0,5.0,2647529.782,0],["2026-07-22",7,30,2,2,0,0,11,2472120.0,2064681.021,2.964722222,2014.0,486559.0,412.0,22.0,8029862.278,0],["2026-07-22",7,30,3,2,0,0,10,5214588.0,864792.3563,4.023611111,2044.0,862482.0001,726.0,32.0,5162325.034,0],["2026-07-22",7,30,3,2,0,0,20,2169466.0,437321.6437,2.034722222,1476.0,378190.0,339.0,14.0,2610564.782,0],["2026-07-22",7,30,4,2,0,0,11,1299000.0,0.0,2.043611111,699.0,196210.0,247.0,6.0,0.0,0],["2026-07-22",7,30,4,2,0,0,19,2384140.0,0.0,4.036388889,2027.0,236580.0,445.0,16.0,0.0,0],["2026-07-23",7,30,0,3,0,0,9,19616974.0,1859679.687,4.024166667,3352.0,380121.0,1353.0,116.0,19033237.12,0],["2026-07-23",7,30,0,3,0,0,17,20668267.0,2779699.313,6.015,6484.0,594899.9999,2004.0,122.0,28449348.84,0],["2026-07-23",7,30,1,3,0,0,9,2251970.0,609853.4739,1.963055556,977.0,294149.0,282.0,16.0,4601539.491,0],["2026-07-23",7,30,1,3,0,0,11,294400.0,97687.01464,0.3144444444,351.0,60174.0,35.0,1.0,737079.7656,0],["2026-07-23",7,30,1,3,0,0,17,14804331.0,1880906.511,6.054444444,4120.0,878676.0,1229.0,119.0,14192041.14,0],["2026-07-23",7,30,2,3,0,0,17,1059800.0,470443.6456,2.374166667,1327.0,434429.0001,192.0,6.0,1963086.778,0],["2026-07-23",7,30,2,3,0,0,20,3309907.0,727159.3544,3.669722222,2565.0,664775.0,485.0,29.0,3034320.746,0],["2026-07-23",7,30,3,3,0,0,10,4072923.0,664901.2026,3.091111111,1467.0,679033.0,410.0,28.0,4489419.542,0],["2026-07-23",7,30,3,3,0,0,10,248000.0,190424.1672,0.8852777778,479.0,156798.0,94.0,2.0,1285745.873,0],["2026-07-23",7,30,3,3,0,0,20,4100745.0,442271.6302,2.056111111,1634.0,597114.9999,672.0,36.0,2986222.452,0],["2026-07-23",7,30,4,3,0,0,9,3285321.0,0.0,2.019722222,1116.0,145514.0,285.0,13.0,0.0,0],["2026-07-23",7,30,4,3,0,0,17,3976169.0,0.0,4.047777778,1486.0,248037.0,446.0,19.0,0.0,0],["2026-07-24",7,30,0,1,0,0,8,34049751.0,6142539.611,6.003055556,7096.0,625881.0002,2526.0,231.0,41233440.16,0],["2026-07-24",7,30,0,1,0,0,14,5266754.0,4008809.341,3.917777778,2317.0,260077.0,494.0,42.0,26910204.99,0],["2026-07-24",7,30,0,1,0,0,18,56858763.0,6103884.047,5.965277778,10399.0,638322.0,4498.0,355.0,40973954.35,0],["2026-07-24",7,30,1,1,0,0,7,12588179.0,2335207.006,6.023888889,3723.0,902301.9999,1285.0,120.0,16528329.22,0],["2026-07-24",7,30,1,1,0,0,17,680357.0,421039.3523,1.086111111,890.0,165878.0,151.0,6.0,2980068.581,0],["2026-07-24",7,30,1,1,0,0,19,15248256.0,1873786.642,4.833611111,3929.0,766650.0001,1414.0,130.0,13262448.43,0],["2026-07-24",7,30,2,1,0,0,7,10944756.0,3192094.785,8.038333333,4484.0,1490702.0,1283.0,110.0,16353859.77,0],["2026-07-24",7,30,2,1,0,0,17,13988266.0,2408797.215,6.065833333,4430.0,1026168.0,1474.0,110.0,12340840.27,0],["2026-07-24",7,30,3,1,0,0,10,8661741.0,1118425.737,4.004166667,2921.0,2335362.0,1387.0,68.0,9417908.819,0],["2026-07-24",7,30,3,1,0,0,19,8145126.0,1126417.263,4.032777778,4103.0,5976494.0,1241.0,57.0,9485202.93,0],["2026-07-24",7,30,4,1,0,0,9,2292114.0,0.0,2.045555556,1236.0,143845.0,241.0,11.0,0.0,0],["2026-07-24",7,30,4,1,0,0,19,3475333.0,0.0,4.020833333,1637.0,270111.0,772.0,17.0,0.0,0],["2026-07-25",7,30,0,1,0,0,8,28764005.0,6699493.044,5.989722222,7100.0,508207.0001,2849.0,190.0,34617469.6,0],["2026-07-25",7,30,0,1,0,0,14,2756218.0,2052133.356,1.834722222,1227.0,122806.0,334.0,18.0,10603737.27,0],["2026-07-25",7,30,0,1,0,0,17,39092560.0,6732426.6,6.019166667,7905.0,565704.9998,3140.0,227.0,34787643.12,0],["2026-07-25",7,30,1,1,0,0,7,15803917.0,2134742.913,6.085277778,3428.0,956584.9999,1233.0,143.0,13951305.89,0],["2026-07-25",7,30,1,1,0,0,17,768764.0,411708.0754,1.173611111,669.0,169718.0,144.0,10.0,2690659.031,0],["2026-07-25",7,30,1,1,0,0,19,789217.0,519190.6807,1.48,826.0,218323.0,159.0,8.0,3393096.17,0],["2026-07-25",7,30,1,1,0,0,20,7269297.0,1156875.331,3.297777778,2096.0,483576.0,847.0,67.0,7560592.667,0],["2026-07-25",7,30,2,1,0,0,21,19339501.0,4716579.0,2.012222222,7423.0,2420729.0,2021.0,129.0,21814255.09,0],["2026-07-25",7,30,3,1,0,0,9,6224610.0,1157704.038,4.056666667,2271.0,2449616.0,935.0,45.0,9298821.304,0],["2026-07-25",7,30,3,1,0,0,19,10723491.0,1160874.962,4.067777778,4331.0,5513533.0,1738.0,56.0,9324290.549,0],["2026-07-25",7,30,4,1,0,0,9,3591043.0,0.0,4.058055556,1110.0,277213.0,513.0,16.0,0.0,0],["2026-07-25",7,30,4,1,0,0,20,3727513.0,0.0,3.995277778,1840.0,304900.0,767.0,21.0,0.0,0]]};
+const R = D.rows;
+const PAL = ['#EE3124','#1a1f36','#f59e0b','#0ea5e9','#8b5cf6','#10b981','#ec4899','#64748b'];
+let mSel='All';
+let bSel='All';  // brand filter (nhu tab CPD/LDB o dash CIR, nhung o day loc thang theo brand)
+// UPC: mỗi channel = 1 brand riêng
+function brandOfName(n){ return n; }
+const BRANDS=[]; const chBrand=[];   // chBrand[chIdx] = brand idx
+D.channels.forEach((n,i)=>{ let bi=BRANDS.indexOf(n); if(bi<0){ bi=BRANDS.length; BRANDS.push(n); } chBrand[i]=bi; });
+
+
+/* ===== Google Sheet live data loader ===== */
+const GSHEET_ID='19FYqsn6o-HYnO-AsFjqL_ZPZp7eqsOFGvIED7vnwJ38';
+const GSHEET_TABS={central:'raw_centralized',smg:'raw_smg',plan:'Data_plan'};
+function sheetCsvUrl(sheet){ return `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`; }
+function parseCsv(text){
+  const rows=[]; let row=[], cell='', q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(q){ if(c==='"'&&n==='"'){ cell+='"'; i++; } else if(c==='"') q=false; else cell+=c; }
+    else { if(c==='"') q=true; else if(c===','){ row.push(cell); cell=''; } else if(c==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; } else if(c==='\r'){} else cell+=c; }
+  }
+  if(cell!==''||row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r=>r.some(x=>String(x).trim()!=='')).map(r=>r.map(x=>String(x).trim()));
+}
+function csvObjects(text){
+  const a=parseCsv(text); if(!a.length) return [];
+  const h=a[0].map(x=>x.trim());
+  return a.slice(1).map(r=>{ const o={}; h.forEach((k,i)=>o[k]=r[i]??''); return o; });
+}
+function nnum(v){
+  let s=String(v??'').trim().replace(/,/g,'');
+  if(!s||s==='-'||s==='#N/A') return 0;
+  if(s.endsWith('%')) return (+s.slice(0,-1)||0)/100;
+  return +s||0;
+}
+function isoFrom(v){
+  const s=String(v??'').trim(); if(!s) return null;
+  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m) return `${m[3]}-${String(+m[1]).padStart(2,'0')}-${String(+m[2]).padStart(2,'0')}`;
+  m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m) return `${m[1]}-${String(+m[2]).padStart(2,'0')}-${String(+m[3]).padStart(2,'0')}`;
+  return null;
+}
+function normName(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,''); }
+function liveTypeName(v){ const s=String(v||'').trim().toLowerCase(); return {'smg':'Super Mega','super mega':'Super Mega','supermega':'Super Mega','mega':'Mega','mg':'Mega','campaign':'Campaign','cp':'Campaign','bau':'BAU'}[s] || String(v||'').trim() || '(no type)'; }
+function rebuildBrandMap(){ BRANDS.splice(0); chBrand.splice(0); D.channels.forEach((n,i)=>{ let bi=BRANDS.indexOf(n); if(bi<0){ bi=BRANDS.length; BRANDS.push(n); } chBrand[i]=bi; }); }
+function buildLiveData(central,smg,planRows){
+  const chanAliases={lifebuoyvietnam:'Lifebuoy Vietnam',dove:'Dove Vietnam',dovevietnam:'Dove Vietnam',closeupvn:'Closeupvietnam',closeupvietnam:'Closeupvietnam',closeupwhitenow:'Closeup White Now',chuyengiaps:'Chuyên Gia P/S',chuyngiaps:'Chuyên Gia P/S'};
+  const baseChannels=['Lifebuoy Vietnam','Dove Vietnam','Closeupvietnam','Chuyên Gia P/S','Closeup White Now'];
+  const channels=[...baseChannels];
+  const chIdx=(name)=>{ const nn=normName(name); let canonical=chanAliases[nn]||name||'(no channel)'; let i=channels.findIndex(c=>normName(c)===normName(canonical)); if(i<0){ i=channels.length; channels.push(canonical); } return i; };
+  const types=['Super Mega','Mega','Campaign','BAU'];
+  const tyIdx=(v)=>{ const tn=liveTypeName(v); let i=types.indexOf(tn); if(i<0){ i=types.length; types.push(tn); } return i; };
+  const weekNo=(iso)=>{ const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7)); const y0=new Date(Date.UTC(d.getUTCFullYear(),0,1)); return Math.ceil((((d-y0)/86400000)+1)/7); };
+  const hourOf=(s)=>{ const h=parseInt(String(s||'0').split(':')[0],10); return Number.isFinite(h)?h:0; };
+  const toRow=(r)=>{ const iso=isoFrom(r.report_date); if(!iso) return null; return [iso,+iso.slice(5,7),weekNo(iso),chIdx(r.channel),tyIdx(r.campaign_type),0,0,hourOf(r.start_time),nnum(r.gmv_actual),nnum(r.ads_actual),nnum(r.duration_hour),nnum(r.view_count),nnum(r.impression_count),nnum(r.click_count),nnum(r.order_count),nnum(r.gmv_ads_actual),0]; };
+  const rows=[...central,...smg].map(toRow).filter(r=>r&&r[1]===7).sort((a,b)=>(a[0]+a[3]+a[4]+String(a[7]).padStart(2,'0')).localeCompare(b[0]+b[3]+b[4]+String(b[7]).padStart(2,'0')));
+  const plan={};
+  const ensure=(mo,ci)=>{ const pm=plan[String(mo)]||(plan[String(mo)]={}); return pm[String(ci)]||(pm[String(ci)]={ads:0,views:0,nmv:0,byType:{},dailyMap:{},dailyByTypeMap:{},kpi:{cpvNum:0,cpvDen:0,ctrNum:0,ctrDen:0,ctorNum:0,ctorDen:0,aovNum:0,aovDen:0,view:0}}); };
+  const addMonth=(mo,ci,tn,ads,gmv,views,days,k={})=>{ if(!(ads||gmv||views)) return; const p=ensure(mo,ci); p.ads+=ads; p.nmv+=gmv; p.views+=views; const bt=p.byType[tn]||(p.byType[tn]={ads:0,nmv:0,gads:0,days:0}); bt.ads+=ads; bt.nmv+=gmv; bt.gads+=gmv; bt.days+=days; const view=views||k.view||0, clicks=view*(k.ctr||0), orders=k.orders||clicks*(k.ctor||0); p.kpi.view+=view; if(view){ if(k.cpv){ p.kpi.cpvNum+=k.cpv*view; p.kpi.cpvDen+=view; } if(k.ctr){ p.kpi.ctrNum+=k.ctr*view; p.kpi.ctrDen+=view; } } if(clicks&&k.ctor){ p.kpi.ctorNum+=k.ctor*clicks; p.kpi.ctorDen+=clicks; } if(orders&&k.aov){ p.kpi.aovNum+=k.aov*orders; p.kpi.aovDen+=orders; } };
+  const addDaily=(mo,ci,tn,iso,ads,gmv)=>{ if(!(ads||gmv)) return; const p=ensure(mo,ci); const d=p.dailyMap[iso]||(p.dailyMap[iso]=[iso,0,0]); d[1]+=ads; d[2]+=gmv; const by=p.dailyByTypeMap[tn]||(p.dailyByTypeMap[tn]={}); const t=by[iso]||(by[iso]=[iso,0,0]); t[1]+=ads; t[2]+=gmv; };
+  const lookup={};
+  planRows.forEach(r=>{ if(!normName(r.brand)||!normName(r.day_type)||!nnum(r.gmv_target)) return; const mo=7, ci=chIdx(r.brand), tn=liveTypeName(r.day_type), gmv=nnum(r.gmv_target), ads=nnum(r.ads_cost||r.budget_ads), days=Math.max(1,Math.round(nnum(r.day_count)||1)), views=nnum(r.total_view_target), orders=nnum(r.order_target); addMonth(mo,ci,tn,ads,gmv,views,days,{view:views,cpv:nnum(r.cpv_target)||(views?ads/views:0),ctr:nnum(r.ctr_target),ctor:nnum(r.ctor_target),aov:nnum(r.aov_target),orders}); lookup[`${mo}|${ci}|${tn}`]={gmvDay:gmv/days,adsDay:nnum(r.ads_cost_per_day)||(ads/days)}; });
+  const seenC=new Set();
+  central.forEach(r=>{ const iso=isoFrom(r.report_date); if(!iso||+iso.slice(5,7)!==7) return; const ci=chIdx(r.channel), tn=liveTypeName(r.campaign_type), key=`${iso}|${ci}|${tn}`; if(seenC.has(key)) return; seenC.add(key); const lk=lookup[`7|${ci}|${tn}`]; addDaily(7,ci,tn,iso,lk?lk.adsDay:nnum(r.budget_ads),lk?lk.gmvDay:nnum(r.gmv_target)); });
+  const seenS=new Set();
+  smg.forEach(r=>{ const iso=isoFrom(r.report_date); if(!iso||+iso.slice(5,7)!==7) return; const ci=chIdx(r.channel), tn='Super Mega', key=`${iso}|${ci}|${tn}`; if(seenS.has(key)) return; seenS.add(key); const ads=nnum(r.budget_ads), gmv=nnum(r.gmv_target), views=nnum(r.total_view_target), orders=nnum(r.order_target); addMonth(7,ci,tn,ads,gmv,views,1,{view:views,cpv:nnum(r.cpv_target)||(views?ads/views:0),ctr:nnum(r.ctr_target),ctor:nnum(r.ctor_target),aov:nnum(r.aov_target),orders}); addDaily(7,ci,tn,iso,ads,gmv); });
+  Object.values(plan).forEach(pm=>Object.values(pm).forEach(p=>{ p.daily=Object.keys(p.dailyMap).sort().map(k=>p.dailyMap[k]); p.dailyByType={}; Object.keys(p.dailyByTypeMap).sort().forEach(tn=>p.dailyByType[tn]=Object.keys(p.dailyByTypeMap[tn]).sort().map(k=>p.dailyByTypeMap[tn][k])); delete p.dailyMap; delete p.dailyByTypeMap; const k=p.kpi; p.kpi={cpv:k.cpvDen?k.cpvNum/k.cpvDen:0,ctor:k.ctorDen?k.ctorNum/k.ctorDen:0,ctr:k.ctrDen?k.ctrNum/k.ctrDen:0,ov:0.015,aov:k.aovDen?k.aovNum/k.aovDen:0,view:k.view}; }));
+  return {channels,types,rows,plan};
+}
+function applyLiveData(built){
+  D.channels=built.channels; D.types=built.types; D.plan=built.plan; D.planMonths=[7]; D.planMonth=7; D.months=[7]; D.updated=new Date().toISOString().slice(0,16).replace('T',' '); D.srcModified='Google Sheet live'; D.nmvFactor=1;
+  R.splice(0,R.length,...built.rows); D.rows=R; rebuildBrandMap();
+}
+function gvizUrl(sheet,cb){ return `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cb}&sheet=${encodeURIComponent(sheet)}`; }
+function gvizValue(c){
+  if(!c) return '';
+  const v=c.v;
+  if(v==null) return '';
+  if(typeof v==='string' && /^Date\(/.test(v)) return c.f||v;
+  return v;
+}
+function gvizObjects(resp){
+  const table=resp&&resp.table; if(!table) return [];
+  const headers=(table.cols||[]).map(c=>String(c.label||c.id||'').trim());
+  return (table.rows||[]).map(r=>{ const o={}; headers.forEach((h,i)=>o[h]=gvizValue((r.c||[])[i])); return o; });
+}
+function loadGvizSheet(sheet){
+  return new Promise((resolve,reject)=>{
+    const cb='__upcGvizCb_'+Math.random().toString(36).slice(2);
+    const sc=document.createElement('script');
+    let done=false;
+    window[cb]=(resp)=>{ done=true; try{ resolve(gvizObjects(resp)); } catch(e){ reject(e); } finally{ delete window[cb]; sc.remove(); } };
+    sc.onerror=()=>{ if(done) return; delete window[cb]; sc.remove(); reject(new Error('Không tải được sheet '+sheet)); };
+    sc.src=gvizUrl(sheet,cb)+'&cbust='+(Date.now());
+    document.head.appendChild(sc);
+    setTimeout(()=>{ if(!done){ delete window[cb]; sc.remove(); reject(new Error('Timeout sheet '+sheet)); } }, 20000);
+  });
+}
+async function loadGoogleSheetData(){
+  const footer=$('footer'); if(footer) footer.textContent='Đang tải data mới từ Google Sheet...';
+  try{
+    const [centralRows,smgRows,planRows]=await Promise.all([
+      loadGvizSheet(GSHEET_TABS.central),
+      loadGvizSheet(GSHEET_TABS.smg),
+      loadGvizSheet(GSHEET_TABS.plan)
+    ]);
+    const built=buildLiveData(centralRows,smgRows,planRows);
+    if(!built.rows.length) throw new Error('Google Sheet không trả rows');
+    applyLiveData(built);
+    D.liveSource='Google Sheet';
+  }catch(err){ console.warn('Không tải được Google Sheet, dùng data nhúng sẵn:',err); D.liveSource='Embedded fallback'; D.liveError=String(err&&err.message||err); }
+}
+
+/* ===== Logo brand (PNG base64, tai dung tu dash CIR) â€” key ma ASCII de tranh loi encoding ===== */
+/* BLOGO cũ đã bỏ — UPC dùng chip chữ */
+const UPC_BRAND_STYLE={
+  'Lifebuoy Vietnam':{bg:'#e11d48',fg:'#fff',t:'LB'},
+  'Dove Vietnam':{bg:'#0369a1',fg:'#fff',t:'DV'},
+  'Closeupvietnam':{bg:'#dc2626',fg:'#fff',t:'CU'},
+  'Closeup White Now':{bg:'#7c3aed',fg:'#fff',t:'CW'},
+  'Chuyên Gia P/S':{bg:'#0f766e',fg:'#fff',t:'PS'}
+};
+function brandCode(bn){ return bn; }
+function brandLogo(bn,size){ size=size||13; const L=UPC_BRAND_STYLE[bn]; if(!L) return '';
+  const fs=Math.round(size*0.44);
+  return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${size}px;height:${size}px;border-radius:3px;background:${L.bg};color:${L.fg};font-size:${fs}px;font-weight:800;line-height:1;vertical-align:-2.5px;margin-right:4px;flex-shrink:0;">${L.t}</span>`;
+}
+function chLogo(ci,size){ return brandLogo(BRANDS[chBrand[ci]],size); }
+function setBrand(b){ bSel=b; render(); }
+function paintBrand(){
+  let h=`<button class="dtab ${bSel==='All'?'on':''}" onclick="setBrand('All')">Tất cả<span class="dsub">${D.channels.length} channel</span></button>`;
+  BRANDS.forEach((b,bi)=>{ const subs=D.channels.filter((c,ci)=>chBrand[ci]===bi).join(' · ');
+    const pic=PIC[b]?` · PIC: ${PIC[b]}`:'';
+    h+=`<button class="dtab ${bSel===String(bi)?'on':''}" onclick="setBrand('${bi}')" style="flex-direction:row;align-items:center;gap:5px;"><span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;">${brandLogo(b,15)}</span><span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;">${esc(b)}<span class="dsub">${esc(subs+pic)}</span></span></button>`; });
+  $('brandBtns').innerHTML=h;
+  $('brandInfo').textContent= bSel==='All'? '' : `Đang xem riêng brand ${BRANDS[+bSel]}`;
+}
+const cf = {};   // dim -> idx  (dims: ch, ty, host, slot)
+const CFCOL = {ch:3, ty:4, host:5, slot:7};
+const CFNAME = {ch:'Channel', ty:'Loại phiên', host:'Host', slot:'Khung giờ'};
+const CH = {};
+let tySel = new Set();
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ===== format ===== */
+function fC(n){ if(n==null||isNaN(n)||!isFinite(n))return '—'; const a=Math.abs(n);
+  if(a>=1e9) return (n/1e9).toFixed(2)+' tỷ';
+  if(a>=1e6) return (n/1e6).toFixed(1)+' tr';
+  if(a>=1e3) return (n/1e3).toFixed(0)+' K';
+  return Math.round(n).toLocaleString('vi-VN'); }
+function fN(n){ return (n==null||isNaN(n))?'—':Math.round(n).toLocaleString('en-US'); }
+function fP(n,d=1){ return (n==null||!isFinite(n))?'—':(n*100).toFixed(d)+'%'; }
+function fX(n,d=2){ return (n==null||!isFinite(n))?'—':n.toFixed(d); }
+function momHtml(cur,base,invert=false){ if(base==null||base===0||cur==null)return '<span style="color:#ccc;">—</span>';
+  const p=(cur-base)/Math.abs(base); const good=invert?p<0:p>0;
+  return `<span class="${good?'up':'dn'}">${p>=0?'▲':'▼'} ${(Math.abs(p)*100).toFixed(1)}%</span>`; }
+
+/* ===== gradient nen (đồng bộ với dash CIR) ===== */
+function gradAmber(v,mn,mx){ if(v==null||!isFinite(v)||mx<=mn)return '';
+  let t=(v-mn)/(mx-mn); t=Math.max(0,Math.min(1,t)); return `background:rgba(245,158,11,${(0.05+0.5*t).toFixed(3)});`; }
+function gradBlue(v,mn,mx){ if(v==null||!isFinite(v)||mx<=mn)return '';
+  let t=(v-mn)/(mx-mn); t=Math.max(0,Math.min(1,t)); return `background:rgba(59,130,246,${(0.05+0.45*t).toFixed(3)});`; }
+// đỏ↔xanh 2 chiều (dir>0: lớn=tốt=xanh; dir<0: nhỏ=tốt) — dùng cho ROI, CTR, %Ads cost…
+function gradMM(v,mn,mx,dir){ if(v==null||!isFinite(v)||mx===mn)return '';
+  let t=(v-mn)/(mx-mn); t=Math.max(0,Math.min(1,t)); if(dir<0)t=1-t;
+  if(t<=0.5){ const k=(0.5-t)*2; return `background:rgba(239,68,68,${(0.06+0.44*k).toFixed(3)});`; }
+  const k=(t-0.5)*2; return `background:rgba(34,197,94,${(0.06+0.44*k).toFixed(3)});`; }
+// lệch quanh mốc (mid) với dung sai band: >mid+band xanh, <mid-band đỏ — dùng cho %Loading vs pace/MTD
+function gradAround(v,mid,band){ if(v==null||!isFinite(v)||!mid)return '';
+  const d=(v-mid)/mid; if(Math.abs(d)<=band)return '';
+  const k=Math.min(1,(Math.abs(d)-band)/0.5);
+  return d>0? `background:rgba(34,197,94,${(0.12+0.45*k).toFixed(3)});` : `background:rgba(239,68,68,${(0.12+0.45*k).toFixed(3)});`; }
+function mmOf(arr){ const v=arr.filter(x=>x!=null&&isFinite(x)); return v.length?[Math.min(...v),Math.max(...v)]:[0,1]; }
+function pctl(arr,p){ const v=arr.filter(x=>x!=null&&isFinite(x)).sort((a,b)=>a-b); if(!v.length)return 0; return v[Math.min(v.length-1,Math.max(0,Math.round(p*(v.length-1))))]; }
+function mmp(arr){ return [pctl(arr,0.05),pctl(arr,0.95)]; }
+
+/* ===== Suggest Action matrix (y hệt dash CIR) — %Loading GMV (run-rate) × %Ads cost actual/target ===== */
+const ACT={1:{t:'Urgent – Kiểm soát spend',bg:'#ef4444',fg:'#fff'},
+           2:{t:'Cần action – Giảm spend',   bg:'#f97316',fg:'#fff'},
+           3:{t:'Maintain',                   bg:'#d1d5db',fg:'#374151'},
+           4:{t:'Potential – Còn room scale', bg:'#22c55e',fg:'#fff'}};
+// hàng GMV band 0:<85% 1:85-95% 2:95-105% 3:>105% · cột Ads cost band 0:>115% 1:105-115% 2:95-105% 3:<95%
+const ACTM=[[1,1,2,2],[1,2,3,4],[1,2,3,4],[2,3,4,4]];
+function nmvBand(p){ if(p==null||!isFinite(p))return null; if(p<0.85)return 0; if(p<0.95)return 1; if(p<=1.05)return 2; return 3; }
+function acosBand(r){ if(r==null||!isFinite(r))return null; if(r>1.15)return 0; if(r>1.05)return 1; if(r>=0.95)return 2; return 3; }
+function suggest(pn,acosR){ const g=nmvBand(pn),t=acosBand(acosR); if(g==null||t==null)return null; return ACTM[g][t]; }
+function actCell(pn,acosR,plain){ const a=suggest(pn,acosR);
+  if(!a) return '<td style="text-align:center;">—</td>';
+  const st=plain?'':`background:${ACT[a].bg};color:${ACT[a].fg};`;
+  return `<td style="${st}font-weight:700;text-align:center;white-space:nowrap;" title="${ACT[a].t}">${a} · ${ACT[a].t}</td>`; }
+const BANDBG=['rgba(239,68,68,.55)','rgba(249,115,22,.55)','rgba(209,213,219,.5)','rgba(34,197,94,.5)'];
+function acosBandStyle(r){ const b=acosBand(r); return b==null?'':`background:${BANDBG[b]};font-weight:700;`; }
+
+/* ===== filter ===== */
+function selVal(id){ return $(id).value; }
+function tyPass(v){ return !tySel.size || tySel.has(v); }
+function passRow(r, excl){
+  if(bSel!=='All' && chBrand[r[3]]!==+bSel) return false;
+  if(mSel!=='All' && r[1]!==+mSel) return false;
+  const f=$('dFrom').value, t=$('dTo').value;
+  if(f && r[0]<f) return false;
+  if(t && r[0]>t) return false;
+  if(selVal('fCh')!=='All' && r[3]!==+selVal('fCh')) return false;
+  if(!tyPass(r[4])) return false;
+  if(selVal('fHost')!=='All' && r[5]!==+selVal('fHost')) return false;
+  if(selVal('fOp')!=='All' && r[6]!==+selVal('fOp')) return false;
+  for(const d in cf){ if(d===excl) continue; if(r[CFCOL[d]]!==cf[d]) return false; }
+  return true;
+}
+function rowsF(excl){ return R.filter(r=>passRow(r,excl)); }
+// filter theo dimension (brand/select/cf) nhung KHONG theo thang/ngay — dung cho khoi plan, MoM, base WoW
+function dimPass(r,excl){
+  if(bSel!=='All' && chBrand[r[3]]!==+bSel) return false;
+  if(selVal('fCh')!=='All' && r[3]!==+selVal('fCh')) return false;
+  if(!tyPass(r[4])) return false;
+  if(selVal('fHost')!=='All' && r[5]!==+selVal('fHost')) return false;
+  if(selVal('fOp')!=='All' && r[6]!==+selVal('fOp')) return false;
+  for(const d in cf){ if(d===excl) continue; if(r[CFCOL[d]]!==cf[d]) return false; }
+  return true;
+}
+// channel co dang nam trong pham vi filter khong (dung de loc plan theo brand/channel/cross-filter)
+function chPass(ci){
+  if(bSel!=='All' && chBrand[ci]!==+bSel) return false;
+  if(selVal('fCh')!=='All' && ci!==+selVal('fCh')) return false;
+  if(cf.ch!=null && ci!==cf.ch) return false;
+  return true;
+}
+function typeFilterActive(){ return tySel.size || cf.ty!=null; }
+function typeNamePass(tn){
+  const ti=D.types.indexOf(tn);
+  if(ti<0) return true;
+  if(cf.ty!=null && ti!==cf.ty) return false;
+  return tyPass(ti);
+}
+/* ===== tuan Thu 2 -> CN + shift thang (theo logic sheet WoW/MoM) ===== */
+function mondayOf(iso){ const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7)); return d.toISOString().slice(0,10); }
+function addDays(iso,n){ const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function edate(iso,dm){ const y=+iso.slice(0,4), m=+iso.slice(5,7)-1+dm, dd=+iso.slice(8,10);
+  const last=new Date(Date.UTC(y,m+1,0)).getUTCDate();
+  return new Date(Date.UTC(y,m,Math.min(dd,last))).toISOString().slice(0,10); }
+function weekLabel(mon){ // nhan chu ky nhu sheet WoW: Deal Day (ngay doi) > Mid Month (15) > Pay Day (25)
+  let lbl='';
+  for(let i=0;i<7;i++){ const dt=addDays(mon,i); const dd=+dt.slice(8,10), mm=+dt.slice(5,7);
+    if(dd===mm) return 'Deal Day';
+    if(dd===15&&!lbl) lbl='Mid Month';
+    if(dd===25&&!lbl) lbl='Pay Day'; }
+  return lbl;
+}
+
+/* ===== aggregate ===== */
+function agg(rows){
+  const s={n:rows.length,gmv:0,ads:0,h:0,v:0,imp:0,clk:0,ord:0,gads:0};
+  for(const r of rows){ s.gmv+=r[8]; s.ads+=r[9]; s.h+=r[10]; s.v+=r[11]; s.imp+=r[12]; s.clk+=r[13]; s.ord+=r[14]; s.gads+=r[15]; }
+  s.pAds = s.gmv? s.ads/s.gmv : null;   // %Ads cost = Ads / GMV (mau so la GMV, khong phai GMV)
+  // ROI = GMV / Ads cost. Bo ROAS (GMV Ads / Ads): cot "GMV Ads Actual" o nguon khong dung
+  // duoc (co dong 19/07 Garnier ghi 468 ty cho phien GMV 3.5tr) va campaign coi GMV tu ads = GMV total.
+  s.roas = s.ads? s.gmv/s.ads : null;
+  s.aov  = s.ord? s.gmv/s.ord : null;
+  s.gmvH = s.h?   s.gmv/s.h : null;
+  s.vH   = s.h?   s.v/s.h : null;
+  s.err  = s.imp? s.v/s.imp : null;
+  s.ctr  = s.v?   s.clk/s.v : null;
+  s.ctor = s.clk? s.ord/s.clk : null;
+  s.cpv  = s.v?   s.ads/s.v : null;
+  s.cpm  = s.imp? s.ads/s.imp*1000 : null;
+  s.gpm  = s.imp? s.gmv/s.imp*1000 : null;
+  return s;
+}
+// Target %Ads cost: plan chi co GMV target -> quy ve GMV target (= GMV/0.85) cho cung mau so voi actual
+function acosTgt(ads,nmv){ return nmv? ads/nmv*D.nmvFactor : null; }
+function groupBy(rows,col){
+  const m=new Map();
+  for(const r of rows){ const k=r[col]; if(!m.has(k)) m.set(k,[]); m.get(k).push(r); }
+  return m;
+}
+
+/* ===== cross filter ===== */
+function toggleCf(dim,val){ if(cf[dim]===val) delete cf[dim]; else cf[dim]=val; render(); }
+function clearCf(){ for(const k in cf) delete cf[k]; render(); }
+function cfLabel(dim,val){
+  if(dim==='ch') return D.channels[val];
+  if(dim==='ty') return D.types[val];
+  if(dim==='host') return D.hosts[val];
+  if(dim==='slot') return val<0?'(N/A)':val+'h';
+  return val;
+}
+function renderCfBar(){
+  const keys=Object.keys(cf);
+  $('cfBar').style.display = keys.length? 'flex':'none';
+  $('cfChips').innerHTML = keys.map(d=>`<span class="cfchip" onclick="toggleCf('${d}',${cf[d]})">${CFNAME[d]}: <b>${esc(cfLabel(d,cf[d]))}</b> <span class="x">✕</span></span>`).join(' ');
+}
+
+/* ===== thang / clear ===== */
+function setMonth(m){ mSel=m; render(); }
+function clearAll(){ mSel='All'; bSel='All'; $('dFrom').value=''; $('dTo').value='';
+  ['fCh','fHost','fOp'].forEach(id=>$(id).value='All'); tySel.clear(); paintTypeFilter(); clearCf(); }
+function buildTabs(){
+  // dropdown thang cho gon (thay day tab) — mac dinh thang gan nhat
+  let h=`<div class="fi"><label>Tháng</label><select id="mSelect" onchange="setMonth(this.value)" style="border:1.5px solid #EE3124;border-radius:999px;padding:3.5px 12px;font-size:10px;font-weight:700;color:#EE3124;background:#fff;cursor:pointer;">
+    <option value="All">All (T${D.months[0]}–T${D.months[D.months.length-1]})</option>
+    ${D.months.map(m=>`<option value="${m}">Tháng ${m}</option>`).join('')}</select></div>`;
+  h+=`<span class="clr" onclick="clearAll()">Clear all slicers</span>`;
+  $('tabRow').innerHTML=h;
+}
+function paintTabs(){
+  $('mSelect').value=mSel;
+  $('timeBadge').textContent = mSel==='All'? 'Tất cả ('+D.months.map(m=>'T'+m).join(' · ')+')' : 'Tháng '+mSel;
+}
+
+/* ===== fill select ===== */
+function toggleTyMenu(ev){ ev.stopPropagation(); $('fTyBox').classList.toggle('open'); }
+function toggleTy(i,checked){ if(checked) tySel.add(i); else tySel.delete(i); paintTypeFilter(); render(); }
+function typeFilterLabel(){
+  if(!tySel.size) return 'All';
+  const names=[...tySel].sort((a,b)=>a-b).map(i=>D.types[i]);
+  return names.length<=2 ? names.join(', ') : `${names.length} loại đã chọn`;
+}
+function paintTypeFilter(){
+  const btn=$('fTyBtn'), menu=$('fTyMenu'); if(!btn||!menu) return;
+  btn.textContent=typeFilterLabel();
+  menu.innerHTML=`<label class="msel-opt"><input type="checkbox" ${!tySel.size?'checked':''} onchange="tySel.clear(); paintTypeFilter(); render()">All</label>`
+    + D.types.map((n,i)=>`<label class="msel-opt"><input type="checkbox" ${tySel.has(i)?'checked':''} onchange="toggleTy(${i},this.checked)">${esc(n)}</label>`).join('');
+}
+document.addEventListener('click',()=>{ const b=$('fTyBox'); if(b) b.classList.remove('open'); });
+function fillSelects(){
+  const fill=(id,arr)=>{ const s=$(id); arr.map((n,i)=>[n,i]).sort((a,b)=>a[0].localeCompare(b[0],'vi')).forEach(([n,i])=>{ const o=document.createElement('option'); o.value=i; o.textContent=n; s.appendChild(o); }); };
+  fill('fCh',D.channels); fill('fHost',D.hosts); fill('fOp',D.ops); paintTypeFilter();
+}
+
+/* ===== KPI ===== */
+function prevMonthOf(m){ const i=D.months.indexOf(+m); return i>0? D.months[i-1] : null; }
+// Tong hop plan 1 thang: tong GMV/Ads/Views + luy ke plan den ngay data cuoi cung cua thang do
+function lastDataIso(m){ const ds=R.filter(r=>r[1]===m).map(r=>r[0]).sort(); return ds.length? ds[ds.length-1] : null; }
+function planInfo(m,ci){
+  const pm=D.plan[m]||{};
+  const keys=ci!=null? (pm[ci]?[ci]:[]) : Object.keys(pm).filter(k=>chPass(+k));   // plan cung nhay theo filter brand/channel
+  const last=lastDataIso(m);
+  const o={nmv:0,ads:0,views:0,nmvCum:0,adsCum:0,has:keys.length>0};
+  for(const k of keys){
+    const p=pm[k];
+    if(typeFilterActive() && p.byType){
+      for(const tn of Object.keys(p.byType).filter(typeNamePass)){
+        const bt=p.byType[tn];
+        o.nmv+=bt.nmv||0; o.ads+=bt.ads||0;
+        const share=p.nmv? (bt.nmv||0)/p.nmv : 0;
+        o.views+=(p.views||0)*share;
+        const dd=(p.dailyByType&&p.dailyByType[tn])||[];
+        if(dd.length){ for(const [iso,a,n] of dd){ if(last&&iso<=last){ o.adsCum+=a; o.nmvCum+=n; } } }
+        else { o.adsCum+=bt.ads||0; o.nmvCum+=bt.nmv||0; }
+      }
+    } else {
+      o.nmv+=p.nmv; o.ads+=p.ads; o.views+=p.views;
+      if(p.daily&&p.daily.length){ for(const [iso,a,n] of p.daily){ if(last&&iso<=last){ o.adsCum+=a; o.nmvCum+=n; } } }
+      else { o.adsCum+=p.ads; o.nmvCum+=p.nmv; }
+    }
+  }
+  return o;
+}
+/* ===== PIC phu trach (theo brand) ===== */
+const PIC={};
+const PICCLR={'Lifebuoy Vietnam':'#e11d48','Dove Vietnam':'#0369a1','Closeupvietnam':'#dc2626','Closeup White Now':'#7c3aed','Chuyên Gia P/S':'#0f766e'};
+function picChip(ci){ const b=BRANDS[chBrand[ci]]; const p=PIC[b]; if(!p) return '';
+  return ` <span class="picchip" style="background:${PICCLR[b]||'#64748b'};" title="PIC brand ${esc(b)}">${esc(p)}</span>`; }
+function kpiCard(cls,lb,vl,s1,s2){ return `<div class="kpi ${cls}"><div class="lb">${lb}</div><div class="vl">${vl}</div><div class="s1">${s1||''}</div><div class="s2">${s2||''}</div></div>`; }
+function renderKpis(){
+  const rows=rowsF(null), s=agg(rows);
+  // MoM: chi khi dang chon 1 thang co thang truoc
+  let momOf=null;
+  if(mSel!=='All'){ const pmv=prevMonthOf(mSel);
+    if(pmv!=null){
+      // thang hien tai (M0): so MTD cung ky thang truoc (note Read me sheet MoM); thang cu: so ca thang
+      const isM0=+mSel===D.months[D.months.length-1];
+      const cutD=isM0? (lastDataIso(+mSel)||'').slice(8,10) : null;
+      const prev=agg(R.filter(r=>r[1]===pmv && dimPass(r,null) && (!cutD||r[0].slice(8,10)<=cutD)));
+      momOf=(get,inv)=>`MoM T${pmv}${cutD?' (cùng kỳ 1–'+(+cutD)+')':''}: ${momHtml(get(s),get(prev),inv)}`; } }
+  const mom=(get,inv)=>momOf? momOf(get,inv):'';
+  // %Loading plan (GMV basis) — thang plan moi nhat
+  const pm=D.planMonth;
+  const P=planInfo(pm);
+  const actPM=agg(R.filter(r=>r[1]===pm && dimPass(r,null)));   // actual nhay theo moi filter dimension + cross-filter
+  const actGMV=actPM.gmv*D.nmvFactor;
+  const ldN=P.nmv? actGMV/P.nmv:null, ldA=P.ads? actPM.ads/P.ads:null;
+  const prog=P.nmvCum? actGMV/P.nmvCum:null;                 // % dat tien do vs plan luy ke den ngay data cuoi
+  const mtd=P.nmv? P.nmvCum/P.nmv:0;                         // % plan da troi (theo plan/ngay)
+  const ldCls=(v)=>v==null?'':(v>=mtd?'up':(v>=mtd*0.85?'neu':'dn'));
+  let h='';
+  h+=kpiCard('hl','GMV', fC(s.gmv), `Orders: <strong>${fN(s.ord)}</strong>: <strong>${fN(s.ord)}</strong>`, mom(x=>x.gmv,false));
+  h+=kpiCard('hl','Ads Cost', fC(s.ads), `CPM: <strong>${fC(s.cpm)}</strong> · CPV: <strong>${fC(s.cpv)}</strong>`, mom(x=>x.ads,true));
+  // %Ads cost = Ads ÷ GMV (sub acc ko tách ads/organic nên là Ads cost, không phải TACOS). Target = Ads target ÷ GMV target.
+  const acosT=acosTgt(P.ads,P.nmv);
+  h+=kpiCard('hl','%Ads cost', acosT!=null? `<span class="${s.pAds!=null&&s.pAds<=acosT?'up':'dn'}">${fP(s.pAds)}</span>` : fP(s.pAds),
+    `Target T${pm}: <strong>${fP(acosT)}</strong>${acosT&&s.pAds!=null?` (×${fX(s.pAds/acosT)})`:''} · ROI: <strong>${fX(s.roas)}</strong>`,
+    `= Ads ÷ GMV · Suggest: ${suggest(prog,acosT&&s.pAds!=null?s.pAds/acosT:null)?`<b style="color:${ACT[suggest(prog,s.pAds/acosT)].bg};">${suggest(prog,s.pAds/acosT)} · ${ACT[suggest(prog,s.pAds/acosT)].t}</b>`:'—'}`);
+  h+=kpiCard('tg',`%Loading GMV — T${pm}`, `<span class="${ldCls(ldN)}">${fP(ldN)}</span>`, `Plan GMV: ${fC(P.nmv)} · <span class="mtdchip">MTD ${fP(mtd,0)}</span>`, `Actual GMV: ${fC(actGMV)} · %Tiến độ: <b class="${prog!=null&&prog>=1?'up':(prog!=null&&prog>=0.9?'neu':'dn')}">${fP(prog)}</b>`);
+  h+=kpiCard('tg',`%Loading Ads — T${pm}`, `<span class="${ldCls(ldA)}">${fP(ldA)}</span>`, `Plan Ads: ${fC(P.ads)} · <span class="mtdchip">MTD ${fP(mtd,0)}</span>`, `Actual: ${fC(actPM.ads)} · vs plan lũy kế: <b>${fP(P.adsCum?actPM.ads/P.adsCum:null)}</b>`);
+  h+=kpiCard('','ROI (GMV ÷ Ads cost)', fX(s.roas), `GMV ${fC(s.gmv)} ÷ Ads ${fC(s.ads)}`, mom(x=>x.roas,false));
+  h+=kpiCard('','GMV / giờ live', fC(s.gmvH), `${fX(s.h,1)} giờ live`, mom(x=>x.gmvH,false));
+  h+=kpiCard('','Giờ live', fX(s.h,1), `${fN(s.n)} phiên · TB ${fX(s.n?s.h/s.n:null,1)}h/phiên`, mom(x=>x.h,false));
+  h+=kpiCard('','Views', fN(s.v), `View/h: <strong>${fN(s.vH)}</strong> · ERR: ${fP(s.err)}`, mom(x=>x.v,false));
+  h+=kpiCard('','AOV', fC(s.aov), `CTR: ${fP(s.ctr)} · CTOR: ${fP(s.ctor)}`, mom(x=>x.aov,false));
+  $('kpiRow').innerHTML=h;
+}
+
+/* ===== funnel ===== */
+function renderFunnel(){
+  const s=agg(rowsF(null));
+  // tam giác ngược: mỗi tầng hẹp dần; mũi tên giữa các tầng in đậm tỉ lệ chuyển đổi (ERR/CTR/CTOR)
+  const stages=[{lb:'Impressions',v:s.imp,c:'#1a1f36'},{lb:'Views',v:s.v,c:'#0ea5e9'},{lb:'Clicks',v:s.clk,c:'#f59e0b'},{lb:'Orders',v:s.ord,c:'#EE3124'}];
+  const arrows=[{nm:'ERR',val:s.err},{nm:'CTR',val:s.ctr},{nm:'CTOR',val:s.ctor}];
+  const W=[100,74,52,34];   // bề rộng % cho hình tam giác ngược (tầng dưới hẹp hơn)
+  let h='';
+  stages.forEach((st,i)=>{
+    h+=`<div class="fnl-stage" style="width:${W[i]}%;"><span class="fnl-bg" style="background:${st.c};"></span><span class="fnl-lb">${st.lb}</span><span class="fnl-v">${fN(st.v)}</span></div>`;
+    if(i<arrows.length){ const a=arrows[i];
+      h+=`<div class="fnl-arrow"><span class="ar">▼</span>${a.nm} <b>${fP(a.val,1)}</b></div>`; }
+  });
+  $('funnel').innerHTML=h;
+}
+
+/* ===== Pivot Plan vs Actual theo Day Type (GMV · Ads Cost · ROI) ===== */
+// mũi tên so Actual vs Plan: good=true nghĩa là actual cao hơn plan là TỐT (GMV, ROI); với Ads thì vượt plan = xấu
+function pvArrow(act,plan,goodHigh){
+  if(act==null||plan==null||!isFinite(act)||!isFinite(plan)||plan===0) return '';
+  const d=(act-plan)/Math.abs(plan), good=goodHigh? d>=0 : d<=0;
+  return `<span class="arw ${good?'up':'dn'}">${d>=0?'▲':'▼'}${Math.abs(d*100).toFixed(0)}%</span>`;
+}
+function renderPvType(){
+  const pm=D.planMonth, NF=D.nmvFactor;
+  // plan theo day type: gộp các kênh trong scope
+  const pmPlan=D.plan[pm]||{};
+  const planT={};
+  for(const ci in pmPlan){ if(!chPass(+ci)) continue; const bt=pmPlan[ci].byType; if(!bt) continue;
+    for(const tt in bt){ if(!planT[tt]) planT[tt]={ads:0,nmv:0,gads:0};
+      planT[tt].ads+=bt[tt].ads; planT[tt].nmv+=bt[tt].nmv; planT[tt].gads+=(bt[tt].gads||0); } }
+  // actual theo day type (tháng plan, theo mọi filter dimension)
+  const aRows=R.filter(r=>r[1]===pm && dimPass(r,null));
+  const actT={};
+  for(const r of aRows){ const tn=D.types[r[4]]; if(!actT[tn]) actT[tn]={gmv:0,ads:0,gads:0};
+    actT[tn].gmv+=r[8]; actT[tn].ads+=r[9]; actT[tn].gads+=r[15]; }
+  const names=[...new Set([...Object.keys(planT),...Object.keys(actT)])]
+    .filter(n=>n!=='(no type)').sort((a,b)=>(TYPE_ORDER[a]??9)-(TYPE_ORDER[b]??9));
+  if(!names.length){ $('tblPvType').innerHTML='<tbody><tr><td style="padding:10px;color:#9ca3af;">Chưa có plan theo day type cho scope này.</td></tr></tbody>'; return; }
+  let h=`<thead>
+    <tr><th class="gp-blank"></th><th class="gp-plan sep" colspan="3">PLAN</th><th class="gp-act sep" colspan="3">ACTUAL</th></tr>
+    <tr><th>Day Type</th><th class="sep">GMV</th><th>Ads Cost</th><th>ROI</th><th class="sep">GMV</th><th>Ads Cost</th><th>ROI</th></tr></thead><tbody>`;
+  const T={pn:0,pa:0,pg:0,an:0,aa:0,ag:0};
+  for(const n of names){
+    const p=planT[n]||{ads:0,nmv:0,gads:0}, a=actT[n]||{gmv:0,ads:0,gads:0};
+    // ROI actual = GMV / Ads (plan giu nguyen: p.gads = ROI plan x Ads plan = GMV plan)
+    const aNmv=a.gmv*NF, pRoi=p.ads?p.gads/p.ads:null, aRoi=a.ads?a.gmv/a.ads:null;
+    T.pn+=p.nmv; T.pa+=p.ads; T.pg+=p.gads; T.an+=aNmv; T.aa+=a.ads; T.ag+=a.gmv;
+    h+=`<tr class="clk" onclick="(function(){const i=D.types.indexOf('${n.replace(/'/g,"\\'")}');if(i>=0)toggleCf('ty',i);})()">
+      <td class="dtn">${esc(n)}</td>
+      <td class="sep">${p.nmv?fC(p.nmv):'—'}</td><td>${p.ads?fC(p.ads):'—'}</td><td>${pRoi!=null?fX(pRoi):'—'}</td>
+      <td class="sep"><b>${aNmv?fC(aNmv):'—'}</b>${pvArrow(aNmv||null,p.nmv||null,true)}</td>
+      <td>${a.ads?fC(a.ads):'—'}${pvArrow(a.ads||null,p.ads||null,false)}</td>
+      <td>${aRoi!=null?fX(aRoi):'—'}${pvArrow(aRoi,pRoi,true)}</td></tr>`;
+  }
+  const pRoiT=T.pa?T.pg/T.pa:null, aRoiT=T.aa?T.ag/T.aa:null;
+  h+=`<tr class="tot"><td class="dtn">TỔNG</td>
+    <td class="sep">${fC(T.pn)}</td><td>${fC(T.pa)}</td><td>${pRoiT!=null?fX(pRoiT):'—'}</td>
+    <td class="sep"><b>${fC(T.an)}</b>${pvArrow(T.an,T.pn,true)}</td>
+    <td>${fC(T.aa)}${pvArrow(T.aa,T.pa,false)}</td>
+    <td>${aRoiT!=null?fX(aRoiT):'—'}${pvArrow(aRoiT,pRoiT,true)}</td></tr></tbody>`;
+  $('tblPvType').innerHTML=h;
+}
+
+/* ===== plan table (plan GMV/Ads tu GSheet Ads Monthly Plan; %loading GMV = GMV x 0.85 / GMV plan) ===== */
+let planSel=null;   // thang plan dang xem trong bang
+function setPlanM(m){ planSel=m; renderPlan(); }
+function renderPlan(){
+  const pm=planSel??D.planMonth, pmPrev=prevMonthOf(pm);
+  const PT=planInfo(pm);
+  const mtd=PT.nmv? PT.nmvCum/PT.nmv:0;
+  const last=lastDataIso(pm);
+  const tog=D.planMonths.length>1? D.planMonths.map(m=>`<button class="tab ${m===pm?'tab-a':'tab-i'}" style="padding:1.5px 9px;font-size:8px;" onclick="setPlanM(${m})">T${m}</button>`).join(' '):'';
+  $('planMtd').innerHTML=`${tog} <span class="mtdchip">MTD ${fP(mtd,0)} — data đến ${last??'—'}</span>`;
+  document.querySelectorAll('.pm-lbl').forEach(e=>e.textContent=D.planMonth);
+  const ldBar=(ld)=>{ if(ld==null) return '—';
+    const c= ld>=mtd?'#22c55e':(ld>=mtd*0.85?'#f59e0b':'#ef4444');
+    return `<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end;"><span class="ldtrack"><span class="ldfill" style="width:${Math.min(100,ld*100)}%;background:${c};"></span><span class="ldtick" style="left:${Math.min(100,mtd*100)}%;"></span></span><b>${fP(ld,0)}</b></div>`; };
+  let h=`<thead><tr><th>Channel</th><th>GMV Plan</th><th>GMV Actual</th><th>%Loading GMV</th><th>%Tiến độ</th><th>MoM GMV</th><th>Ads cost Plan</th><th>Ads cost Actual</th><th>%Loading Ads</th><th>%Ads cost Plan</th><th>%Ads cost Act</th><th>ROI</th><th>CIR Plan</th><th>CIR T${pmPrev??'—'}</th><th style="text-align:center;">Suggest Action</th></tr></thead><tbody>`;
+  const pmPlan=D.plan[pm]||{};
+  // dong kenh loc theo brand/dropdown channel (cf.ch chi highlight, khong an dong de con click bo chon)
+  const idxs=Object.keys(pmPlan).map(Number).filter(ci=>{
+    if(bSel!=='All'&&chBrand[ci]!==+bSel) return false;
+    if(selVal('fCh')!=='All'&&ci!==+selVal('fCh')) return false;
+    return true; }).sort((a,b)=>pmPlan[b].nmv-pmPlan[a].nmv);
+  const fixOf=ci=>{ const f=D.fix[ci]; if(!f) return {fix:0,fixPrev:0}; return f; };
+  // MoM: neu pm la thang hien tai (M0) -> so MTD cung ky thang truoc (theo note Read me sheet MoM)
+  const isM0 = pm===D.months[D.months.length-1];
+  const cutD = isM0? (lastDataIso(pm)||'').slice(8,10) : null;
+  const tot={pn:0,pa:0,pv:0,fix:0,fixP:0,lg:0,la:0};
+  for(const ci of idxs){
+    const p=planInfo(pm,ci);
+    const a=agg(R.filter(r=>r[1]===pm&&r[3]===ci&&dimPass(r,'ch')));
+    const nmvA=a.gmv*D.nmvFactor;
+    const lm=pmPrev!=null? agg(R.filter(r=>r[1]===pmPrev&&r[3]===ci&&dimPass(r,'ch')&&(!cutD||r[0].slice(8,10)<=cutD))):null;
+    const fx=fixOf(ci);
+    tot.pn+=p.nmv; tot.pa+=p.ads; tot.pv+=p.views; tot.pnCum=(tot.pnCum||0)+p.nmvCum; tot.fix+=fx.fix; tot.fixP+=fx.fixPrev;
+    if(lm){tot.lg+=lm.gmv; tot.la+=lm.ads;}
+    const cirP=p.nmv? (p.ads+fx.fix)/p.nmv:null;
+    const cirL=(lm&&lm.gmv)? (lm.ads+fx.fixPrev)/(lm.gmv*D.nmvFactor):null;
+    const prog=p.nmvCum? nmvA/p.nmvCum:null;
+    h+=`<tr class="clk ${cf.ch===ci?'cfsel':''}" onclick="toggleCf('ch',${ci})">
+      <td>${chLogo(ci,13)}${esc(D.channels[ci])}${picChip(ci)}</td>
+      <td>${fC(p.nmv)}</td><td><b>${fC(nmvA)}</b></td><td>${ldBar(p.nmv?nmvA/p.nmv:null)}</td>
+      <td><b class="${prog!=null&&prog>=1?'up':(prog!=null&&prog>=0.9?'neu':'dn')}">${fP(prog,0)}</b></td>
+      <td>${lm?momHtml(nmvA,lm.gmv*D.nmvFactor):'—'}</td>
+      <td>${fC(p.ads)}</td><td>${fC(a.ads)}</td><td>${ldBar(p.ads?a.ads/p.ads:null)}</td>
+      <td>${fP(acosTgt(p.ads,p.nmv))}</td>
+      <td>${(()=>{const tg=acosTgt(p.ads,p.nmv); if(a.pAds==null)return '—'; if(tg==null)return fP(a.pAds);
+        return `<span style="${acosBandStyle(a.pAds/tg)}" title="%Ads cost actual/target = ${fP(a.pAds)}/${fP(tg)} = ×${fX(a.pAds/tg)}">${fP(a.pAds)}</span>`;})()}</td>
+      <td>${fX(a.roas)}</td>
+      <td>${cirP==null?'—':`<span class="${cirP<=D.cirTarget?'badge-grn':'badge-red'}">${fP(cirP)}</span>`}</td>
+      <td>${cirL==null?'—':`<span class="${cirL<=D.cirTarget?'badge-grn':'badge-red'}">${fP(cirL)}</span>`}</td>
+      ${(()=>{const tg=acosTgt(p.ads,p.nmv); return actCell(prog, (tg&&a.pAds!=null)?a.pAds/tg:null);})()}</tr>`;
+  }
+  const chSet=new Set(idxs);
+  const aT=agg(R.filter(r=>r[1]===pm&&chSet.has(r[3])&&dimPass(r,'ch')));   // total actual chi tinh cac kenh co plan, nhay theo filter
+  const nmvT=aT.gmv*D.nmvFactor;
+  const cirPT=tot.pn? (tot.pa+tot.fix)/tot.pn:null;
+  const cirLT=tot.lg? (tot.la+tot.fixP)/(tot.lg*D.nmvFactor):null;
+  const progT=tot.pnCum? nmvT/tot.pnCum:null;
+  h+=`<tr class="tot"><td>TOTAL (kênh có plan)</td><td>${fC(tot.pn)}</td><td>${fC(nmvT)}</td><td>${ldBar(tot.pn?nmvT/tot.pn:null)}</td>
+    <td><b class="${progT!=null&&progT>=1?'up':(progT!=null&&progT>=0.9?'neu':'dn')}">${fP(progT,0)}</b></td>
+    <td>${tot.lg?momHtml(nmvT,tot.lg*D.nmvFactor):'—'}</td>
+    <td>${fC(tot.pa)}</td><td>${fC(aT.ads)}</td><td>${ldBar(tot.pa?aT.ads/tot.pa:null)}</td>
+    <td>${fP(acosTgt(tot.pa,tot.pn))}</td>
+    <td>${(()=>{const tg=acosTgt(tot.pa,tot.pn); if(aT.pAds==null)return '—'; if(tg==null)return fP(aT.pAds);
+      return `<span style="${acosBandStyle(aT.pAds/tg)}">${fP(aT.pAds)}</span>`;})()}</td>
+    <td>${fX(aT.roas)}</td>
+    <td>${cirPT==null?'—':`<span class="${cirPT<=D.cirTarget?'badge-grn':'badge-red'}">${fP(cirPT)}</span>`}</td>
+    <td>${cirLT==null?'—':`<span class="${cirLT<=D.cirTarget?'badge-grn':'badge-red'}">${fP(cirLT)}</span>`}</td>
+    ${(()=>{const tg=acosTgt(tot.pa,tot.pn); return actCell(progT,(tg&&aT.pAds!=null)?aT.pAds/tg:null,true);})()}</tr></tbody>`;
+  $('tblPlan').innerHTML=h;
+}
+
+/* ===== charts ===== */
+// datalabels đăng ký nhưng mặc định TẮT — chỉ chart khai báo mới bật
+if(window.ChartDataLabels){ Chart.register(ChartDataLabels); Chart.defaults.set('plugins.datalabels',{display:false}); }
+// hiệu ứng xuất hiện: chart animate 1 LẦN khi lọt viewport (giống dash CIR); re-render/cross-filter tức thì
+const ANIM_DONE=new Set();
+const animIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>{
+  es.forEach(en=>{ if(!en.isIntersecting) return; const cv=en.target; animIO.unobserve(cv);
+    const ch=CH[cv.id]; if(!ch||ANIM_DONE.has(cv.id)) return; ANIM_DONE.add(cv.id);
+    try{ ch.options.animation={duration:750,easing:'easeOutQuart'}; ch.reset(); ch.update();
+      setTimeout(()=>{ try{ ch.options.animation=false; }catch(e){} },850); }catch(e){}
+  });
+},{threshold:0.2}):null;
+function mk(id,cfg){ if(CH[id]) CH[id].destroy(); cfg.options=cfg.options||{}; cfg.options.responsive=true; cfg.options.maintainAspectRatio=false; cfg.options.animation=false; CH[id]=new Chart($(id),cfg);
+  if(animIO && !ANIM_DONE.has(id)) animIO.observe($(id)); }
+function renderChartDate(){
+  const rows=rowsF(null);
+  const m=groupBy(rows,0);
+  const days=[...m.keys()].sort();
+  const ag=days.map(d=>agg(m.get(d)));
+  const gmv=ag.map(s=>s.gmv), ads=ag.map(s=>s.ads), pads=ag.map(s=>s.pAds!=null?s.pAds*100:null), cpv=ag.map(s=>s.cpv!=null&&isFinite(s.cpv)?s.cpv:null);
+  const showLbl=days.length<=32;   // nhiều ngày quá thì ẩn nhãn cho đỡ rối
+  mk('chDate',{data:{labels:days.map(d=>+d.slice(8,10)),datasets:[
+    {type:'bar',label:'GMV',data:gmv,backgroundColor:'#1d4ed8',borderRadius:2,yAxisID:'y',order:4,
+      datalabels:{display:showLbl,anchor:'end',align:'end',offset:1,color:'#1d4ed8',font:{size:6.5,weight:700},formatter:v=>fC(v)}},
+    {type:'bar',label:'Ads Cost',data:ads,backgroundColor:'#EE3124',borderRadius:2,yAxisID:'y',order:4,datalabels:{display:false}},
+    {type:'line',label:'%Ads Cost',data:pads,borderColor:'#f59e0b',backgroundColor:'#f59e0b',borderWidth:2,pointRadius:2,tension:.3,yAxisID:'y1',order:1,
+      datalabels:{display:showLbl,align:'top',color:'#b45309',font:{size:6.5,weight:700},formatter:v=>v!=null?v.toFixed(1)+'%':''}},
+    {type:'line',label:'CPV',data:cpv,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:1.6,borderDash:[5,3],pointRadius:1.5,tension:.3,yAxisID:'y2',order:2,datalabels:{display:false}}]},
+    options:{layout:{padding:{top:16}},scales:{x:{ticks:{font:{size:7}},grid:{display:false}},
+      y:{ticks:{font:{size:7},callback:v=>fC(v)},grace:'12%'},
+      y1:{position:'right',grid:{display:false},ticks:{font:{size:7},callback:v=>v+'%'},min:0},
+      y2:{position:'right',display:false,grid:{display:false}}},
+    plugins:{legend:{labels:{font:{size:8},boxWidth:10}},tooltip:{callbacks:{label:c=>{const id=c.dataset.yAxisID;
+      return ` ${c.dataset.label}: ${id==='y1'?(c.parsed.y!=null?c.parsed.y.toFixed(1)+'%':'—'):fC(c.parsed.y)}`;}}}}}});
+}
+
+/* ===== MoM table ===== */
+function renderMoM(){
+  const rows=R.filter(r=>dimPass(r,null));   // bo filter thang/ngay, giu cac filter khac de so MoM cung ky
+  const m=groupBy(rows,1);
+  const mos=[...m.keys()].sort((a,b)=>a-b);
+  // MoM cuoi: thang hien tai so MTD cung ky thang truoc (note Read me sheet MoM)
+  const lastM=mos[mos.length-1], prevM=mos.length>=2? mos[mos.length-2]:null;
+  const isM0=lastM===D.months[D.months.length-1];
+  const cutD=isM0? (lastDataIso(lastM)||'').slice(8,10) : null;
+  const agPrev=prevM!=null? agg(rows.filter(r=>r[1]===prevM && (!cutD||r[0].slice(8,10)<=cutD))) : null;
+  let h=`<thead><tr><th>Chỉ số</th>${mos.map(x=>`<th>Tháng ${x}</th>`).join('')}<th>MoM cuối${cutD?' (cùng kỳ 1–'+(+cutD)+')':''}</th><th>Trend</th><th style="text-align:left;">Nhận xét nhanh</th></tr></thead><tbody>`;
+  const ag=mos.map(x=>agg(m.get(x)));
+  const defs=[['GMV',s=>s.gmv,fC,false],['Ads Cost',s=>s.ads,fC,true],['%Ads Cost',s=>s.pAds,v=>fP(v),true],['ROI',s=>s.roas,v=>fX(v),false],
+    ['GMV/giờ',s=>s.gmvH,fC,false],['Giờ live',s=>s.h,v=>fX(v,1),false],['Phiên live',s=>s.n,fN,false],['AOV',s=>s.aov,fC,false],
+    ['Views',s=>s.v,fN,false],['View/h',s=>s.vH,fN,false],['ERR',s=>s.err,v=>fP(v),false],['CTR',s=>s.ctr,v=>fP(v),false],['CTOR',s=>s.ctor,v=>fP(v),false],['CPM',s=>s.cpm,fC,true],['CPV',s=>s.cpv,fC,true]];
+  // Δ% mỗi tháng so tháng liền trước — mũi tên + màu theo chiều tốt/xấu của từng metric (inv=true: giảm là tốt)
+  const dlt=(cur,prev,inv)=>{
+    if(prev==null||cur==null||!isFinite(prev)||!isFinite(cur)||prev===0) return '';
+    const d=(cur-prev)/Math.abs(prev), good=inv? d<0 : d>0;
+    return `<span class="mdlt ${good?'up':'dn'}">${d>=0?'▲':'▼'}${Math.abs(d*100).toFixed(1)}%</span>`;
+  };
+  // nhận xét nhanh theo hình dạng chuỗi (tăng/giảm đều · hồi phục · chững lại · biến động)
+  const verdict=(vals,inv)=>{
+    const v=vals.filter(x=>x!=null&&isFinite(x));
+    if(v.length<2) return ['—','#9ca3af'];
+    const ds=[]; for(let i=1;i<v.length;i++) ds.push(v[i]-v[i-1]);
+    const up=ds.every(d=>d>0), dn=ds.every(d=>d<0), last=ds[ds.length-1];
+    const tot=(v[v.length-1]-v[0])/(Math.abs(v[0])||1);
+    const G='#16a34a', B='#dc2626', N='#6b7280';
+    if(up)  return [`↗ tăng đều ${(Math.abs(tot)*100).toFixed(0)}%`, inv?B:G];
+    if(dn)  return [`↘ giảm đều ${(Math.abs(tot)*100).toFixed(0)}%`, inv?G:B];
+    if(last>0) return ['↗ hồi lại ở tháng cuối', inv?B:G];
+    if(last<0) return ['↘ chững lại ở tháng cuối', inv?G:B];
+    return ['→ đi ngang', N];
+  };
+  for(const [lb,get,fmt,inv] of defs){
+    const series=ag.map(get);
+    const [vtxt,vcol]=verdict(series,inv);
+    h+=`<tr><td>${lb}</td>`
+      + ag.map((s,i)=>`<td><span class="mval">${fmt(get(s))}</span>${i>0?dlt(get(s),get(ag[i-1]),inv):''}</td>`).join('')
+      + `<td>${agPrev?momHtml(get(ag[ag.length-1]),get(agPrev),inv):'—'}</td>`
+      + `<td style="text-align:center;">${sparkSvg(series, vcol)}</td>`
+      + `<td style="text-align:left;color:${vcol};font-weight:700;font-size:8px;">${vtxt}</td></tr>`;
+  }
+  // khoi target (plan GSheet: thang moi nhat = H46/E46, thang cu = F1x0.85/F3) — chi hien thang co plan
+  const pl=mos.map(x=>planInfo(x));
+  if(pl.some(p=>p.nmv>0||p.ads>0)){
+    const tS='background:#fff7ed;';
+    // label đóng chip; %Loading tô màu theo mức đạt, %Ads cost Target là mốc tham chiếu
+    const tgtRow=(chip,cls,cells)=>`<tr><td style="${tS}"><span class="tgt-chip ${cls}">${chip}</span></td>${cells.map(c=>`<td style="${tS}">${c}</td>`).join('')}<td style="${tS}"></td><td style="${tS}"></td><td style="${tS}"></td></tr>`;
+    const ldCol=v=>v==null?'—':`<span class="${v>=1?'up':(v>=0.9?'neu':'dn')}" style="font-weight:700;">${fP(v)}</span>`;
+    h+=tgtRow('GMV Target','tc-nmv', pl.map(p=>p.nmv?fC(p.nmv):'—'));
+    h+=tgtRow('%Loading GMV','tc-load', pl.map((p,i)=>ldCol(p.nmv?ag[i].gmv*D.nmvFactor/p.nmv:null)));
+    h+=tgtRow('Ads Cost Target','tc-ads', pl.map(p=>p.ads?fC(p.ads):'—'));
+    h+=tgtRow('%Loading Ads','tc-load', pl.map((p,i)=>ldCol(p.ads?ag[i].ads/p.ads:null)));
+    h+=tgtRow('%Ads cost Target','tc-acos', pl.map((p,i)=>{ if(!(p.nmv&&p.ads))return '—';
+      const tg=acosTgt(p.ads,p.nmv), act=ag[i].pAds;
+      return `${fP(tg)}${act!=null?`<span class="mdlt ${act<=tg?'up':'dn'}">${act<=tg?'✓':'✗'} act ${fP(act,1)}</span>`:''}`; }));
+  }
+  $('tblMoM').innerHTML=h+'</tbody>';
+}
+
+/* ===== WoW table (logic sheet WoW: tuan T2->CN, base = cung khoang ngay thang truoc qua EDATE) ===== */
+function renderWoW(){
+  const rows=rowsF(null);
+  const dimRows=R.filter(r=>dimPass(r,null));   // base thang truoc: bo filter thang/ngay
+  const m=new Map();
+  for(const r of rows){ const k=mondayOf(r[0]); if(!m.has(k)) m.set(k,[]); m.get(k).push(r); }
+  const wks=[...m.keys()].sort().reverse();     // tuan moi nhat len dau
+  const LBL={'Deal Day':'🔥 Deal Day','Mid Month':'🌗 Mid Month','Pay Day':'💰 Pay Day'};
+  let h=tblHead(['Tuần','Chu kỳ','Phiên','GMV','WoW GMV','Ads cost','WoW Ads','%Ads cost','ROI','WoW ROI','GMV/h','Views','View/h'])+'<tbody>';
+  const gmvs=wks.map(w=>agg(m.get(w)).gmv);
+  const mm=[Math.min(...gmvs),Math.max(...gmvs)];
+  for(const w of wks){
+    const s=agg(m.get(w));
+    const end=addDays(w,6);
+    const b0=edate(w,-1), b1=edate(end,-1);
+    const base=agg(dimRows.filter(r=>r[0]>=b0&&r[0]<=b1));
+    const lbl=weekLabel(w);
+    h+=`<tr><td>${w.slice(8,10)}/${w.slice(5,7)} – ${end.slice(8,10)}/${end.slice(5,7)}</td>
+      <td>${lbl?`<span class="badge-${lbl==='Deal Day'?'red':(lbl==='Pay Day'?'grn':'ora')}">${LBL[lbl]}</span>`:''}</td>
+      <td>${fN(s.n)}</td>
+      <td style="${gradAmber(s.gmv,mm[0],mm[1])}"><b>${fC(s.gmv)}</b></td><td>${base.gmv?momHtml(s.gmv,base.gmv):'—'}</td>
+      <td>${fC(s.ads)}</td><td>${base.ads?momHtml(s.ads,base.ads,true):'—'}</td>
+      <td>${fP(s.pAds)}</td>
+      <td>${fX(s.roas)}</td><td>${(base.roas&&s.roas)?momHtml(s.roas,base.roas):'—'}</td>
+      <td>${fC(s.gmvH)}</td><td>${fN(s.v)}</td><td>${fN(s.vH)}</td></tr>`;
+  }
+  const sT=agg(rows);
+  h+=`<tr class="tot"><td>TOTAL</td><td></td><td>${fN(sT.n)}</td><td><b>${fC(sT.gmv)}</b></td><td></td><td>${fC(sT.ads)}</td><td></td><td>${fP(sT.pAds)}</td><td>${fX(sT.roas)}</td><td></td><td>${fC(sT.gmvH)}</td><td>${fN(sT.v)}</td><td>${fN(sT.vH)}</td></tr></tbody>`;
+  $('tblWoW').innerHTML=h;
+}
+/* ===== detail tables ===== */
+function detailRows(rows,col,nameOf){
+  const m=groupBy(rows,col);
+  return [...m.entries()].map(([k,rs])=>({k,name:nameOf(k),s:agg(rs)})).sort((a,b)=>b.s.gmv-a.s.gmv);
+}
+function tblHead(cols){ return `<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>`; }
+// RG=null -> không tô (dòng TOTAL); có RG -> tô gradient đỏ↔xanh theo chiều tốt/xấu từng metric
+function metricCells(s,tot,gmvMM,RG){
+  const g=(v,k,dir)=>RG?gradMM(v,RG[k][0],RG[k][1],dir):'';
+  return `<td style="${gradAmber(s.gmv,gmvMM[0],gmvMM[1])}"><b>${fC(s.gmv)}</b></td><td>${fP(tot?s.gmv/tot:null)}</td>
+    <td>${fC(s.ads)}</td><td style="${g(s.pAds,'pAds',-1)}">${fP(s.pAds)}</td><td style="${g(s.roas,'roas',1)}">${fX(s.roas)}</td>
+    <td>${fX(s.h,1)}</td><td style="${g(s.gmvH,'gmvH',1)}">${fC(s.gmvH)}</td><td style="${g(s.aov,'aov',1)}">${fC(s.aov)}</td>
+    <td>${fN(s.v)}</td><td style="${g(s.vH,'vH',1)}">${fN(s.vH)}</td><td style="${g(s.err,'err',1)}">${fP(s.err)}</td>
+    <td style="${g(s.ctr,'ctr',1)}">${fP(s.ctr)}</td><td style="${g(s.ctor,'ctor',1)}">${fP(s.ctor)}</td>
+    <td style="${g(s.cpm,'cpm',-1)}">${fC(s.cpm)}</td><td style="${g(s.cpv,'cpv',-1)}">${fC(s.cpv)}</td>`;
+}
+const DETAIL_COLS=['','Phiên','GMV','%GMV','Ads cost','%Ads cost','ROI','Giờ','GMV/h','AOV','Views','View/h','ERR','CTR','CTOR','CPM','CPV'];
+function renderDetail(tblId,dim,col,nameOf,firstLbl){
+  const rows=rowsF(dim);
+  const items=detailRows(rows,col,nameOf);
+  const tot=items.reduce((a,x)=>a+x.s.gmv,0);
+  const mm=[Math.min(...items.map(x=>x.s.gmv)),Math.max(...items.map(x=>x.s.gmv))];
+  // range gradient theo cột (pctl 5–95 chống outlier)
+  const RG={}; ['pAds','roas','gmvH','aov','vH','err','ctr','ctor','cpm','cpv'].forEach(k=>RG[k]=mmp(items.map(x=>x.s[k])));
+  // ⭐ khung peak: top theo GMV/giờ (ngưỡng pctl 75) — đánh dấu ô "mạnh nhất"
+  const ghArr=items.map(x=>x.s.gmvH).filter(v=>v!=null&&isFinite(v));
+  const peakCut=ghArr.length>=3? pctl(ghArr,0.75) : Infinity;
+  const bestGh=Math.max(...ghArr);
+  const cols=[...DETAIL_COLS]; cols[0]=firstLbl;
+  let h=tblHead(cols)+'<tbody>';
+  for(const it of items){
+    const gh=it.s.gmvH, isBest=gh===bestGh, isPeak=gh!=null&&isFinite(gh)&&gh>=peakCut;
+    const star=isBest?'<span class="pk" title="Peak mạnh nhất (GMV/giờ cao nhất)">⭐</span>'
+      :(isPeak?'<span class="pk pk2" title="Khung peak (GMV/giờ thuộc top 25%)">⭐</span>':'');
+    h+=`<tr class="clk ${cf[dim]===it.k?'cfsel':''}" onclick="toggleCf('${dim}',${it.k})"><td>${dim==='ch'?chLogo(it.k,13):''}${esc(it.name)}${star}${dim==='ch'?picChip(it.k):''}</td><td>${fN(it.s.n)}</td>${metricCells(it.s,tot,mm,RG)}</tr>`;
+  }
+  const sT=agg(rows);
+  h+=`<tr class="tot"><td>TOTAL</td><td>${fN(sT.n)}</td>${metricCells(sT,tot,[0,0],null)}</tr></tbody>`;
+  $(tblId).innerHTML=h;
+}
+function renderDate(){
+  const rows=rowsF(null);
+  const m=groupBy(rows,0);
+  const days=[...m.keys()].sort().reverse();
+  const ag=days.map(d=>({d,s:agg(m.get(d))}));
+  const mm=[Math.min(...ag.map(x=>x.s.gmv)),Math.max(...ag.map(x=>x.s.gmv))];
+  // range cho tô màu đỏ↔xanh theo chiều tốt/xấu (percentile 5–95 chống outlier)
+  const RG={pAds:mmp(ag.map(x=>x.s.pAds)),roas:mmp(ag.map(x=>x.s.roas)),gmvH:mmp(ag.map(x=>x.s.gmvH)),
+    err:mmp(ag.map(x=>x.s.err)),ctr:mmp(ag.map(x=>x.s.ctr)),ctor:mmp(ag.map(x=>x.s.ctor)),cpm:mmp(ag.map(x=>x.s.cpm)),gmvHm:mmp(ag.map(x=>x.s.gmvH))};
+  const DOW=['CN','T2','T3','T4','T5','T6','T7'];
+  // Tier Rank theo CTOR (note "Tier Rank 4>3>2>1" trong file gốc): tier cao = chốt đơn tốt → nên tăng ads maximize GMV
+  const cq=[pctl(ag.map(x=>x.s.ctor),.25),pctl(ag.map(x=>x.s.ctor),.50),pctl(ag.map(x=>x.s.ctor),.75)];
+  const tierOf=v=>(v==null||!isFinite(v))?null:(v>=cq[2]?4:v>=cq[1]?3:v>=cq[0]?2:1);
+  const TIER={4:['T4','tr-4','tăng ads — chốt tốt nhất'],3:['T3','tr-3','có thể đẩy thêm'],2:['T2','tr-2','giữ nhịp'],1:['T1','tr-1','siết ads — tối ưu chốt trước']};
+  let h=tblHead(['Ngày','Tier','Phiên','Giờ','GMV','Ads cost','%Ads cost','ROI','GMV/h','AOV','Views','View/h','ERR','CTR','CTOR','CPM'])+'<tbody>';
+  for(const x of ag){
+    const dt=new Date(x.d+'T00:00:00'), s=x.s;
+    const tk=tierOf(s.ctor), T=tk?TIER[tk]:null;
+    h+=`<tr><td>${x.d} <span style="color:#aaa;">(${DOW[dt.getDay()]})</span></td>
+      <td>${T?`<span class="tier ${T[1]}" title="CTOR ${fP(s.ctor,1)} — ${T[2]}">${T[0]}</span>`:'—'}</td>
+      <td>${fN(s.n)}</td><td>${fX(s.h,1)}</td>
+      <td style="${gradAmber(s.gmv,mm[0],mm[1])}"><b>${fC(s.gmv)}</b></td><td>${fC(s.ads)}</td>
+      <td style="${gradMM(s.pAds,RG.pAds[0],RG.pAds[1],-1)}">${fP(s.pAds)}</td>
+      <td style="${gradMM(s.roas,RG.roas[0],RG.roas[1],1)}">${fX(s.roas)}</td>
+      <td style="${gradMM(s.gmvH,RG.gmvH[0],RG.gmvH[1],1)}">${fC(s.gmvH)}</td>
+      <td>${fC(s.aov)}</td><td>${fN(s.v)}</td><td>${fN(s.vH)}</td>
+      <td style="${gradMM(s.err,RG.err[0],RG.err[1],1)}">${fP(s.err)}</td>
+      <td style="${gradMM(s.ctr,RG.ctr[0],RG.ctr[1],1)}">${fP(s.ctr)}</td>
+      <td style="${gradMM(s.ctor,RG.ctor[0],RG.ctor[1],1)}">${fP(s.ctor)}</td>
+      <td style="${gradMM(s.cpm,RG.cpm[0],RG.cpm[1],-1)}">${fC(s.cpm)}</td></tr>`;
+  }
+  const sT=agg(rows);
+  h+=`<tr class="tot"><td>TOTAL</td><td></td><td>${fN(sT.n)}</td><td>${fX(sT.h,1)}</td><td><b>${fC(sT.gmv)}</b></td><td>${fC(sT.ads)}</td><td>${fP(sT.pAds)}</td><td>${fX(sT.roas)}</td><td>${fC(sT.gmvH)}</td><td>${fC(sT.aov)}</td><td>${fN(sT.v)}</td><td>${fN(sT.vH)}</td><td>${fP(sT.err)}</td><td>${fP(sT.ctr)}</td><td>${fP(sT.ctor)}</td><td>${fC(sT.cpm)}</td></tr></tbody>`;
+  $('tblDate').innerHTML=h;
+  makeSortable('tblDate');
+}
+
+/* ===== sort (DOM-based, giu dong TOTAL) ===== */
+function parseCell(td){
+  const t=td.textContent.replace(/[,%]/g,'').trim();
+  let mult=1;
+  if(t.includes('tỷ')) mult=1e9; else if(t.includes(' tr')) mult=1e6; else if(t.includes(' K')) mult=1e3;
+  const n=parseFloat(t.replace(/[^\d.\-]/g,''));
+  return isNaN(n)? t.toLowerCase() : n*mult;
+}
+function sortTable(id,ci){
+  const tbl=$(id), tb=tbl.tBodies[0];
+  const rows=[...tb.rows].filter(r=>!r.classList.contains('tot'));
+  const tot=[...tb.rows].find(r=>r.classList.contains('tot'));
+  const dir=tbl.dataset.sc==ci&&tbl.dataset.sd=='desc'?'asc':'desc';
+  tbl.dataset.sc=ci; tbl.dataset.sd=dir;
+  rows.sort((a,b)=>{ const x=parseCell(a.cells[ci]),y=parseCell(b.cells[ci]);
+    if(typeof x=='number'&&typeof y=='number') return dir=='desc'?y-x:x-y;
+    return dir=='desc'? String(y).localeCompare(String(x),'vi') : String(x).localeCompare(String(y),'vi'); });
+  rows.forEach(r=>tb.appendChild(r));
+  if(tot) tb.appendChild(tot);
+  [...tbl.tHead.rows[0].cells].forEach((th,i)=>{ th.classList.toggle('sactive',i==ci);
+    const s=th.querySelector('.sarr'); if(s)s.remove();
+    if(i==ci){ const sp=document.createElement('span'); sp.className='sarr'; sp.textContent=dir=='desc'?'▼':'▲'; th.appendChild(sp);} });
+}
+function makeSortable(id){
+  const tbl=$(id); if(!tbl.tHead) return;
+  [...tbl.tHead.rows[0].cells].forEach((th,i)=>{ th.onclick=()=>sortTable(id,i); });
+}
+
+/* ===== Key metrics theo Day Type — đồng bộ coloring dash CIR ===== */
+const TYPE_ORDER={'Super Mega':0,'Mega':1,'Campaign':2,'BAU':3};
+// plan Ads cost target theo day type (gộp các kênh trong scope, tháng plan mới nhất)
+function planTypeAcos(typeName){
+  const pm=D.plan[D.planMonth]||{}; let ads=0,nmv=0;
+  for(const ci in pm){ if(!chPass(+ci)) continue; const bt=pm[ci].byType; if(bt&&bt[typeName]){ ads+=bt[typeName].ads; nmv+=bt[typeName].nmv; } }
+  return acosTgt(ads,nmv);
+}
+function renderDayType(){
+  const rows=rowsF('ty');
+  const m=groupBy(rows,4);
+  const items=[...m.entries()].map(([k,rs])=>({k,name:D.types[k],s:agg(rs)}))
+    .sort((a,b)=>(TYPE_ORDER[a.name]??9)-(TYPE_ORDER[b.name]??9));
+  const totGmv=items.reduce((a,x)=>a+x.s.gmv,0)||1;
+  // range cho gradient theo chiều tốt/xấu
+  const ghR=mmOf(items.map(x=>x.s.gmvH)), roR=mmOf(items.map(x=>x.s.roas)), acR=mmOf(items.map(x=>x.s.pAds)),
+        ctrR=mmOf(items.map(x=>x.s.ctr)), ctoR=mmOf(items.map(x=>x.s.ctor)), aovR=mmOf(items.map(x=>x.s.aov)),
+        cpmR=mmOf(items.map(x=>x.s.cpm)), errR=mmOf(items.map(x=>x.s.err)), cpvR=mmOf(items.map(x=>x.s.cpv)), vhR=mmOf(items.map(x=>x.s.vH));
+  let h=`<thead><tr><th>Day Type</th><th>Phiên</th><th>Giờ</th><th>GMV</th><th>%GMV</th><th>GMV/h</th><th>Ads cost</th><th>%Ads cost Act</th><th>%Ads cost Tgt</th><th>ROI</th><th>AOV</th><th>Views</th><th>View/h</th><th>ERR</th><th>CTR</th><th>CTOR</th><th>CPM</th><th>CPV</th></tr></thead><tbody>`;
+  for(const it of items){
+    const s=it.s, tg=planTypeAcos(it.name);
+    h+=`<tr class="clk ${cf.ty===it.k?'cfsel':''}" onclick="toggleCf('ty',${it.k})">
+      <td><b>${esc(it.name)}</b></td><td>${fN(s.n)}</td><td>${fX(s.h,0)}</td>
+      <td><b>${fC(s.gmv)}</b></td><td>${fP(s.gmv/totGmv,0)}</td>
+      <td style="${gradMM(s.gmvH,ghR[0],ghR[1],1)}">${fC(s.gmvH)}</td>
+      <td>${fC(s.ads)}</td>
+      <td style="${tg!=null?acosBandStyle(s.pAds/tg):gradMM(s.pAds,acR[0],acR[1],-1)}" title="${tg!=null?('Target '+fP(tg)+' → ×'+fX(s.pAds/tg)):'chưa có target theo type'}">${fP(s.pAds)}</td>
+      <td>${tg!=null?fP(tg):'—'}</td>
+      <td style="${gradMM(s.roas,roR[0],roR[1],1)}">${fX(s.roas)}</td>
+      <td style="${gradMM(s.aov,aovR[0],aovR[1],1)}">${fC(s.aov)}</td>
+      <td>${fN(s.v)}</td>
+      <td style="${gradMM(s.vH,vhR[0],vhR[1],1)}">${fN(s.vH)}</td>
+      <td style="${gradMM(s.err,errR[0],errR[1],1)}">${fP(s.err)}</td>
+      <td style="${gradMM(s.ctr,ctrR[0],ctrR[1],1)}">${fP(s.ctr)}</td>
+      <td style="${gradMM(s.ctor,ctoR[0],ctoR[1],1)}">${fP(s.ctor)}</td>
+      <td style="${gradMM(s.cpm,cpmR[0],cpmR[1],-1)}">${fC(s.cpm)}</td>
+      <td style="${gradMM(s.cpv,cpvR[0],cpvR[1],-1)}">${fC(s.cpv)}</td></tr>`;
+  }
+  const sT=agg(rows);
+  h+=`<tr class="tot"><td>TỔNG</td><td>${fN(sT.n)}</td><td>${fX(sT.h,0)}</td><td><b>${fC(sT.gmv)}</b></td><td>100%</td><td>${fC(sT.gmvH)}</td><td>${fC(sT.ads)}</td><td>${fP(sT.pAds)}</td><td></td><td>${fX(sT.roas)}</td><td>${fC(sT.aov)}</td><td>${fN(sT.v)}</td><td>${fN(sT.vH)}</td><td>${fP(sT.err)}</td><td>${fP(sT.ctr)}</td><td>${fP(sT.ctor)}</td><td>${fC(sT.cpm)}</td><td>${fC(sT.cpv)}</td></tr></tbody>`;
+  $('tblType').innerHTML=h;
+  // insight: so Super Mega/Mega (push) vs BAU (nền)
+  const push=items.find(x=>x.name==='Super Mega')||items.find(x=>x.name==='Mega');
+  const bau=items.find(x=>x.name==='BAU');
+  if(push&&bau&&bau.s.gmvH&&bau.s.pAds){
+    const gh=(push.s.gmvH/bau.s.gmvH-1), ac=(push.s.pAds-bau.s.pAds);
+    // đọc trạng thái thực: GMV/h cao hơn = tốt; Ads cost thấp hơn = tốt
+    const verdict = (gh>0&&ac<=0)? '✅ vừa nhiều doanh thu/giờ vừa ads hiệu quả hơn nền'
+      : (gh>0&&ac>0)? '⚠️ kéo được nhiều GMV/giờ hơn nhưng đang <b>đốt ads mạnh hơn</b> nền — soi lại hiệu quả spend ngày push'
+      : (gh<=0&&ac<=0)? 'GMV/giờ chưa vượt nền nhưng ads tiết kiệm hơn'
+      : '🔴 vừa thấp GMV/giờ vừa %Ads cost cao hơn nền';
+    $('typeNote').innerHTML=`📌 <b>${esc(push.name)}</b> vs <b>BAU</b>: GMV/h <b class="${gh>=0?'up':'dn'}">${gh>=0?'+':''}${(gh*100).toFixed(0)}%</b> · %Ads cost <b class="${ac<=0?'up':'dn'}">${ac>=0?'+':''}${(ac*100).toFixed(1)}đ%</b> · AOV ${fC(push.s.aov)} vs ${fC(bau.s.aov)} → ${verdict}.`;
+  } else $('typeNote').innerHTML='';
+}
+
+/* ===================== HOST DETAIL VIEW ===================== */
+let curView='overall';
+function setView(v){ if(v==='host') v='overall'; curView=v;
+  $('viewOverall').style.display = v==='overall'?'':'none';
+  $('viewHost').style.display    = v==='host'?'':'none';
+  $('vtOverall').className = 'vtab '+(v==='overall'?'vtab-a':'vtab-i');
+  $('vtHost').className    = 'vtab '+(v==='host'?'vtab-a':'vtab-i');
+  render();
+}
+function dow(iso){ return new Date(iso+'T00:00:00Z').getUTCDay(); } // 0=CN
+const DOWL=['CN','T2','T3','T4','T5','T6','T7'], DOW_ORDER=[1,2,3,4,5,6,0];
+// gom theo host (tôn trọng mọi filter)
+function hostAgg(){
+  const rows=rowsF(null);
+  const m=groupBy(rows,5);
+  return [...m.entries()].map(([k,rs])=>({k,name:D.hosts[k],rows:rs,s:agg(rs)})).sort((a,b)=>b.s.gmv-a.s.gmv);
+}
+// sao tiềm năng: GMV/h + ROI + quy mô GMV (percentile), 0.5–5
+function pcrank(v,arr){ if(v==null||!isFinite(v)||!arr.length)return .5; let lo=0; for(const x of arr){ if(x<v)lo++; } return lo/arr.length; }
+function hostStars(it,pool){
+  const gh=pool.gh, ro=pool.ro, gm=pool.gm;
+  const sc=.45*pcrank(it.s.gmvH,gh)+.35*pcrank(it.s.roas,ro)+.20*pcrank(it.s.gmv,gm);
+  return Math.max(.5,Math.round(sc*10)/2);
+}
+function starHtml(st){ const full=Math.round(st); let o='';
+  for(let i=1;i<=5;i++) o+=`<span class="${i<=full?'':'off'}">★</span>`;
+  return `<span class="stars" title="${st.toFixed(1)}/5">${o}</span>`; }
+
+// metric cho Top host selector
+const HMETRICS={
+  gmv:{lb:'GMV',get:s=>s.gmv,fmt:fC},
+  gmvH:{lb:'GMV/giờ',get:s=>s.gmvH,fmt:fC},
+  ctr:{lb:'CTR',get:s=>s.ctr,fmt:v=>fP(v,1)},
+  ctor:{lb:'CTOR',get:s=>s.ctor,fmt:v=>fP(v,1)},
+  err:{lb:'ERR',get:s=>s.err,fmt:v=>fP(v,1)},
+  pAds:{lb:'%Ads cost',get:s=>s.pAds,fmt:v=>fP(v,1),low:true},
+  roas:{lb:'ROI',get:s=>s.roas,fmt:v=>fX(v)},
+  aov:{lb:'AOV',get:s=>s.aov,fmt:fC},
+  cpv:{lb:'CPV',get:s=>s.cpv,fmt:fC,low:true},
+  v:{lb:'Views',get:s=>s.v,fmt:fN}
+};
+// nhận xét nhanh host theo logic phễu (CTR tầng 2, CTOR tầng 3, CPV/ERR tầng 1) vs trung vị team
+function hostNote(s,med){
+  const t=[];
+  if(s.ctor>=med.ctor*1.12) t.push(['chốt tốt','g']); else if(med.ctor&&s.ctor<=med.ctor*0.88) t.push(['chốt yếu','r']);
+  if(s.ctr>=med.ctr*1.12) t.push(['CTR khoẻ','g']); else if(med.ctr&&s.ctr<=med.ctr*0.88) t.push(['CTR yếu','r']);
+  if(med.cpv&&s.cpv>=med.cpv*1.15) t.push(['CPV cao','r']); else if(med.cpv&&s.cpv<=med.cpv*0.85) t.push(['CPV rẻ','g']);
+  if(!t.length) t.push(['ổn định','n']);
+  return t.slice(0,2).map(([x,c])=>`<span class="hntag hn-${c}">${x}</span>`).join('');
+}
+// combo cột + line theo host: cfg{barGet,lineGet,barLbl,lineLbl,barFmt,lineFmt,barColor,lineColor}
+// cfg.extra (tuỳ chọn): [{lbl,get,color,fmt,axis,dash}] — thêm line phụ (VD CTR/CTOR)
+function hostCombo(id, items, cfg){
+  const sc=items.filter(x=>isFinite(cfg.barGet(x.s))&&x.s.h>=2).sort((a,b)=>cfg.barGet(b.s)-cfg.barGet(a.s)).slice(0,15);
+  const ds=[
+    {type:'bar',label:cfg.barLbl,data:sc.map(x=>cfg.barGet(x.s)),backgroundColor:cfg.barColor,borderRadius:2,yAxisID:'y',order:4,_f:cfg.barFmt},
+    {type:'line',label:cfg.lineLbl,data:sc.map(x=>cfg.lineGet(x.s)),borderColor:cfg.lineColor,backgroundColor:cfg.lineColor,borderWidth:1.5,pointRadius:2,tension:.25,yAxisID:'y1',order:1,_f:cfg.lineFmt}];
+  (cfg.extra||[]).forEach(e=>ds.push({type:'line',label:e.lbl,data:sc.map(x=>e.get(x.s)),borderColor:e.color,backgroundColor:e.color,
+    borderWidth:1.4,borderDash:e.dash||[],pointRadius:1.5,tension:.25,yAxisID:e.axis||'y1',order:1,_f:e.fmt}));
+  const scales={x:{ticks:{font:{size:6.5},maxRotation:60,minRotation:60}},
+    y:{position:'left',title:{display:true,text:cfg.barLbl,font:{size:7}},ticks:{font:{size:7},callback:cfg.barFmt}},
+    y1:{position:'right',grid:{display:false},title:{display:true,text:cfg.lineLbl,font:{size:7}},ticks:{font:{size:7},callback:cfg.lineFmt}}};
+  if((cfg.extra||[]).some(e=>e.axis==='y2')) scales.y2={position:'right',display:false,grid:{display:false}};
+  mk(id,{data:{labels:sc.map(x=>x.name),datasets:ds},
+    options:{plugins:{legend:{labels:{font:{size:8},boxWidth:10}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${(c.dataset._f||(v=>v))(c.parsed.y)}`}}},scales}});
+}
+function renderHostView(){
+  const items=hostAgg();
+  const sAll=agg(rowsF(null));
+  // KPI
+  let k='';
+  k+=kpiCard('hl','Số host', fN(items.length), `${fN(sAll.n)} phiên · ${fX(sAll.h,0)} giờ`, '');
+  k+=kpiCard('hl','GMV', fC(sAll.gmv), `GMV: ${fC(sAll.gmv*D.nmvFactor)}`, '');
+  k+=kpiCard('hl','%Ads cost', fP(sAll.pAds), `ROI: ${fX(sAll.roas)}`, '');
+  k+=kpiCard('','GMV / giờ', fC(sAll.gmvH), `TB toàn team`, '');
+  k+=kpiCard('','GMV / host', fC(items.length?sAll.gmv/items.length:null), `TB mỗi host`, '');
+  k+=kpiCard('','AOV', fC(sAll.aov), `CTOR: ${fP(sAll.ctor)}`, '');
+  k+=kpiCard('','Views', fN(sAll.v), `View/h: ${fN(sAll.vH)}`, '');
+  k+=kpiCard('','Giờ/phiên', fX(sAll.n?sAll.h/sAll.n:null,1), `${fN(sAll.n)} phiên`, '');
+  $('hostKpi').innerHTML=k;
+
+  // Top host bars — chọn metric qua dropdown, kèm nhận xét nhanh theo logic phễu
+  const poolAll={gh:items.map(x=>x.s.gmvH).filter(isFinite),ro:items.map(x=>x.s.roas).filter(isFinite),gm:items.map(x=>x.s.gmv)};
+  const med={ctr:pctl(items.map(x=>x.s.ctr),.5),ctor:pctl(items.map(x=>x.s.ctor),.5),cpv:pctl(items.map(x=>x.s.cpv),.5),
+    err:pctl(items.map(x=>x.s.err),.5),gmvH:pctl(items.map(x=>x.s.gmvH),.5),pAds:pctl(items.map(x=>x.s.pAds),.5)};
+  const hm=HMETRICS[selVal('hostMetricSel')||'gmv'];
+  $('hostTopHint').textContent=`— sắp theo ${hm.lb}${hm.low?' (thấp nhất trước)':''} · click host để lọc`;
+  const sorted=[...items].filter(x=>isFinite(hm.get(x.s))).sort((a,b)=> hm.low? hm.get(a.s)-hm.get(b.s) : hm.get(b.s)-hm.get(a.s));
+  const top=sorted.slice(0,15), mxV=Math.max(...top.map(x=>Math.abs(hm.get(x.s))),1e-9);
+  $('hostTop').innerHTML=top.map((it,rank)=>{ const v=hm.get(it.s);
+    const mdl=rank<3? `<span class="medal">${MEDALS[rank]}</span>`:'';
+    return `<div class="hbar ${cf.host===it.k?'sel':''}" onclick="toggleCf('host',${it.k})" title="GMV ${fC(it.s.gmv)} · GMV/h ${fC(it.s.gmvH)} · %Ads cost ${fP(it.s.pAds)} · CTR ${fP(it.s.ctr)} · CTOR ${fP(it.s.ctor)} · ROI ${fX(it.s.roas)}">
+    <span class="hn">${mdl}${esc(it.name)}</span>
+    <span class="htk"><span class="hfl" style="width:${Math.max(5,Math.abs(v)/mxV*100)}%;"><span>${hm.fmt(v)}</span></span></span>
+    <span class="hnote">${hostNote(it.s,med)}</span></div>`; }).join('');
+
+  renderHostInsight(items);
+
+  // 3 combo cột+line theo host (top 15 theo metric cột)
+  hostCombo('hostScatter', items, {barGet:s=>s.gmvH, lineGet:s=>s.pAds*100, barLbl:'GMV/giờ', lineLbl:'%Ads cost',
+    barFmt:fC, lineFmt:v=>v.toFixed(0)+'%', barColor:'#1a1f36', lineColor:'#EE3124',
+    extra:[{lbl:'CTR%',get:s=>s.ctr*100,color:'#0ea5e9',fmt:v=>v.toFixed(1)+'%',axis:'y1'},
+           {lbl:'CTOR%',get:s=>s.ctor*100,color:'#16a34a',fmt:v=>v.toFixed(1)+'%',axis:'y2',dash:[4,3]}]});
+  hostCombo('hostCtrCtor', items, {barGet:s=>s.ctr*100, lineGet:s=>s.ctor*100, barLbl:'CTR %', lineLbl:'CTOR %',
+    barFmt:v=>v.toFixed(0)+'%', lineFmt:v=>v.toFixed(1)+'%', barColor:'#0ea5e9', lineColor:'#f59e0b'});
+  hostCombo('hostErrCpv', items, {barGet:s=>s.err*100, lineGet:s=>s.cpv, barLbl:'ERR %', lineLbl:'CPV',
+    barFmt:v=>v.toFixed(1)+'%', lineFmt:fC, barColor:'#8b5cf6', lineColor:'#EE3124'});
+
+  // Host × Day Type — tone cam
+  renderHostMatrix('tblHostType', items.slice(0,20), D.types.map((n,i)=>i).sort((a,b)=>(TYPE_ORDER[D.types[a]]??9)-(TYPE_ORDER[D.types[b]]??9)),
+    (rs,ti)=>rs.filter(r=>r[4]===ti), ti=>D.types[ti], gradAmber, 'pkc-amber');
+  // Host × Weekday — tone xanh dương cho phân biệt
+  renderHostMatrix('tblHostDow', items.slice(0,20), DOW_ORDER, (rs,d)=>rs.filter(r=>dow(r[0])===d), d=>DOWL[d], gradBlue, 'pkc-blue');
+
+  // Funnel training matrix + bảng vàng top 3 + leaderboard
+  renderTraining(items);
+  renderMedals(items);
+  renderHostRank(items,poolAll);
+}
+// ma trận host × chiều (GMV mỗi ô, tô đậm ô mạnh nhất của host)
+/* ===== Nhận xét tự động về host (theo kênh đang chọn; All kênh -> tổng quan) ===== */
+function renderHostInsight(items){
+  const rows=rowsF(null), tot=agg(rows);
+  const chs=[...new Set(rows.map(r=>r[3]))];
+  const single = chs.length===1 ? chs[0] : null;
+  $('hostInsightSub').textContent = single!=null? `— kênh ${D.channels[single]}` : `— tổng quan ${chs.length} kênh`;
+  if(!items.length||!tot.gmv){ $('hostInsight').innerHTML='<i style="color:#9ca3af;">Không có dữ liệu trong scope.</i>'; return; }
+  const eligible=items.filter(x=>x.s.h>=2);          // loại mẫu quá nhỏ khỏi các "ngôi sao"
+  const pool=eligible.length?eligible:items;
+  const byGmv=[...items].sort((a,b)=>b.s.gmv-a.s.gmv);
+  const byGh=[...pool].filter(x=>isFinite(x.s.gmvH)).sort((a,b)=>b.s.gmvH-a.s.gmvH);
+  const byAcos=[...pool].filter(x=>isFinite(x.s.pAds)&&x.s.pAds>0).sort((a,b)=>a.s.pAds-b.s.pAds);
+  const top3Share=byGmv.slice(0,3).reduce((a,x)=>a+x.s.gmv,0)/tot.gmv;
+  // tầng yếu nhất toàn team (dùng cùng logic Training Matrix)
+  const base={err:tot.err,ctr:tot.ctr,ctor:tot.ctor,aov:tot.aov};
+  const cnt={};
+  pool.forEach(x=>{ const s=x.s;
+    const sk=SKILL.map(m=>({lb:m.lb, v:(s[m.k]!=null&&base[m.k])? s[m.k]/base[m.k]*100 : null})).filter(m=>m.v!=null);
+    if(!sk.length) return; const mn=sk.reduce((a,b)=>b.v<a.v?b:a,sk[0]);
+    if(mn.v<TRAIN_T) cnt[mn.lb]=(cnt[mn.lb]||0)+1; });
+  const weakest=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+  const li=[];
+  li.push(`<b>${items.length} host</b> · ${fX(tot.h,0)} giờ live · GMV <b>${fC(tot.gmv)}</b> · GMV/giờ ${fC(tot.gmvH)} · %Ads cost <b>${fP(tot.pAds,1)}</b>`);
+  if(byGh[0]) li.push(`⭐ Hiệu suất cao nhất: <b>${esc(byGh[0].name)}</b> — ${fC(byGh[0].s.gmvH)}/giờ (gấp ${fX(byGh[0].s.gmvH/tot.gmvH,1)}× TB team)`);
+  if(byGmv[0]) li.push(`🏋️ Gánh doanh thu: <b>${esc(byGmv[0].name)}</b> — ${fC(byGmv[0].s.gmv)} (${fP(byGmv[0].s.gmv/tot.gmv,0)} GMV)`);
+  if(byAcos[0]) li.push(`💰 Ads hiệu quả nhất: <b>${esc(byAcos[0].name)}</b> — %Ads cost ${fP(byAcos[0].s.pAds,1)}`);
+  const worstAcos=byAcos[byAcos.length-1];
+  if(worstAcos && worstAcos.s.pAds>tot.pAds*1.25)
+    li.push(`⚠️ Đốt ads nhiều nhất: <b>${esc(worstAcos.name)}</b> — %Ads cost ${fP(worstAcos.s.pAds,1)} (cao hơn TB ${fP(worstAcos.s.pAds/tot.pAds-1,0)})`);
+  // mức tập trung
+  const cTxt = top3Share>=0.6? `<span class="dn">rủi ro tập trung</span> — top 3 host gánh <b>${fP(top3Share,0)}</b> GMV, phụ thuộc ít người`
+             : top3Share>=0.4? `top 3 host chiếm <b>${fP(top3Share,0)}</b> GMV — mức tập trung vừa`
+             : `<span class="up">phân bổ đều</span> — top 3 host chỉ ${fP(top3Share,0)} GMV`;
+  li.push(`📊 ${cTxt}`);
+  if(weakest) li.push(`🎓 Tầng yếu diện rộng: <b>${weakest[0]}</b> (${weakest[1]} host dưới ngưỡng) → ưu tiên mở lớp chung`);
+  if(single!=null){
+    const p=planInfo(D.planMonth,single);
+    if(p.nmv){ const tgA=acosTgt(p.ads,p.nmv);
+      li.push(`🎯 Kênh này tháng ${D.planMonth}: GMV plan ${fC(p.nmv)} · %Ads cost target ${fP(tgA,1)} — actual ${fP(tot.pAds,1)} ${tot.pAds<=tgA?'<span class="up">đạt ✓</span>':'<span class="dn">vượt ✗</span>'}`); }
+  } else {
+    // so sánh kênh khi xem tất cả
+    const byCh=chs.map(ci=>({ci,s:agg(rows.filter(r=>r[3]===ci))})).filter(x=>x.s.gmvH).sort((a,b)=>b.s.gmvH-a.s.gmvH);
+    if(byCh.length>1) li.push(`🏆 Kênh GMV/giờ cao nhất: <b>${esc(D.channels[byCh[0].ci])}</b> (${fC(byCh[0].s.gmvH)}) · thấp nhất: ${esc(D.channels[byCh[byCh.length-1].ci])} (${fC(byCh[byCh.length-1].s.gmvH)})`);
+  }
+  $('hostInsight').innerHTML=li.map(x=>`<div style="padding:2px 0;border-bottom:1px dashed #f1f5f9;">${x}</div>`).join('');
+}
+
+/* ===== Funnel Training Matrix — index vs TB team + gợi ý train tầng yếu nhất =====
+   Logic đã reverse-engineer từ bảng mẫu (khớp 13/13 dòng):
+   · index = giá trị host ÷ TB team × 100 (CPV đảo chiều: TBcpv/hostCpv)
+   · Training CHỈ xét 4 kỹ năng host ERR/CTR/CTOR/AOV — LOẠI CPV (chi phí = việc team Ads)
+   · min < T(92)  -> train tầng yếu nhất · min ≥ T & max ≥ S(110) -> "scale — mạnh: X" · còn lại "balanced" */
+const TRAIN_T=92, TRAIN_S=110;
+const SKILL=[
+  {k:'err', lb:'ERR',  train:'opening hook (giữ chân đầu phiên)'},
+  {k:'ctr', lb:'CTR',  train:'product hook (pin SP + CTA)'},
+  {k:'ctor',lb:'CTOR', train:'chốt đơn (SKU hot, xử lý phản đối)'},
+  {k:'aov', lb:'AOV',  train:'basket (combo/upsell nâng giỏ)'}
+];
+function idxColor(v){ if(v==null||!isFinite(v)) return '';
+  const d=(v-100)/100, k=Math.min(1,Math.abs(d)/0.35);
+  return d>=0? `background:rgba(22,163,74,${(0.05+0.33*k).toFixed(3)});color:#14532d;`
+             : `background:rgba(239,68,68,${(0.05+0.33*k).toFixed(3)});color:#7f1d1d;`; }
+function renderTraining(items){
+  const elig=items.filter(x=>x.s.h>0 && isFinite(x.s.err) && isFinite(x.s.ctr) && isFinite(x.s.ctor) && isFinite(x.s.aov));
+  if(!elig.length){ $('tblTrain').innerHTML='<tbody><tr><td style="padding:10px;color:#9ca3af;">Không đủ dữ liệu.</td></tr></tbody>'; $('trainNote').innerHTML=''; return; }
+  // TB team = trung bình có trọng số (tổng/tổng) để không bị host ít giờ kéo lệch
+  const tot=agg(rowsF(null));
+  const base={err:tot.err, ctr:tot.ctr, ctor:tot.ctor, aov:tot.aov, cpv:tot.cpv};
+  const ix=(v,b)=>(v!=null&&isFinite(v)&&b)? v/b*100 : null;
+  const rowsD=elig.map(x=>{ const s=x.s;
+    const I={err:ix(s.err,base.err), ctr:ix(s.ctr,base.ctr), ctor:ix(s.ctor,base.ctor), aov:ix(s.aov,base.aov),
+             cpv:(s.cpv&&base.cpv)? base.cpv/s.cpv*100 : null};   // CPV đảo chiều
+    const sk=SKILL.map(m=>({...m, v:I[m.k], raw:s[m.k]})).filter(m=>m.v!=null);
+    const mn=sk.reduce((a,b)=>b.v<a.v?b:a, sk[0]), mx=sk.reduce((a,b)=>b.v>a.v?b:a, sk[0]);
+    let verdict;
+    if(mn.v<TRAIN_T) verdict={type:'train', m:mn};
+    else if(mx.v>=TRAIN_S) verdict={type:'scale', m:mx};
+    else verdict={type:'bal'};
+    return {x, I, verdict, low:s.h<6};
+  }).sort((a,b)=>b.x.s.gmv-a.x.s.gmv);
+  const fmtRaw={err:v=>fP(v,1), ctr:v=>fP(v,1), ctor:v=>fP(v,1), aov:v=>fC(v), cpv:v=>fC(v)};
+  let h=`<thead><tr><th style="text-align:left;">Host</th><th>Giờ</th><th>ERR</th><th>CTR</th><th>CTOR</th><th>AOV</th><th>CPV (đảo)</th><th style="text-align:left;">Training</th></tr></thead><tbody>`;
+  for(const r of rowsD){
+    const s=r.x.s;
+    const cell=k=>{ const v=r.I[k]; if(v==null) return '<td>—</td>';
+      return `<td style="${idxColor(v)}"><div class="idx">${Math.round(v)}</div><div class="raw">${fmtRaw[k](s[k])}</div></td>`; };
+    let trn;
+    if(r.verdict.type==='train') trn=`<b>${r.verdict.m.lb}</b> — ${r.verdict.m.train} <span style="color:#9ca3af;">(idx ${Math.round(r.verdict.m.v)})</span>`;
+    else if(r.verdict.type==='scale') trn=`<span class="scale">scale — mạnh: ${r.verdict.m.lb}</span> <span style="color:#9ca3af;">(idx ${Math.round(r.verdict.m.v)})</span>`;
+    else trn=`<span class="bal">balanced — không tầng nào lệch</span>`;
+    h+=`<tr class="clk ${r.low?'lowsample':''} ${cf.host===r.x.k?'cfsel':''}" onclick="toggleCf('host',${r.x.k})">
+      <td class="hostn">${esc(r.x.name)}${r.low?' <span style="color:#f59e0b;" title="Dưới 6 giờ live — mẫu nhỏ, index dễ nhiễu">*</span>':''}</td>
+      <td>${fX(s.h,0)}</td>${cell('err')}${cell('ctr')}${cell('ctor')}${cell('aov')}${cell('cpv')}
+      <td class="trn">${trn}</td></tr>`;
+  }
+  $('tblTrain').innerHTML=h+'</tbody>';
+  // tổng hợp: tầng nào cần train nhiều nhất
+  const cnt={}; rowsD.filter(r=>r.verdict.type==='train'&&!r.low).forEach(r=>{ cnt[r.verdict.m.lb]=(cnt[r.verdict.m.lb]||0)+1; });
+  const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+  const nScale=rowsD.filter(r=>r.verdict.type==='scale'&&!r.low).length;
+  $('trainNote').innerHTML= top.length
+    ? `📌 <b>Ưu tiên đào tạo:</b> ${top.map(([k,n])=>`${k} <b>(${n} host)</b>`).join(' · ')} — mở lớp chung cho tầng đông nhất sẽ hiệu quả hơn kèm lẻ. `
+      +`Có <b>${nScale}</b> host đủ mạnh để <span style="color:#16a34a;font-weight:700;">scale</span>. `
+      +`<i>TB team: ERR ${fP(base.err,1)} · CTR ${fP(base.ctr,1)} · CTOR ${fP(base.ctor,1)} · AOV ${fC(base.aov)} · CPV ${fC(base.cpv)}</i>`
+    : `Không host nào (đủ mẫu) có tầng dưới ngưỡng ${TRAIN_T} — team đang khá đều.`;
+}
+
+/* ===== Bảng vàng: top 3 host mỗi hạng mục (🥇🥈🥉) ===== */
+const MEDALS=['🥇','🥈','🥉'];
+// hạng mục: [nhãn, accessor, format, low=true nếu thấp là tốt]
+const MDL_CATS=[
+  ['GMV',s=>s.gmv,fC,false],['GMV/giờ',s=>s.gmvH,fC,false],['ROI',s=>s.roas,v=>fX(v),false],
+  ['%Ads cost',s=>s.pAds,v=>fP(v,1),true],['CTR',s=>s.ctr,v=>fP(v,1),false],['CTOR',s=>s.ctor,v=>fP(v,1),false],
+  ['AOV',s=>s.aov,fC,false],['CPV',s=>s.cpv,fC,true],['Views',s=>s.v,fN,false]
+];
+function top3(items,get,low){
+  return items.filter(x=>x.s.h>=2&&isFinite(get(x.s))&&get(x.s)>0)
+    .sort((a,b)=> low? get(a.s)-get(b.s) : get(b.s)-get(a.s)).slice(0,3);
+}
+// trả về huy chương của host trong 1 hạng mục (dùng cho Top host bar)
+function medalOf(items,it,get,low){ const t=top3(items,get,low); const i=t.findIndex(x=>x.k===it.k); return i>=0?MEDALS[i]:''; }
+function renderMedals(items){
+  let h=`<thead><tr><th style="text-align:left;">Hạng mục</th><th style="text-align:left;">🥇 Vàng</th><th style="text-align:left;">🥈 Bạc</th><th style="text-align:left;">🥉 Đồng</th></tr></thead><tbody>`;
+  for(const [lb,get,fmt,low] of MDL_CATS){
+    const t=top3(items,get,low);
+    h+=`<tr><td class="cat">${lb}${low?' <span style="font-weight:400;color:#9ca3af;font-size:7px;">(thấp=tốt)</span>':''}</td>`
+      + [0,1,2].map(i=>{ const x=t[i]; if(!x) return '<td class="hn3" style="color:#d1d5db;">—</td>';
+          return `<td class="hn3 clk" onclick="toggleCf('host',${x.k})"><span class="medal">${MEDALS[i]}</span><b>${esc(x.name)}</b> <span style="color:#6b7280;">${fmt(get(x.s))}</span></td>`; }).join('')
+      + `</tr>`;
+  }
+  $('tblMedals').innerHTML=h+'</tbody>';
+}
+// gradFn: hàm gradient nền (mỗi bảng 1 tone) · ô peak của host = chip nhẹ nhàng thay vì viền đỏ
+function renderHostMatrix(tblId,items,cols,filt,colLbl,gradFn,chipCls){
+  const G=gradFn||gradAmber, CC=chipCls||'pkc-amber';
+  let h=`<thead><tr><th>Host</th>${cols.map(c=>`<th>${esc(colLbl(c))}</th>`).join('')}<th>Tổng</th></tr></thead><tbody>`;
+  const colTot=cols.map(()=>0); let gTot=0;
+  for(const it of items){
+    const vals=cols.map(c=>filt(it.rows,c).reduce((a,r)=>a+r[8],0));
+    const rowMax=Math.max(...vals), rowSum=vals.reduce((a,b)=>a+b,0); gTot+=rowSum;
+    h+=`<tr class="clk ${cf.host===it.k?'cfsel':''}" onclick="toggleCf('host',${it.k})"><td>${esc(it.name)}</td>`+
+      vals.map((v,i)=>{ colTot[i]+=v; const hi=v>0&&v===rowMax;
+        return `<td style="${v?G(v,0,rowMax):''}">${v?(hi?`<span class="pkchip ${CC}" title="Mạnh nhất của host này">${fC(v)}</span>`:fC(v)):'—'}</td>`; }).join('')+
+      `<td><b>${fC(rowSum)}</b></td></tr>`;
+  }
+  h+=`<tr class="tot"><td>TỔNG</td>${colTot.map(v=>`<td>${fC(v)}</td>`).join('')}<td>${fC(gTot)}</td></tr></tbody>`;
+  $(tblId).innerHTML=h;
+}
+function renderHostRank(items,pool){
+  const ghR=mmOf(items.map(x=>x.s.gmvH)), roR=mmOf(items.map(x=>x.s.roas)), acR=mmOf(items.map(x=>x.s.pAds)), ctoR=mmOf(items.map(x=>x.s.ctor));
+  const med={ctr:pctl(items.map(x=>x.s.ctr),.5),ctor:pctl(items.map(x=>x.s.ctor),.5),cpv:pctl(items.map(x=>x.s.cpv),.5)};
+  const totG=items.reduce((a,x)=>a+x.s.gmv,0)||1;
+  let h=`<thead><tr><th>Host</th><th style="text-align:left;">Nhận xét</th><th>⭐</th><th>Phiên</th><th>Giờ</th><th>GMV</th><th>%GMV</th><th>GMV/h</th><th>Ads cost</th><th>%Ads cost</th><th>ROI</th><th>AOV</th><th>CTR</th><th>CTOR</th><th>CPM</th></tr></thead><tbody>`;
+  for(const it of items){ const s=it.s;
+    h+=`<tr class="clk ${cf.host===it.k?'cfsel':''}" onclick="toggleCf('host',${it.k})">
+      <td>${esc(it.name)}</td><td style="text-align:left;">${hostNote(s,med)}</td><td>${starHtml(hostStars(it,pool))}</td>
+      <td>${fN(s.n)}</td><td>${fX(s.h,0)}</td>
+      <td><b>${fC(s.gmv)}</b></td><td>${fP(s.gmv/totG,0)}</td>
+      <td style="${gradMM(s.gmvH,ghR[0],ghR[1],1)}">${fC(s.gmvH)}</td>
+      <td>${fC(s.ads)}</td>
+      <td style="${gradMM(s.pAds,acR[0],acR[1],-1)}">${fP(s.pAds)}</td>
+      <td style="${gradMM(s.roas,roR[0],roR[1],1)}">${fX(s.roas)}</td>
+      <td>${fC(s.aov)}</td><td>${fP(s.ctr)}</td>
+      <td style="${gradMM(s.ctor,ctoR[0],ctoR[1],1)}">${fP(s.ctor)}</td><td>${fC(s.cpm)}</td></tr>`;
+  }
+  const sT=agg(rowsF(null));
+  h+=`<tr class="tot"><td>TỔNG</td><td></td><td></td><td>${fN(sT.n)}</td><td>${fX(sT.h,0)}</td><td><b>${fC(sT.gmv)}</b></td><td>100%</td><td>${fC(sT.gmvH)}</td><td>${fC(sT.ads)}</td><td>${fP(sT.pAds)}</td><td>${fX(sT.roas)}</td><td>${fC(sT.aov)}</td><td>${fP(sT.ctr)}</td><td>${fP(sT.ctor)}</td><td>${fC(sT.cpm)}</td></tr></tbody>`;
+  $('tblHostRank').innerHTML=h; makeSortable('tblHostRank');
+}
+
+/* ===================== FUNNEL DIAGNOSTICS (logic ảnh 2–3) ===================== */
+// target KPI blend theo scope (view-weighted CPV/CTR, click-weighted CTOR) từ plan tháng mới nhất
+function planKpiScope(){
+  const pm=D.plan[D.planMonth]||{}; let vw=0,ck=0, cpvN=0,ctrN=0,ctorN=0, has=false;
+  for(const ci in pm){ if(!chPass(+ci)) continue; const k=pm[ci].kpi; if(!k||!k.view) continue; has=true;
+    const v=k.view, c=v*(k.ctr||0);
+    vw+=v; ck+=c; cpvN+=(k.cpv||0)*v; ctrN+=(k.ctr||0)*v; ctorN+=(k.ctor||0)*c; }
+  return has? {cpv:vw?cpvN/vw:null, ctr:vw?ctrN/vw:null, ctor:ck?ctorN/ck:null, has:true} : {has:false};
+}
+function pearson(xs,ys){ const n=xs.length; if(n<3) return null;
+  let sx=0,sy=0,sxx=0,syy=0,sxy=0; for(let i=0;i<n;i++){ const x=xs[i],y=ys[i]; sx+=x;sy+=y;sxx+=x*x;syy+=y*y;sxy+=x*y; }
+  const cov=sxy-sx*sy/n, vx=sxx-sx*sx/n, vy=syy-sy*sy/n; if(vx<=0||vy<=0) return null; return cov/Math.sqrt(vx*vy); }
+function corrStrength(r){ const a=Math.abs(r); return a>=.5?'mạnh':a>=.3?'khá':'yếu'; }
+function corrColor(r,inv){ const good=inv?r<0:r>0; const a=Math.abs(r); if(a<.3) return '#9ca3af'; return good?'#16a34a':'#dc2626'; }
+// tương quan 1 tầng bằng CỘT + LINE: bin các ngày theo metric X (thấp→cao), cột = TB Y mỗi bin, line = xu hướng Y
+// combo bar+line nhiều metric theo NGÀY (kiểu PBI "X & Y by Date"); mỗi dataset có _fmt để format tooltip
+function corrDayChart(id, dates, datasets, axes){
+  mk(id,{data:{labels:dates,datasets},options:{
+    plugins:{legend:{labels:{font:{size:7},boxWidth:9,padding:5}},
+      tooltip:{callbacks:{label:c=>{const f=c.dataset._fmt||(v=>v); return ` ${c.dataset.label}: ${f(c.parsed.y)}`;}}}},
+    scales:Object.assign({x:{ticks:{font:{size:6},maxRotation:0,autoSkip:true,maxTicksLimit:9}}},axes),layout:{padding:2}}});
+}
+function renderFunnelDiag(){
+  const rows=rowsF(null), s=agg(rows), T=planKpiScope();
+  // chuỗi theo ngày (giữ ngày để vẽ chart theo ngày + tính tương quan cho bảng r)
+  const dm=groupBy(rows,0); const dkeys=[...dm.keys()].sort();
+  const daily=dkeys.map(d=>({d,s:agg(dm.get(d))})).filter(x=>x.s.h>=1&&x.s.v>0&&x.s.imp>0);
+  const dates=daily.map(x=>x.d.slice(8,10)+'/'+x.d.slice(5,7)), S=daily.map(x=>x.s);
+  const gmvH=S.map(x=>x.gmvH), ctrS=S.map(x=>x.ctr), ctorS=S.map(x=>x.ctor), errS=S.map(x=>x.err), cpvS=S.map(x=>x.cpv);
+  const rCtr=pearson(ctrS,gmvH), rCtor=pearson(ctorS,gmvH), rErr=pearson(errS,gmvH), rEC=pearson(errS,cpvS);
+  const pctF=d=>v=>v.toFixed(d)+'%';
+  const axL=f=>({position:'left',ticks:{font:{size:6},callback:f}});
+  const axR=f=>({position:'right',grid:{display:false},ticks:{font:{size:6},callback:f}});
+  // ① CPM × Ads spend — Ads cost (cột, VND) + CPM (line, trục phải)
+  corrDayChart('scF1', dates, [
+    {type:'bar',label:'Ads cost',data:S.map(x=>x.ads),backgroundColor:'rgba(65,64,66,.5)',borderRadius:1,yAxisID:'y',order:3,_fmt:fC},
+    {type:'line',label:'CPM',data:S.map(x=>x.cpm),borderColor:'#8b5cf6',borderWidth:1.6,pointRadius:0,tension:.25,yAxisID:'y1',order:1,_fmt:fC}],
+    {y:axL(fC),y1:axR(fC)});
+  // ② CPV × ERR — CPV (cột, VND) + ERR% (line phải)
+  corrDayChart('scF2', dates, [
+    {type:'bar',label:'CPV',data:S.map(x=>x.cpv),backgroundColor:'rgba(139,92,246,.5)',borderRadius:1,yAxisID:'y',order:3,_fmt:fC},
+    {type:'line',label:'ERR%',data:S.map(x=>x.err*100),borderColor:'#f59e0b',borderWidth:1.6,pointRadius:0,tension:.25,yAxisID:'y1',order:1,_fmt:pctF(1)}],
+    {y:axL(fC),y1:axR(pctF(1))});
+  // ③ CTR × Click — Click (cột) + CTR% (line phải)
+  corrDayChart('scF3', dates, [
+    {type:'bar',label:'Click',data:S.map(x=>x.clk),backgroundColor:'rgba(14,165,233,.5)',borderRadius:1,yAxisID:'y',order:3,_fmt:fN},
+    {type:'line',label:'CTR%',data:S.map(x=>x.ctr*100),borderColor:'#0369a1',borderWidth:1.6,pointRadius:0,tension:.25,yAxisID:'y1',order:1,_fmt:pctF(1)}],
+    {y:axL(fN),y1:axR(pctF(0))});
+  // ④ AOV × GMV — GMV (cột, VND) + AOV (line phải)
+  corrDayChart('scF4', dates, [
+    {type:'bar',label:'GMV',data:S.map(x=>x.gmv),backgroundColor:'rgba(238,49,36,.5)',borderRadius:1,yAxisID:'y',order:3,_fmt:fC},
+    {type:'line',label:'AOV',data:S.map(x=>x.aov),borderColor:'#EE3124',borderWidth:1.6,pointRadius:0,tension:.25,yAxisID:'y1',order:1,_fmt:fC}],
+    {y:axL(fC),y1:axR(fC)});
+  // ⑤ ROI × CTOR — ROI (cột) + CTOR% (line phải)
+  corrDayChart('scF5', dates, [
+    {type:'bar',label:'ROI',data:S.map(x=>x.roas),backgroundColor:'rgba(180,83,9,.45)',borderRadius:1,yAxisID:'y',order:3,_fmt:v=>v.toFixed(2)},
+    {type:'line',label:'CTOR%',data:S.map(x=>x.ctor*100),borderColor:'#15803d',borderWidth:1.6,pointRadius:0,tension:.25,yAxisID:'y1',order:1,_fmt:pctF(1)}],
+    {y:axL(v=>v.toFixed(1)),y1:axR(pctF(1))});
+  // 3 cổng
+  const gate=(n,name,formula,actv,tgtv,pass,fmt,recs)=>{
+    const okKnown = pass!=null;
+    const badge = !okKnown? `<span style="background:#e5e7eb;color:#6b7280;padding:1px 7px;border-radius:8px;font-size:8px;font-weight:700;">chưa có target</span>`
+      : pass? `<span class="badge-grn">ĐẠT ✓</span>` : `<span class="badge-red">CHƯA ĐẠT ✗</span>`;
+    const col = !okKnown?'#94a3b8':pass?'#16a34a':'#ef4444';
+    return `<div class="card" style="border-left:3px solid ${col};padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:${col};color:#fff;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;">${n}</span><b style="font-size:10px;">${name}</b> ${badge}</div>
+      <div style="font-size:7.5px;color:#9ca3af;font-family:Consolas,monospace;margin-bottom:4px;">${formula}</div>
+      <div style="font-size:11px;font-weight:800;">${fmt(actv)} <span style="font-size:8px;color:#9ca3af;font-weight:600;">${tgtv!=null?'/ target '+fmt(tgtv):''}</span></div>
+      ${(okKnown&&!pass)?`<div style="font-size:8px;color:#c2410c;margin-top:4px;line-height:1.5;">→ ${recs}</div>`:(okKnown?`<div style="font-size:8px;color:#16a34a;margin-top:4px;">→ Maintain · giữ nhịp</div>`:'')}</div>`;
+  };
+  const cpvPass = T.has&&T.cpv? s.cpv<=T.cpv : null;
+  const ctrPass = T.has&&T.ctr? s.ctr>=T.ctr : null;
+  const ctorPass= T.has&&T.ctor? s.ctor>=T.ctor : null;
+  $('funnelGates').innerHTML =
+    gate(1,'View · CPV','CPV = CPM ÷ (1000 × ERR) · View = Impr × ERR', s.cpv, T.cpv, cpvPass, fC,
+      'Creative ít liên quan / ROI target cao → đăng creative hợp kênh, hạ ROI target · nếu CPM rẻ mà CPV cao → check placement mix (Traffic Source)') +
+    gate(2,'CTR in-room','CTR = click sản phẩm ÷ View', s.ctr, T.ctr, ctrPass, v=>fP(v,1),
+      'Host chưa nhắc CTA / chưa đọc realtime SKU · kịch bản đơn điệu → chuẩn hoá kịch bản, xoay tua hook–deal, pin đúng SP') +
+    gate(3,'CTOR','CTOR = đơn ÷ click', s.ctor, T.ctor, ctorPass, v=>fP(v,1),
+      'Host chốt yếu / chưa đọc pfm SKU realtime → dồn spotlight SKU đang hot, đọc comment xoáy pain point, align deal–giá');
+  // bảng tương quan
+  const cr=(lb,r,inv,note)=>`<tr><td>${lb}</td><td style="color:${r==null?'#ccc':corrColor(r,inv)};font-weight:700;">${r==null?'—':(r>=0?'+':'')+r.toFixed(2)}</td><td>${r==null?'—':corrStrength(r)}</td><td style="text-align:left;color:#6b7280;">${note}</td></tr>`;
+  $('tblCorr').innerHTML=`<thead><tr><th>Chỉ số</th><th>r vs GMV/h</th><th>Mức</th><th style="text-align:left;">Ý nghĩa</th></tr></thead><tbody>`+
+    cr('CTOR',rCtor,false,'chốt đơn — mạnh khi tầng chốt ổn')+
+    cr('CTR',rCtr,false,'giữ click — leading indicator')+
+    cr('ERR',rErr,false,'ít dự báo GMV — là driver chi phí')+
+    cr('ERR ↔ CPV',rEC,true,'ERR↑ ⇒ CPV↓ (nghịch = tốt)')+`</tbody>`;
+  // ===== nhận xét TOP-DOWN (học style flow chẩn đoán): tìm tầng nghẽn ĐẦU TIÊN, fix đó trước =====
+  const tiers=[
+    {n:1,nm:'CPV · tầng 1 (Ads/reach)',pass:cpvPass,act:s.cpv,tgt:T.cpv,fmt:fC,inv:true,
+     fix:'mở Traffic Source check placement mix (Video profile taps ăn hết impression?) → creative liên quan + nuôi organic kéo ERR lên cho view rẻ; chỉ chỉnh bid/ROI target sau cùng',
+     why:'view đắt → mua được ít view → dù CTR/CTOR tốt cũng thiếu lượng để ra GMV'},
+    {n:2,nm:'CTR in-room · tầng 2 (Op)',pass:ctrPass,act:s.ctr,tgt:T.ctr,fmt:v=>fP(v,1),inv:false,
+     fix:'host đọc realtime SKU khách đang xem, pin đúng SP + CTA, xoay tua kịch bản 15–30′ để CTR không trôi cuối phiên',
+     why:'click hụt → dù chốt tốt cũng ít đơn'},
+    {n:3,nm:'CTOR · tầng 3 (Op)',pass:ctorPass,act:s.ctor,tgt:T.ctor,fmt:v=>fP(v,1),inv:false,
+     fix:'check ATC/click per-SKU dồn hero SKU đang chạy, đọc comment xoáy pain point, align deal/giá; CTOR chưa đạt thì CHƯA push ads (Ads Gate)',
+     why:'click không chốt = đốt tiền traffic'}
+  ];
+  const known=tiers.filter(t=>t.pass!=null), firstBad=known.find(t=>t.pass===false);
+  const strong=[['CTOR',rCtor],['CTR',rCtr]].filter(x=>x[1]!=null).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))[0];
+  let note='';
+  if(!T.has){
+    note=`<i>Scope này chưa có target KPI (tháng cũ / brand chưa nhập plan) — cổng chỉ hiện actual, chưa chẩn đoán pass/fail được. Lọc brand có plan tháng mới nhất để xem chẩn đoán.</i>`;
+  } else if(!firstBad){
+    note=`<b style="color:#16a34a;">✓ Cả 3 tầng đạt target — phễu thông suốt.</b> Maintain nhịp, theo dõi CPV. CTOR ≥ target ổn định (2 phiên) thì mở <b>Ads Gate</b> scale +20–30%/bước (trần +50%/ngày), sau mỗi bước chờ 1 phiên đo lại CPV & ROI — xấu đi thì rollback.`;
+  } else {
+    const gap=firstBad.inv? (firstBad.act/firstBad.tgt-1) : (1-firstBad.act/firstBad.tgt);
+    note=`<b style="color:#dc2626;">🔧 Nghẽn tại ${firstBad.nm}</b> — actual <b>${firstBad.fmt(firstBad.act)}</b> vs target ${firstBad.fmt(firstBad.tgt)} (${firstBad.inv?'vượt':'hụt'} <b>${(Math.abs(gap)*100).toFixed(0)}%</b>). Đây là tầng cao nhất đang fail → <b>xử lý TRƯỚC:</b> ${firstBad.fix}. `;
+    note+=`<span style="color:#6b7280;">Lý do ưu tiên: ${firstBad.why}${firstBad.n<3?' — tầng dưới có tốt cũng không bù nổi khi tầng trên gãy (top-down).':'.'}</span>`;
+    const otherBad=known.filter(t=>t.pass===false&&t.n>firstBad.n);
+    if(otherBad.length) note+=` <span style="color:#9ca3af;">(${otherBad.map(t=>t.nm.split(' ')[0]).join(', ')} cũng dưới target — fix sau khi tầng trên thông.)</span>`;
+  }
+  if(firstBad&&firstBad.n===3){
+    note+=`<br><span style="color:#b45309;">⚠️ CTOR gãy: nếu GMV/loading vẫn đạt thì nhiều khả năng <b>AOV hoặc view volume đang gánh</b> (mua GMV bằng traffic) — không bền khi AOV về nền, đừng scale ads theo GMV này.</span>`;
+  }
+  if(strong) note+=`<br><b>Metric bám GMV/giờ chặt nhất trong scope:</b> ${strong[0]} (r=${strong[1]>=0?'+':''}${strong[1].toFixed(2)}, ${corrStrength(strong[1])})${Math.abs(strong[1])<.3?' — tín hiệu yếu, có thể do tầng đó đang gãy nên mất khả năng dự báo':''}.`;
+  if(rEC!=null&&rEC<-.3) note+=` <b>ERR↔CPV</b> nghịch ${corrStrength(rEC)} (r=${rEC.toFixed(2)}) → đẩy ERR là cách hạ CPV nhanh nhất.`;
+  $('funnelNote').innerHTML=note;
+}
+
+/* ===================== SO SÁNH TUẦN/THÁNG THEO KÊNH (kiểu sheet CIR WoW/MoM) ===================== */
+let cmpMode='week';
+function setCmp(m){ cmpMode=m;
+  $('cmpW').className='vtab '+(m==='week'?'vtab-a':'vtab-i');
+  $('cmpM').className='vtab '+(m==='month'?'vtab-a':'vtab-i');
+  const el=$('cmpModeLbl'); if(el) el.textContent=m==='week'?'tuần (WoW)':'tháng (MoM)';
+  renderCompare(); }
+// phân loại elasticity GMV × ROI (giống dash CIR)
+function elast(nw,rw){ if(nw==null||rw==null||!isFinite(nw)||!isFinite(rw))return '—';
+  const nu=nw>=0,ru=rw>=0;
+  if(nu&&ru)return '<span class="mchip rc-good">🟢 Cùng tăng</span>';
+  if(!nu&&!ru)return '<span class="mchip rc-bad">🔴 Cùng giảm</span>';
+  if(nu&&!ru)return '<span class="mchip rc-neu">🟠 GMV↑ ROI↓</span>';
+  return '<span class="mchip" style="background:#fef9c3;color:#854d0e;">🟡 ROI↑ GMV↓</span>'; }
+function sparkSvg(vals,color){
+  const idx=vals.map((v,i)=>[v,i]).filter(x=>x[0]!=null&&isFinite(x[0]));
+  if(idx.length<2) return '<span style="color:#d1d5db;font-size:7px;">—</span>';
+  const ys=idx.map(x=>x[0]),mn=Math.min(...ys),mx=Math.max(...ys),rng=mx-mn||1,w=82,h=18;
+  const pts=idx.map(([v,i])=>{const px=(i/(Math.max(1,vals.length-1)))*w;const py=h-((v-mn)/rng)*(h-3)-1.5;return px.toFixed(1)+','+py.toFixed(1);}).join(' ');
+  const li=idx[idx.length-1][1], lv=ys[ys.length-1];
+  const lx=(li/Math.max(1,vals.length-1))*w, ly=h-((lv-mn)/rng)*(h-3)-1.5;
+  return `<svg width="${w}" height="${h}" style="vertical-align:middle;"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.3"/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="1.7" fill="${color}"/></svg>`;
+}
+function renderCompare(){
+  const NF=D.nmvFactor;
+  const dimRows=R.filter(r=>dimPass(r,null));   // bỏ filter tháng/ngày để thấy toàn timeline
+  // gom theo BRAND (mỗi brand = các kênh của nó); sort theo GMV
+  const brs=[...new Set(dimRows.map(r=>chBrand[r[3]]))].filter(bi=>{ if(bSel!=='All'&&bi!==+bSel)return false;
+      if(selVal('fCh')!=='All'&&chBrand[+selVal('fCh')]!==bi)return false; return true; })
+    .map(bi=>({bi,g:dimRows.filter(r=>chBrand[r[3]]===bi).reduce((a,r)=>a+r[8],0)})).sort((a,b)=>b.g-a.g).map(x=>x.bi);
+  const brRows=bi=>dimRows.filter(r=>chBrand[r[3]]===bi);
+  let periods;
+  if(cmpMode==='week'){
+    const wks=[...new Set(dimRows.map(r=>mondayOf(r[0])))].sort();
+    periods=wks.map(w=>{const end=addDays(w,6),b0=edate(w,-1),b1=edate(end,-1),cy=weekLabel(w);
+      return {lab:w.slice(8,10)+'/'+w.slice(5,7),cyc:cy,inP:r=>r[0]>=w&&r[0]<=end,inC:r=>r[0]>=b0&&r[0]<=b1};});
+    $('cmpHint').textContent='tuần Thứ 2→CN · %WoW so cùng khoảng ngày tháng trước (logic sheet WoW) · TACOS=Spend/GMV · ROI=GMV/Spend';
+  } else {
+    const mos=[...new Set(dimRows.map(r=>r[1]))].sort((a,b)=>a-b);
+    periods=mos.map((m,i)=>{const pm=i>0?mos[i-1]:null;
+      return {lab:'T'+m,cyc:'',inP:r=>r[1]===m,inC:pm!=null?(r=>r[1]===pm):null};});
+    $('cmpHint').textContent='%MoM so tháng liền trước · TACOS=Spend/GMV · ROI=GMV/Spend';
+  }
+  // ---- role/MTD: this-month vs cùng kỳ tháng trước, tính share/best/worst GMV ----
+  const lastM=Math.max(...dimRows.map(r=>r[1])), prevM=lastM-1;
+  const dCut=(()=>{ const ds=dimRows.filter(r=>r[1]===lastM).map(r=>+r[0].slice(8,10)); return ds.length?Math.max(...ds):31; })();
+  const mtd={};
+  brs.forEach(bi=>{ const rs=brRows(bi);
+    const n1=rs.filter(r=>r[1]===lastM).reduce((a,r)=>a+r[8],0)*NF;
+    const n0=rs.filter(r=>r[1]===prevM&&+r[0].slice(8,10)<=dCut).reduce((a,r)=>a+r[8],0)*NF;
+    const c1=rs.filter(r=>r[1]===lastM).reduce((a,r)=>a+r[9],0);
+    mtd[bi]={n1,n0,tr:n0?n1/n0-1:null,tac:n1?c1/n1:null}; });
+  const totN1=brs.reduce((a,bi)=>a+mtd[bi].n1,0)||1;
+  const roles={}; brs.forEach(bi=>roles[bi]=[]);
+  if(brs.length){ const carrier=brs.reduce((a,bi)=>mtd[bi].n1>mtd[a].n1?bi:a,brs[0]);
+    roles[carrier].push(['🏋️ gánh team — '+Math.round(mtd[carrier].n1/totN1*100)+'% GMV nhóm','neu']); }
+  const wTr=brs.filter(bi=>mtd[bi].tr!=null);
+  if(wTr.length>=2){ const best=wTr.reduce((a,bi)=>mtd[bi].tr>mtd[a].tr?bi:a,wTr[0]), worst=wTr.reduce((a,bi)=>mtd[bi].tr<mtd[a].tr?bi:a,wTr[0]);
+    if(best!==worst){ const pf=d=>(d>=0?'▲':'▼')+Math.abs(d*100).toFixed(0)+'%';
+      roles[best].push(['💪 khỏe nhất — GMV MTD '+pf(mtd[best].tr),'good']);
+      roles[worst].push(['🥀 đuối nhất — GMV MTD '+pf(mtd[worst].tr),'bad']); } }
+  const cycCls={'Deal Day':'cyc-d','Mid Month':'cyc-m','Pay Day':'cyc-p'};
+  let h='<thead><tr><th class="cmp-br">Brand</th><th class="cmp-mt">Chỉ số</th>'
+    + periods.map(p=>`<th class="pcol">${p.lab}${p.cyc?`<br><span class="cyc ${cycCls[p.cyc]||''}">${p.cyc.split(' ')[0]}</span>`:''}</th>`).join('')
+    + '<th class="cmp-spk2">Xu hướng</th></tr></thead><tbody>';
+  const wowCell=(v,inv)=>v==null?'<span style="color:#d1d5db;">—</span>':`<span class="${(inv?v<0:v>=0)?'up':'dn'}">${v>=0?'▲':'▼'}${Math.abs(v*100).toFixed(0)}%</span>`;
+  for(const bi of brs){
+    const rs=brRows(bi);
+    const nmv=periods.map(p=>{const s=agg(rs.filter(p.inP));return s.n?s.gmv*NF:null;});
+    const spend=periods.map(p=>{const s=agg(rs.filter(p.inP));return s.n?s.ads:null;});
+    const gmvP=periods.map(p=>{const s=agg(rs.filter(p.inP));return s.n?s.gmv:null;});
+    const tacos=periods.map((p,i)=>nmv[i]?spend[i]/nmv[i]:null);
+    const roas=periods.map((p,i)=>spend[i]?gmvP[i]/spend[i]:null);   // ROI = GMV / Spend
+    // WoW/MoM: so với cmp (cùng kỳ tháng trước cho tuần / tháng liền trước)
+    const nmvCmp=periods.map(p=>{if(!p.inC)return null;const s=agg(rs.filter(p.inC));return s.n?s.gmv*NF:null;});
+    const roasCmp=periods.map(p=>{if(!p.inC)return null;const s=agg(rs.filter(p.inC));return s.n&&s.ads?s.gmv/s.ads:null;});
+    const nmvW=periods.map((p,i)=>(nmv[i]!=null&&nmvCmp[i])?(nmv[i]-nmvCmp[i])/nmvCmp[i]:null);
+    const roasW=periods.map((p,i)=>(roas[i]!=null&&roasCmp[i])?(roas[i]-roasCmp[i])/roasCmp[i]:null);
+    const spec=[
+      {lb:'GMV',cells:nmv.map(v=>v!=null?`<span class="cval">${fC(v)}</span>`:'—'),raw:nmv,clr:'#EE3124',strong:1},
+      {lb:'Spend',cells:spend.map(v=>v!=null?fC(v):'—'),raw:spend,clr:'#414042'},
+      {lb:'TACOS',cells:tacos.map(v=>v!=null?fP(v,1):'—'),raw:tacos,clr:'#f59e0b'},
+      {lb:'ROI',cells:roas.map(v=>v!=null?fX(v):'—'),raw:roas,clr:'#16a34a'},
+      {lb:'%GMV WoW',cells:nmvW.map(v=>wowCell(v,false))},
+      {lb:'%ROI WoW',cells:roasW.map(v=>wowCell(v,false))},
+      {lb:'Elasticity',cells:periods.map((p,i)=>elast(nmvW[i],roasW[i]))}
+    ];
+    const bn=BRANDS[bi];
+    const mi=mtd[bi];
+    const mtdHtml=`<div class="br-mtd">MTD: GMV ${mi.tr==null?'—':`<b class="${mi.tr>=0?'up':'dn'}">${mi.tr>=0?'▲':'▼'}${Math.abs(mi.tr*100).toFixed(0)}%</b>`} · TACOS ${mi.tac!=null?fP(mi.tac,1):'—'}`
+      +(roles[bi].length?`<br>${roles[bi].map(([t,c])=>`<span class="rolechip rc-${c}">${t}</span>`).join(' ')}`:'')+`</div>`;
+    spec.forEach((rs2,ri)=>{
+      const lab=rs2.clr?`<span class="mchip" style="background:${rs2.clr}1a;color:${rs2.clr};border:1px solid ${rs2.clr}45;">${rs2.lb}</span>`:`<span style="font-size:8px;color:#888;">${rs2.lb}</span>`;
+      h+=`<tr class="${ri===0?'brsep':''}">`
+        +(ri===0?`<td class="cmp-br" rowspan="7"><div class="brname">${brandLogo(bn,14)}${esc(bn)}</div>${mtdHtml}</td>`:'')
+        +`<td class="cmp-mt">${lab}</td>`
+        + rs2.cells.map(c=>`<td class="pcol"${rs2.strong?' style="font-weight:700;color:#414042;"':''}>${c}</td>`).join('')
+        +`<td class="cmp-spk2">${rs2.clr?sparkSvg(rs2.raw,rs2.clr):''}</td>`
+        +`</tr>`;
+    });
+  }
+  $('tblCompare').innerHTML=h+'</tbody>';
+}
+
+/* ===== Self-Selling Live — Ads by Date (nguồn GSheet Ads Report) ===== */
+function renderAdsLive(){
+  const AL=D.adsLive||{};
+  const cis=Object.keys(AL).map(Number).filter(chPass);
+  const f=$('dFrom').value, t=$('dTo').value;
+  const byDate={}, byCh={};
+  cis.forEach(ci=>{ const dd=AL[ci]; byCh[ci]=[0,0,0,0,0];
+    for(const iso in dd){ if(mSel!=='All'&&+iso.slice(5,7)!==+mSel) continue; if(f&&iso<f) continue; if(t&&iso>t) continue;
+      const a=dd[iso]; if(!byDate[iso]) byDate[iso]=[0,0,0,0,0];
+      for(let k=0;k<5;k++){ byDate[iso][k]+=a[k]; byCh[ci][k]+=a[k]; } } });
+  const days=Object.keys(byDate).sort().reverse();
+  if(!days.length){ $('tblAdsLive').innerHTML='<tbody><tr><td style="padding:12px;color:#9ca3af;">Không có ads self-selling live cho scope/khoảng ngày đang chọn (UPC không có nguồn self-selling ads riêng).</td></tr></tbody>'; $('adsLiveNote').innerHTML=''; return; }
+  // metric từ [cost,gmv,ord,view,v10]
+  const met=a=>({cost:a[0],gmv:a[1],ord:a[2],view:a[3],v10:a[4],
+    roi:a[0]?a[1]/a[0]:null, aov:a[2]?a[1]/a[2]:null, cr:a[3]?a[2]/a[3]:null, cpv:a[3]?a[0]/a[3]:null, r10:a[3]?a[4]/a[3]:null});
+  const ms=days.map(d=>met(byDate[d]));
+  const RG={roi:mmp(ms.map(x=>x.roi)),aov:mmp(ms.map(x=>x.aov)),cr:mmp(ms.map(x=>x.cr)),cpv:mmp(ms.map(x=>x.cpv)),r10:mmp(ms.map(x=>x.r10)),gmv:mmp(ms.map(x=>x.gmv))};
+  const DOW=['CN','T2','T3','T4','T5','T6','T7'];
+  let h=tblHead(['Ngày','Cost','GMV','ROI','AOV','CR% (Live View)','CPV','10s View Rate','LIVE views','10s LIVE views','SKU orders'])+'<tbody>';
+  days.forEach((d,i)=>{ const m=ms[i], dt=new Date(d+'T00:00:00');
+    h+=`<tr><td>${d.slice(5)} <span style="color:#aaa;">(${DOW[dt.getDay()]})</span></td>
+      <td>${fC(m.cost)}</td>
+      <td style="${gradAmber(m.gmv,RG.gmv[0],RG.gmv[1])}"><b>${fC(m.gmv)}</b></td>
+      <td style="${gradMM(m.roi,RG.roi[0],RG.roi[1],1)}">${fX(m.roi)}</td>
+      <td style="${gradMM(m.aov,RG.aov[0],RG.aov[1],1)}">${fC(m.aov)}</td>
+      <td style="${gradMM(m.cr,RG.cr[0],RG.cr[1],1)}">${fP(m.cr,1)}</td>
+      <td style="${gradMM(m.cpv,RG.cpv[0],RG.cpv[1],-1)}">${fC(m.cpv)}</td>
+      <td style="${gradMM(m.r10,RG.r10[0],RG.r10[1],1)}">${fP(m.r10,1)}</td>
+      <td>${fN(m.view)}</td><td>${fN(m.v10)}</td><td>${fN(m.ord)}</td></tr>`;
+  });
+  const T=[0,0,0,0,0]; days.forEach(d=>{ for(let k=0;k<5;k++) T[k]+=byDate[d][k]; }); const mt=met(T);
+  h+=`<tr class="tot"><td>TỔNG</td><td>${fC(mt.cost)}</td><td><b>${fC(mt.gmv)}</b></td><td>${fX(mt.roi)}</td><td>${fC(mt.aov)}</td><td>${fP(mt.cr,1)}</td><td>${fC(mt.cpv)}</td><td>${fP(mt.r10,1)}</td><td>${fN(mt.view)}</td><td>${fN(mt.v10)}</td><td>${fN(mt.ord)}</td></tr></tbody>`;
+  $('tblAdsLive').innerHTML=h;
+  const chTxt=cis.map(ci=>`${esc(D.channels[ci])}: GMV ${fC(byCh[ci][1])} · ROI ${fX(byCh[ci][0]?byCh[ci][1]/byCh[ci][0]:null)}`).join(' · ');
+  $('adsLiveNote').innerHTML=`📌 ${chTxt}. <i>Nguồn chỉ có Cost/GMV/orders/live_views/10s views — thiếu "LIVE follows" & "Creative boost cost" (không có trong sheet raw data live).</i>`;
+}
+
+/* ===== render all ===== */
+function render(){
+  if(curView==='host'){ paintTabs(); paintBrand(); renderCfBar(); renderHostView(); return; }
+  paintTabs(); paintBrand(); renderCfBar(); renderKpis(); renderFunnel(); renderPvType(); renderPlan();
+  renderChartDate(); renderMoM(); renderAdsLive(); renderWoW();
+  renderDayType(); renderFunnelDiag();
+  renderDetail('tblSlot','slot',7,k=>k<0?'(N/A)':(k+'h – '+(k+2)+'h'),'Khung giờ (bắt đầu)');
+  renderDetail('tblCh','ch',3,k=>D.channels[k],'Channel');
+  renderDate(); renderCompare();
+}
+function gdToggle(){
+  const p=$('gdPanel'), s=$('gdPlus');
+  const open=!p.classList.contains('open');
+  p.classList.toggle('open',open);
+  s.textContent=open?'−':'＋';
+}
+// ===== badge cap nhat + banner note tinh trang data =====
+function renderMeta(){
+  // badge: "21/07/2026 16:28"  <- D.updated dang "2026-07-21 16:28"
+  const u=(D.updated||'').match(/(\d{4})-(\d{2})-(\d{2})[ T]?(\d{2}:\d{2})?/);
+  const upTxt = u ? `${u[3]}/${u[2]}/${u[1]}${u[4]?' '+u[4]:''}` : (D.updated||'—');
+  const b=$('updBadge'); if(b) b.innerHTML=`<span class="dot"></span>Cập nhật: ${upTxt}`;
+
+  // banner: phien co GMV>0 nhung Ads=0 (chua gan chi phi) -> %Ads/ROI cua ngay do bi thap gia
+  // chi xet thang moi nhat (thang dang chay) — thang cu da dong so
+  const curMo=Math.max(...D.rows.map(r=>r[1]));
+  const gap={};   // 'ch|iso' -> {n, gmv}
+  let totN=0, totG=0;
+  for(const r of D.rows){ if(r[1]===curMo && r[8]>0 && r[9]===0){
+    const k=r[3]+'|'+r[0]; (gap[k]=gap[k]||{n:0,g:0}); gap[k].n++; gap[k].g+=r[8]; totN++; totG+=r[8];
+  }}
+  const el=$('dataNote'); if(!el) return;
+  const keys=Object.keys(gap);
+  if(keys.length===0){ el.style.display='none'; return; }
+  // gom theo channel
+  const byCh={};
+  keys.forEach(k=>{ const [ci,iso]=k.split('|'); (byCh[ci]=byCh[ci]||{days:new Set(),n:0,g:0});
+    byCh[ci].days.add(iso); byCh[ci].n+=gap[k].n; byCh[ci].g+=gap[k].g; });
+  const parts=Object.keys(byCh).sort((a,b)=>byCh[b].g-byCh[a].g).map(ci=>{
+    const o=byCh[ci], dd=[...o.days].sort().map(x=>x.slice(8)+'/'+x.slice(5,7)).join(', ');
+    return `<b>${esc(D.channels[ci])}</b> (${dd}: ${o.n} phiên · GMV ${fC(o.g)})`;
+  });
+  el.innerHTML=`<span class="dn-hd">⚠️ Đã có GMV, chưa có Ads cost — ${totN} phiên · GMV ${fC(totG)}</span>`
+    + `Các phiên này <b>đã tính đủ GMV</b> ở KPI &amp; bảng, nhưng <b>chưa gán Ads cost</b> nên <b>%Ads / ROI của ngày đó thấp giả</b> (mẫu số ads thiếu). Số tự khớp khi team đổ Ads vào sheet. &nbsp;→ ${parts.join(' · ')}`;
+  el.style.display='';
+}
+
+(async function init(){
+  await loadGoogleSheetData();
+  buildTabs(); fillSelects();
+  const ds=R.map(r=>r[0]).sort();
+  $('hdrRange').textContent=`Data: ${ds[0]} → ${ds[ds.length-1]} · ${R.length.toLocaleString()} phiên live`;
+  $('footer').textContent=`UPC Livestream Dashboard · build ${D.updated} · data đến ${D.srcModified} · ${D.liveSource||'Embedded'}${D.liveError?' · lỗi tải live data':''} · Ecomobi CPD Team`;
+  renderMeta();
+  mSel=String(D.planMonth||'All');
+  // brand mac dinh = brand co %loading GMV cao nhat trong thang plan
+  let best=-1, bestLd=-1;
+  BRANDS.forEach((b,bi)=>{
+    let pn=0, act=0;
+    D.channels.forEach((c,ci)=>{
+      if(chBrand[ci]!==bi) return;
+      const p=(D.plan[D.planMonth]||{})[ci]; if(!p) return;
+      pn+=p.nmv;
+      act+=agg(R.filter(r=>r[1]===D.planMonth&&r[3]===ci)).gmv*D.nmvFactor;
+    });
+    if(pn>0){ const ld=act/pn; if(ld>bestLd){ bestLd=ld; best=bi; } }
+  });
+  if(best>=0) bSel=String(best);
+  render();
+})();
+</script>
+</body>
+</html>
