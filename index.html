@@ -646,11 +646,7 @@ function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 /* ===== format ===== */
-function fC(n){ if(n==null||isNaN(n)||!isFinite(n))return '—'; const a=Math.abs(n);
-  if(a>=1e9) return (n/1e9).toFixed(2)+' tỷ';
-  if(a>=1e6) return (n/1e6).toFixed(1)+' tr';
-  if(a>=1e3) return (n/1e3).toFixed(0)+' K';
-  return Math.round(n).toLocaleString('vi-VN'); }
+function fC(n){ return fFull(n); }
 function fN(n){ return (n==null||isNaN(n))?'—':Math.round(n).toLocaleString('en-US'); }
 function fFull(n,d=0){ if(n==null||isNaN(n)||!isFinite(n)) return '—'; return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
 function fP(n,d=1){ return (n==null||!isFinite(n))?'—':(n*100).toFixed(d)+'%'; }
