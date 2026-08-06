@@ -556,7 +556,9 @@ function buildLiveData(central,smg,planRows){
   return {channels,types,rows,plan,months,planMonths};
 }
 function applyLiveData(built){
-  D.channels=built.channels; D.types=built.types; D.plan=built.plan; D.months=built.months||[...new Set(built.rows.map(r=>r[1]))].sort((a,b)=>a-b); D.planMonths=built.planMonths&&built.planMonths.length?built.planMonths:Object.keys(D.plan).map(Number).sort((a,b)=>a-b); D.planMonth=D.planMonths[D.planMonths.length-1]||D.months[D.months.length-1]||7; D.updated=new Date().toLocaleString('sv-SE',{hour12:false}).slice(0,16); D.srcModified='Google Sheet live'; D.nmvFactor=1;
+  const liveDates=built.rows.map(r=>r[0]).sort();
+  const liveMax=liveDates[liveDates.length-1]||new Date().toLocaleDateString('sv-SE');
+  D.channels=built.channels; D.types=built.types; D.plan=built.plan; D.months=built.months||[...new Set(built.rows.map(r=>r[1]))].sort((a,b)=>a-b); D.planMonths=built.planMonths&&built.planMonths.length?built.planMonths:Object.keys(D.plan).map(Number).sort((a,b)=>a-b); D.planMonth=D.planMonths[D.planMonths.length-1]||D.months[D.months.length-1]||7; D.updated=liveMax; D.srcModified=liveMax; D.nmvFactor=1;
   R.splice(0,R.length,...built.rows); D.rows=R; rebuildBrandMap();
 }
 function gvizUrl(sheet,cb){ return `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cb}&tq=${encodeURIComponent('select *')}&sheet=${encodeURIComponent(sheet)}`; }
@@ -596,7 +598,9 @@ async function loadGoogleSheetData(){
     ]);
     const built=buildLiveData(centralRows,smgRows,planRows);
     if(!built.rows.length) throw new Error('Google Sheet không trả rows');
-    if(D.rows&&D.rows.length>=50&&built.rows.length<D.rows.length*.6) throw new Error('Google Sheet đang trả data thiếu, có thể sheet đang filter');
+    const oldMax=(D.rows||[]).map(r=>r[0]).sort().pop()||'';
+    const liveMax=built.rows.map(r=>r[0]).sort().pop()||'';
+    if(D.rows&&D.rows.length>=50&&built.rows.length<D.rows.length*.6&&liveMax<oldMax) throw new Error('Google Sheet đang trả data thiếu, có thể sheet đang filter');
     applyLiveData(built);
     D.liveSource='Google Sheet'; D.liveError='';
   }catch(err){ console.warn('Không tải được Google Sheet, dùng data nhúng sẵn:',err); D.liveSource='Embedded fallback'; D.liveError=String(err&&err.message||err); const f=$('footer'); if(f) f.textContent='Không tải được Google Sheet: '+D.liveError+' · đang dùng data nhúng'; }
