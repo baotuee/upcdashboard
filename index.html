@@ -246,6 +246,8 @@ tr.tot td:first-child{text-align:left;}
 .sync-btn{border:0;background:#EE3124;color:#fff;border-radius:6px;padding:7px 10px;font-size:9px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(238,49,36,.22);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
 .sync-btn:hover{background:#c9241a;}
 .sync-btn:disabled{background:#9ca3af;cursor:wait;box-shadow:none;}
+.dl-btn{border:0;background:#1a1f36;color:#fff;border-radius:6px;padding:5px 9px;font-size:8.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
+.dl-btn:hover{background:#EE3124;}
 .note{font-size:7.5px;color:#aaa;margin-top:4px;}
 #gdBtn{position:fixed;left:14px;bottom:14px;z-index:1500;background:#EE3124;color:#fff;font-weight:900;font-size:12px;letter-spacing:.4px;border-radius:999px;padding:10px 18px;cursor:pointer;box-shadow:0 4px 16px rgba(238,49,36,.45);user-select:none;display:flex;align-items:center;gap:7px;}
 #gdBtn:hover{background:#c9241a;}
@@ -376,11 +378,14 @@ body.auth-locked #gdBtn,body.auth-locked #gdPanel{display:none;}
 </div>
 
 <div class="full card">
-  <div class="ct">🗓️ Detail theo ngày <span style="color:#aaa;text-transform:none;font-weight:400;">— click tiêu đề cột để sort · <b>Tier</b> xếp theo CTOR (tứ phân vị):
-    <span class="tier tr-4">T4</span> chốt tốt nhất → tăng ads maximize GMV ·
-    <span class="tier tr-3">T3</span> đẩy thêm ·
-    <span class="tier tr-2">T2</span> giữ nhịp ·
-    <span class="tier tr-1">T1</span> siết ads, tối ưu chốt trước</span></div>
+  <div class="ct" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+    <span>🗓️ Detail theo ngày <span style="color:#aaa;text-transform:none;font-weight:400;">— click tiêu đề cột để sort · số hiển thị dạng đầy đủ · <b>Tier</b> xếp theo CTOR (tứ phân vị):
+      <span class="tier tr-4">T4</span> chốt tốt nhất → tăng ads maximize GMV ·
+      <span class="tier tr-3">T3</span> đẩy thêm ·
+      <span class="tier tr-2">T2</span> giữ nhịp ·
+      <span class="tier tr-1">T1</span> siết ads, tối ưu chốt trước</span></span>
+    <button class="dl-btn" onclick="downloadDateDetail()" title="Tải bảng detail theo ngày theo filter hiện tại">⬇ Tải CSV</button>
+  </div>
   <div class="tblwrap" style="max-height:330px;"><table id="tblDate"></table></div>
 </div>
 
@@ -647,6 +652,7 @@ function fC(n){ if(n==null||isNaN(n)||!isFinite(n))return '—'; const a=Math.ab
   if(a>=1e3) return (n/1e3).toFixed(0)+' K';
   return Math.round(n).toLocaleString('vi-VN'); }
 function fN(n){ return (n==null||isNaN(n))?'—':Math.round(n).toLocaleString('en-US'); }
+function fFull(n,d=0){ if(n==null||isNaN(n)||!isFinite(n)) return '—'; return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
 function fP(n,d=1){ return (n==null||!isFinite(n))?'—':(n*100).toFixed(d)+'%'; }
 function fX(n,d=2){ return (n==null||!isFinite(n))?'—':n.toFixed(d); }
 function momHtml(cur,base,invert=false){ if(base==null||base===0||cur==null)return '<span style="color:#ccc;">—</span>';
@@ -1243,19 +1249,24 @@ function renderDetail(tblId,dim,col,nameOf,firstLbl){
   h+=`<tr class="tot"><td>TOTAL</td><td>${fN(sT.n)}</td>${metricCells(sT,tot,[0,0],null)}</tr></tbody>`;
   $(tblId).innerHTML=h;
 }
-function renderDate(){
+function dateDetailData(){
   const rows=rowsF(null);
   const m=groupBy(rows,0);
   const days=[...m.keys()].sort().reverse();
   const ag=days.map(d=>({d,s:agg(m.get(d))}));
-  const mm=[Math.min(...ag.map(x=>x.s.gmv)),Math.max(...ag.map(x=>x.s.gmv))];
-  // range cho tô màu đỏ↔xanh theo chiều tốt/xấu (percentile 5–95 chống outlier)
+  const vals=ag.map(x=>x.s.gmv).filter(v=>v!=null&&isFinite(v));
+  const mm=vals.length?[Math.min(...vals),Math.max(...vals)]:[0,0];
   const RG={pAds:mmp(ag.map(x=>x.s.pAds)),roas:mmp(ag.map(x=>x.s.roas)),gmvH:mmp(ag.map(x=>x.s.gmvH)),
     err:mmp(ag.map(x=>x.s.err)),ctr:mmp(ag.map(x=>x.s.ctr)),ctor:mmp(ag.map(x=>x.s.ctor)),cpm:mmp(ag.map(x=>x.s.cpm)),gmvHm:mmp(ag.map(x=>x.s.gmvH))};
+  const ctorVals=ag.map(x=>x.s.ctor).filter(v=>v!=null&&isFinite(v));
+  const cq=ctorVals.length?[pctl(ctorVals,.25),pctl(ctorVals,.50),pctl(ctorVals,.75)]:[null,null,null];
+  return {rows,ag,mm,RG,cq};
+}
+function renderDate(){
+  const {rows,ag,mm,RG,cq}=dateDetailData();
   const DOW=['CN','T2','T3','T4','T5','T6','T7'];
   // Tier Rank theo CTOR (note "Tier Rank 4>3>2>1" trong file gốc): tier cao = chốt đơn tốt → nên tăng ads maximize GMV
-  const cq=[pctl(ag.map(x=>x.s.ctor),.25),pctl(ag.map(x=>x.s.ctor),.50),pctl(ag.map(x=>x.s.ctor),.75)];
-  const tierOf=v=>(v==null||!isFinite(v))?null:(v>=cq[2]?4:v>=cq[1]?3:v>=cq[0]?2:1);
+  const tierOf=v=>(v==null||!isFinite(v)||cq[2]==null)?null:(v>=cq[2]?4:v>=cq[1]?3:v>=cq[0]?2:1);
   const TIER={4:['T4','tr-4','tăng ads — chốt tốt nhất'],3:['T3','tr-3','có thể đẩy thêm'],2:['T2','tr-2','giữ nhịp'],1:['T1','tr-1','siết ads — tối ưu chốt trước']};
   let h=tblHead(['Ngày','Tier','Phiên','Giờ','GMV','Ads cost','%Ads cost','ROI','GMV/h','AOV','Views','View/h','ERR','CTR','CTOR','CPM'])+'<tbody>';
   for(const x of ag){
@@ -1263,22 +1274,37 @@ function renderDate(){
     const tk=tierOf(s.ctor), T=tk?TIER[tk]:null;
     h+=`<tr><td>${x.d} <span style="color:#aaa;">(${DOW[dt.getDay()]})</span></td>
       <td>${T?`<span class="tier ${T[1]}" title="CTOR ${fP(s.ctor,1)} — ${T[2]}">${T[0]}</span>`:'—'}</td>
-      <td>${fN(s.n)}</td><td>${fX(s.h,1)}</td>
-      <td style="${gradAmber(s.gmv,mm[0],mm[1])}"><b>${fC(s.gmv)}</b></td><td>${fC(s.ads)}</td>
+      <td>${fN(s.n)}</td><td>${fFull(s.h,1)}</td>
+      <td style="${gradAmber(s.gmv,mm[0],mm[1])}"><b>${fFull(s.gmv)}</b></td><td>${fFull(s.ads)}</td>
       <td style="${gradMM(s.pAds,RG.pAds[0],RG.pAds[1],-1)}">${fP(s.pAds)}</td>
       <td style="${gradMM(s.roas,RG.roas[0],RG.roas[1],1)}">${fX(s.roas)}</td>
-      <td style="${gradMM(s.gmvH,RG.gmvH[0],RG.gmvH[1],1)}">${fC(s.gmvH)}</td>
-      <td>${fC(s.aov)}</td><td>${fN(s.v)}</td><td>${fN(s.vH)}</td>
+      <td style="${gradMM(s.gmvH,RG.gmvH[0],RG.gmvH[1],1)}">${fFull(s.gmvH)}</td>
+      <td>${fFull(s.aov)}</td><td>${fN(s.v)}</td><td>${fN(s.vH)}</td>
       <td style="${gradMM(s.err,RG.err[0],RG.err[1],1)}">${fP(s.err)}</td>
       <td style="${gradMM(s.ctr,RG.ctr[0],RG.ctr[1],1)}">${fP(s.ctr)}</td>
       <td style="${gradMM(s.ctor,RG.ctor[0],RG.ctor[1],1)}">${fP(s.ctor)}</td>
-      <td style="${gradMM(s.cpm,RG.cpm[0],RG.cpm[1],-1)}">${fC(s.cpm)}</td></tr>`;
+      <td style="${gradMM(s.cpm,RG.cpm[0],RG.cpm[1],-1)}">${fFull(s.cpm)}</td></tr>`;
   }
   const sT=agg(rows);
-  h+=`<tr class="tot"><td>TOTAL</td><td></td><td>${fN(sT.n)}</td><td>${fX(sT.h,1)}</td><td><b>${fC(sT.gmv)}</b></td><td>${fC(sT.ads)}</td><td>${fP(sT.pAds)}</td><td>${fX(sT.roas)}</td><td>${fC(sT.gmvH)}</td><td>${fC(sT.aov)}</td><td>${fN(sT.v)}</td><td>${fN(sT.vH)}</td><td>${fP(sT.err)}</td><td>${fP(sT.ctr)}</td><td>${fP(sT.ctor)}</td><td>${fC(sT.cpm)}</td></tr></tbody>`;
+  h+=`<tr class="tot"><td>TOTAL</td><td></td><td>${fN(sT.n)}</td><td>${fFull(sT.h,1)}</td><td><b>${fFull(sT.gmv)}</b></td><td>${fFull(sT.ads)}</td><td>${fP(sT.pAds)}</td><td>${fX(sT.roas)}</td><td>${fFull(sT.gmvH)}</td><td>${fFull(sT.aov)}</td><td>${fN(sT.v)}</td><td>${fN(sT.vH)}</td><td>${fP(sT.err)}</td><td>${fP(sT.ctr)}</td><td>${fP(sT.ctor)}</td><td>${fFull(sT.cpm)}</td></tr></tbody>`;
   $('tblDate').innerHTML=h;
   makeSortable('tblDate');
 }
+function csvCell(v){ const s=String(v??''); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+function downloadCsv(name, rows){
+  const csv='\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'})); a.download=name; document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
+}
+function downloadDateDetail(){
+  const {rows,ag,cq}=dateDetailData();
+  const tierOf=v=>(v==null||!isFinite(v)||cq[2]==null)?'':(v>=cq[2]?'T4':v>=cq[1]?'T3':v>=cq[0]?'T2':'T1');
+  const out=[['Ngày','Tier','Phiên','Giờ','GMV','Ads cost','%Ads cost','ROI','GMV/h','AOV','Views','View/h','ERR','CTR','CTOR','CPM']];
+  ag.forEach(x=>{ const s=x.s; out.push([x.d,tierOf(s.ctor),Math.round(s.n),Number((s.h||0).toFixed(1)),Math.round(s.gmv||0),Math.round(s.ads||0),s.pAds==null?'':Number((s.pAds*100).toFixed(2)),s.roas==null?'':Number(s.roas.toFixed(2)),Math.round(s.gmvH||0),Math.round(s.aov||0),Math.round(s.v||0),Math.round(s.vH||0),s.err==null?'':Number((s.err*100).toFixed(2)),s.ctr==null?'':Number((s.ctr*100).toFixed(2)),s.ctor==null?'':Number((s.ctor*100).toFixed(2)),Math.round(s.cpm||0)]); });
+  const t=agg(rows); out.push(['TOTAL','',Math.round(t.n),Number((t.h||0).toFixed(1)),Math.round(t.gmv||0),Math.round(t.ads||0),t.pAds==null?'':Number((t.pAds*100).toFixed(2)),t.roas==null?'':Number(t.roas.toFixed(2)),Math.round(t.gmvH||0),Math.round(t.aov||0),Math.round(t.v||0),Math.round(t.vH||0),t.err==null?'':Number((t.err*100).toFixed(2)),t.ctr==null?'':Number((t.ctr*100).toFixed(2)),t.ctor==null?'':Number((t.ctor*100).toFixed(2)),Math.round(t.cpm||0)]);
+  const from=$('dFrom').value||'all', to=$('dTo').value||'all';
+  downloadCsv(`upc_detail_theo_ngay_${from}_${to}.csv`,out);
+}
+
 
 /* ===== sort (DOM-based, giu dong TOTAL) ===== */
 function parseCell(td){
